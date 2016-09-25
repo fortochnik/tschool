@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+    "-//Hibernate/Hibernate Configuration DTD//EN"
+    "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+  <session-factory>
+    <property name="connection.url">jdbc:mysql://localhost:3306/tstore</property>
+    <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
+      <property name="connection.password">root</property>
+      <property name="connection.username">root</property>
+      <mapping class="tstore.model.AdressEntity"/>
+      <mapping class="tstore.model.BasketEntity"/>
+      <mapping class="tstore.model.CategoryEntity"/>
+      <mapping class="tstore.model.ClientEntity"/>
+      <mapping class="tstore.model.DeliveryEntity"/>
+      <mapping class="tstore.model.OrderEntity"/>
+      <mapping class="tstore.model.OrderStatusEntity"/>
+      <mapping class="tstore.model.PaymentEntity"/>
+      <mapping class="tstore.model.PaymentStatusEntity"/>
+      <mapping class="tstore.model.PictureEntity"/>
+      <mapping class="tstore.model.ProductEntity"/>
+      <!-- DB schema will be updated if needed -->
+    <!-- <property name="hbm2ddl.auto">update</property> -->
+  </session-factory>
+</hibernate-configuration>
