@@ -6,12 +6,11 @@
   <session-factory>
     <property name="connection.url">jdbc:mysql://localhost:3306/tstore</property>
     <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
-      <property name="connection.password">root</property>
-      <property name="connection.username">root</property>
-      <mapping class="tstore.model.AdressEntity"/>
+    <property name="connection.password">root</property>
+    <property name="connection.username">root</property>
+    <mapping class="tstore.model.AdressEntity"/>
       <mapping class="tstore.model.BasketEntity"/>
       <mapping class="tstore.model.CategoryEntity"/>
-      <mapping class="tstore.model.ClientEntity"/>
       <mapping class="tstore.model.DeliveryEntity"/>
       <mapping class="tstore.model.OrderEntity"/>
       <mapping class="tstore.model.OrderStatusEntity"/>
@@ -19,7 +18,9 @@
       <mapping class="tstore.model.PaymentStatusEntity"/>
       <mapping class="tstore.model.PictureEntity"/>
       <mapping class="tstore.model.ProductEntity"/>
-      <!-- DB schema will be updated if needed -->
+    <mapping class="tstore.model.RolesEntity"/>
+    <mapping class="tstore.model.UsersEntity"/>
+    <!-- DB schema will be updated if needed -->
     <!-- <property name="hbm2ddl.auto">update</property> -->
   </session-factory>
 </hibernate-configuration>

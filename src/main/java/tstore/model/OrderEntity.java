@@ -18,11 +18,11 @@ public class OrderEntity {
     private int client;
     private AdressEntity adressByAdress;
     private BasketEntity basketByBasket;
-    private ClientEntity clientByClient;
     private DeliveryEntity deliveryByDelivery;
     private OrderStatusEntity orderStatusByOrderStatus;
     private PaymentEntity paymentByPayment;
     private PaymentStatusEntity paymentStatusByPaymentStatus;
+    private UsersEntity usersByClient;
 
     @Id
     @Column(name = "id", nullable = false, insertable = true, updatable = true)
@@ -156,15 +156,6 @@ public class OrderEntity {
         this.basketByBasket = basketByBasket;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "client", referencedColumnName = "id", nullable = false)
-    public ClientEntity getClientByClient() {
-        return clientByClient;
-    }
-
-    public void setClientByClient(ClientEntity clientByClient) {
-        this.clientByClient = clientByClient;
-    }
 
     @ManyToOne
     @JoinColumn(name = "delivery", referencedColumnName = "id", nullable = false)
@@ -204,5 +195,15 @@ public class OrderEntity {
 
     public void setPaymentStatusByPaymentStatus(PaymentStatusEntity paymentStatusByPaymentStatus) {
         this.paymentStatusByPaymentStatus = paymentStatusByPaymentStatus;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "client", referencedColumnName = "id", nullable = false)
+    public UsersEntity getUsersByClient() {
+        return usersByClient;
+    }
+
+    public void setUsersByClient(UsersEntity usersByClient) {
+        this.usersByClient = usersByClient;
     }
 }

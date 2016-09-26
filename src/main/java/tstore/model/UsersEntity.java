@@ -9,15 +9,17 @@ import java.util.Collection;
  * Created by mipan on 25.09.2016.
  */
 @Entity
-@Table(name = "client", schema = "", catalog = "tstore")
-public class ClientEntity {
+@Table(name = "users", schema = "", catalog = "tstore")
+public class UsersEntity {
     private int id;
     private String name;
     private String sername;
     private Date birthday;
     private byte[] email;
     private String password;
+    private int roleId;
     private Collection<OrderEntity> ordersById;
+    private RolesEntity rolesByRoleId;
 
     @Id
     @Column(name = "id", nullable = false, insertable = true, updatable = true)
@@ -79,14 +81,25 @@ public class ClientEntity {
         this.password = password;
     }
 
+    @Basic
+    @Column(name = "role_id", nullable = false, insertable = false , updatable = false)
+    public int getRoleId() {
+        return roleId;
+    }
+
+    public void setRoleId(int roleId) {
+        this.roleId = roleId;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        ClientEntity that = (ClientEntity) o;
+        UsersEntity that = (UsersEntity) o;
 
         if (id != that.id) return false;
+        if (roleId != that.roleId) return false;
         if (name != null ? !name.equals(that.name) : that.name != null) return false;
         if (sername != null ? !sername.equals(that.sername) : that.sername != null) return false;
         if (birthday != null ? !birthday.equals(that.birthday) : that.birthday != null) return false;
@@ -104,15 +117,26 @@ public class ClientEntity {
         result = 31 * result + (birthday != null ? birthday.hashCode() : 0);
         result = 31 * result + (email != null ? Arrays.hashCode(email) : 0);
         result = 31 * result + (password != null ? password.hashCode() : 0);
+        result = 31 * result + roleId;
         return result;
     }
 
-    @OneToMany(mappedBy = "clientByClient")
+    @OneToMany(mappedBy = "usersByClient")
     public Collection<OrderEntity> getOrdersById() {
         return ordersById;
     }
 
     public void setOrdersById(Collection<OrderEntity> ordersById) {
         this.ordersById = ordersById;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "role_id", referencedColumnName = "id", nullable = false)
+    public RolesEntity getRolesByRoleId() {
+        return rolesByRoleId;
+    }
+
+    public void setRolesByRoleId(RolesEntity rolesByRoleId) {
+        this.rolesByRoleId = rolesByRoleId;
     }
 }
