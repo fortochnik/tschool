@@ -16,7 +16,7 @@ public class OrderEntity {
     private int paymentStatus;
     private int orderStatus;
     private int client;
-    private AdressEntity adressByAdress;
+    private AddressEntity adressByAdress;
     private BasketEntity basketByBasket;
     private DeliveryEntity deliveryByDelivery;
     private OrderStatusEntity orderStatusByOrderStatus;
@@ -138,11 +138,11 @@ public class OrderEntity {
 
     @ManyToOne
     @JoinColumn(name = "adress", referencedColumnName = "id", nullable = false)
-    public AdressEntity getAdressByAdress() {
+    public AddressEntity getAdressByAdress() {
         return adressByAdress;
     }
 
-    public void setAdressByAdress(AdressEntity adressByAdress) {
+    public void setAdressByAdress(AddressEntity adressByAdress) {
         this.adressByAdress = adressByAdress;
     }
 

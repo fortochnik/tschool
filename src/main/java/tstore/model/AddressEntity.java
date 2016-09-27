@@ -7,10 +7,10 @@ import java.util.Collection;
  * Created by mipan on 25.09.2016.
  */
 @Entity
-@Table(name = "adress", schema = "", catalog = "tstore")
-public class AdressEntity {
+@Table(name = "address", schema = "", catalog = "tstore")
+public class AddressEntity {
     private int id;
-    private String contry;
+    private String country;
     private String city;
     private String zipcode;
     private String street;
@@ -30,12 +30,12 @@ public class AdressEntity {
 
     @Basic
     @Column(name = "contry", nullable = false, insertable = true, updatable = true, length = 45)
-    public String getContry() {
-        return contry;
+    public String getCountry() {
+        return country;
     }
 
-    public void setContry(String contry) {
-        this.contry = contry;
+    public void setCountry(String country) {
+        this.country = country;
     }
 
     @Basic
@@ -93,10 +93,10 @@ public class AdressEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        AdressEntity that = (AdressEntity) o;
+        AddressEntity that = (AddressEntity) o;
 
         if (id != that.id) return false;
-        if (contry != null ? !contry.equals(that.contry) : that.contry != null) return false;
+        if (country != null ? !country.equals(that.country) : that.country != null) return false;
         if (city != null ? !city.equals(that.city) : that.city != null) return false;
         if (zipcode != null ? !zipcode.equals(that.zipcode) : that.zipcode != null) return false;
         if (street != null ? !street.equals(that.street) : that.street != null) return false;
@@ -109,7 +109,7 @@ public class AdressEntity {
     @Override
     public int hashCode() {
         int result = id;
-        result = 31 * result + (contry != null ? contry.hashCode() : 0);
+        result = 31 * result + (country != null ? country.hashCode() : 0);
         result = 31 * result + (city != null ? city.hashCode() : 0);
         result = 31 * result + (zipcode != null ? zipcode.hashCode() : 0);
         result = 31 * result + (street != null ? street.hashCode() : 0);
