@@ -1,21 +1,27 @@
 package tstore.model;
 
 import javax.persistence.*;
-import java.util.Collection;
+import java.util.Set;
 
 /**
- * Created by mipan on 25.09.2016.
+ * Created by mipan on 29.09.2016.
  */
 @Entity
-@Table(name = "category", schema = "", catalog = "tstore")
+@Table(name = "category")
 public class CategoryEntity {
-    private int id;
-    private int level;
-    private String name;
-    private Collection<ProductEntity> productsById;
-
     @Id
-    @Column(name = "id", nullable = false, insertable = true, updatable = true)
+    @Column(name = "id")
+    private int id;
+
+    @Column(name = "level")
+    private int level;
+
+    @Column(name = "category")
+    private String name;
+
+    @OneToMany(mappedBy = "category")
+    private Set<ProductEntity> products;
+
     public int getId() {
         return id;
     }
@@ -24,8 +30,6 @@ public class CategoryEntity {
         this.id = id;
     }
 
-    @Basic
-    @Column(name = "level", nullable = false, insertable = true, updatable = true)
     public int getLevel() {
         return level;
     }
@@ -34,8 +38,6 @@ public class CategoryEntity {
         this.level = level;
     }
 
-    @Basic
-    @Column(name = "name", nullable = false, insertable = true, updatable = true, length = 45)
     public String getName() {
         return name;
     }
@@ -44,34 +46,19 @@ public class CategoryEntity {
         this.name = name;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    public Set<ProductEntity> getProducts() {
+        return products;
+    }
 
-        CategoryEntity that = (CategoryEntity) o;
-
-        if (id != that.id) return false;
-        if (level != that.level) return false;
-        if (name != null ? !name.equals(that.name) : that.name != null) return false;
-
-        return true;
+    public void setProducts(Set<ProductEntity> products) {
+        this.products = products;
     }
 
     @Override
-    public int hashCode() {
-        int result = id;
-        result = 31 * result + level;
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        return result;
-    }
-
-    @OneToMany(mappedBy = "categoryByCategory")
-    public Collection<ProductEntity> getProductsById() {
-        return productsById;
-    }
-
-    public void setProductsById(Collection<ProductEntity> productsById) {
-        this.productsById = productsById;
+    public String toString() {
+        return "Category{" +
+                "level=" + level +
+                ", name='" + name + '\'' +
+                '}';
     }
 }

@@ -10,19 +10,17 @@
     <property name="connection.username">root</property>
     <property name="hibernate.hbm2ddl.auto">update</property>
     <property name="hibernate.c3p0.max_size">200</property>
+      <!--<property name="dialect">org.hibernate.dialect.MySQLInnoDBDialect</property>-->
+      <property name="dialect">org.hibernate.dialect.MySQLDialect</property>
 
     <mapping class="tstore.model.AddressEntity"/>
-      <mapping class="tstore.model.BasketEntity"/>
-      <mapping class="tstore.model.CategoryEntity"/>
-      <mapping class="tstore.model.DeliveryEntity"/>
-      <mapping class="tstore.model.OrderEntity"/>
-      <mapping class="tstore.model.OrderStatusEntity"/>
-      <mapping class="tstore.model.PaymentEntity"/>
-      <mapping class="tstore.model.PaymentStatusEntity"/>
-      <mapping class="tstore.model.PictureEntity"/>
-      <mapping class="tstore.model.ProductEntity"/>
-    <mapping class="tstore.model.RolesEntity"/>
-    <mapping class="tstore.model.UsersEntity"/>
+    <mapping class="tstore.model.CategoryEntity"/>
+    <mapping class="tstore.model.CountryEntity"/>
+    <mapping class="tstore.model.ImageEntity"/>
+    <mapping class="tstore.model.OrderEntity"/>
+    <mapping class="tstore.model.ProductEntity"/>
+    <mapping class="tstore.model.ProductListEntity"/>
+    <mapping class="tstore.model.UserEntity"/>
     <!-- DB schema will be updated if needed -->
     <!-- <property name="hbm2ddl.auto">update</property> -->
   </session-factory>

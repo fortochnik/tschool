@@ -1,7 +1,7 @@
 package tstore.dao.impl;
 
-import tstore.dao.CategoryDao;
-import tstore.model.CategoryEntity;
+import tstore.dao.ImageDao;
+import tstore.model.ImageEntity;
 
 import java.io.Serializable;
 import java.util.List;
@@ -9,8 +9,10 @@ import java.util.List;
 /**
  * Created by mipan on 28.09.2016.
  */
-public class CategoryDaoImpl implements CategoryDao{
-    public void delete(CategoryEntity entity) {
+public class ImageDaoImpl implements ImageDao {
+
+
+    public void delete(ImageEntity entity) {
 
     }
 
