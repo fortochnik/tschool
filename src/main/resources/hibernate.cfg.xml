@@ -10,6 +10,7 @@
     <property name="connection.username">root</property>
     <property name="hibernate.hbm2ddl.auto">update</property>
     <property name="hibernate.c3p0.max_size">200</property>
+    <property name="current_session_context_class">thread</property>
       <!--<property name="dialect">org.hibernate.dialect.MySQLInnoDBDialect</property>-->
       <property name="dialect">org.hibernate.dialect.MySQLDialect</property>
 

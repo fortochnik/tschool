@@ -11,9 +11,10 @@
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
+
     <servlet>
         <servlet-name>Main</servlet-name>
-        <servlet-class>tstore.controller.IndexServlet</servlet-class>
+        <servlet-class>tstore.servlets.IndexServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>Main</servlet-name>
@@ -22,22 +23,100 @@
 
     <servlet>
         <servlet-name>Product</servlet-name>
-        <servlet-class>tstore.controller.SimpleServlet</servlet-class>
+        <servlet-class>tstore.servlets.SimpleServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>Product</servlet-name>
         <url-pattern>/product/*</url-pattern>
     </servlet-mapping>
 
+    <!--Client's servlets-->
+
     <servlet>
-        <servlet-name>Bucket</servlet-name>
-        <servlet-class>tstore.controller.SimpleServlet</servlet-class>
+        <servlet-name>Basket</servlet-name>
+        <servlet-class>tstore.servlets.SimpleServlet</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>Bucket</servlet-name>
-        <url-pattern>/bucket</url-pattern>
-        <!--<url-pattern>/hello/*</url-pattern>-->
+        <servlet-name>Basket</servlet-name>
+        <url-pattern>/basket</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>UserProfile</servlet-name>
+        <servlet-class>tstore.servlets.SimpleServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UserProfile</servlet-name>
+        <url-pattern>/profile</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>OrderHistory</servlet-name>
+        <servlet-class>tstore.servlets.SimpleServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>OrderHistory</servlet-name>
+        <url-pattern>/orderhistory</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>Payment</servlet-name>
+        <servlet-class>tstore.servlets.SimpleServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Payment</servlet-name>
+        <url-pattern>/pay</url-pattern>
+    </servlet-mapping>
+
+    <!--Admin's servlets-->
+    <servlet>
+        <servlet-name>OrderList</servlet-name>
+        <servlet-class>tstore.servlets.SimpleServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>OrderList</servlet-name>
+        <url-pattern>/orders</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>AddProduct</servlet-name>
+        <servlet-class>tstore.servlets.SimpleServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AddProduct</servlet-name>
+        <url-pattern>/add</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>UpdateOrder</servlet-name>
+        <servlet-class>tstore.servlets.SimpleServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UpdateOrder</servlet-name>
+        <url-pattern>/updateorder</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>Statistic</servlet-name>
+        <servlet-class>tstore.servlets.SimpleServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Statistic</servlet-name>
+        <url-pattern>/statistic</url-pattern>
+    </servlet-mapping>
+
+    <!--login page-->
+
+    <servlet>
+        <servlet-name>Login</servlet-name>
+        <servlet-class>tstore.servlets.SimpleServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Login</servlet-name>
+        <url-pattern>/basket</url-pattern>
+
+    </servlet-mapping>
+
+    <!--Filter-->
 
 </web-app>
