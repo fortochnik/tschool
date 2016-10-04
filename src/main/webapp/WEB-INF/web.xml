@@ -18,7 +18,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>Main</servlet-name>
-        <url-pattern>/product</url-pattern>
+        <url-pattern>/test</url-pattern>
     </servlet-mapping>
 
     <servlet>
@@ -34,7 +34,7 @@
 
     <servlet>
         <servlet-name>Basket</servlet-name>
-        <servlet-class>tstore.servlets.SimpleServlet</servlet-class>
+        <servlet-class>tstore.servlets.BasketServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>Basket</servlet-name>
@@ -71,7 +71,7 @@
     <!--Admin's servlets-->
     <servlet>
         <servlet-name>OrderList</servlet-name>
-        <servlet-class>tstore.servlets.SimpleServlet</servlet-class>
+        <servlet-class>tstore.servlets.AdminOrderListServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>OrderList</servlet-name>
@@ -109,14 +109,23 @@
 
     <servlet>
         <servlet-name>Login</servlet-name>
-        <servlet-class>tstore.servlets.SimpleServlet</servlet-class>
+        <servlet-class>tstore.servlets.LoginServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>Login</servlet-name>
-        <url-pattern>/basket</url-pattern>
-
+        <url-pattern>/login</url-pattern>
     </servlet-mapping>
 
     <!--Filter-->
+    <filter>
+        <filter-name>UserIdentification</filter-name>
+        <filter-class>tstore.servlets.UserIdentificationFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>UserIdentification</filter-name>
+        <url-pattern>/*</url-pattern>
+        <!--<servlet-name>Product</servlet-name>-->
+    </filter-mapping>
+
 
 </web-app>
