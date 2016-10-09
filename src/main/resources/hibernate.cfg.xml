@@ -12,7 +12,12 @@
     <property name="hibernate.c3p0.max_size">200</property>
     <property name="current_session_context_class">thread</property>
       <!--<property name="dialect">org.hibernate.dialect.MySQLInnoDBDialect</property>-->
-      <property name="dialect">org.hibernate.dialect.MySQLDialect</property>
+    <property name="dialect">org.hibernate.dialect.MySQLDialect</property>
+
+    <property name="connection.autoReconnect">true</property>
+    <property name="connection.autoReconnectForPools">true</property>
+    <property name="connection.is-connection-validation-required">true</property>
+
 
     <mapping class="tstore.model.AddressEntity"/>
     <mapping class="tstore.model.CategoryEntity"/>

@@ -21,7 +21,7 @@ public class UserIdentificationFilter implements Filter {
         HttpServletResponse response = (HttpServletResponse) resp;
 
         HttpSession session = request.getSession(false);
-        if (session != null){
+        if (session == null){
             session = request.getSession(true);
             session.setAttribute(SessionAttributes.LOGIN, "false");
 //            session.setAttribute(SessionAttributes.LOGIN, "true");

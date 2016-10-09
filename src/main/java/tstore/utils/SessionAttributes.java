@@ -6,6 +6,7 @@ package tstore.utils;
 public class SessionAttributes {
     public final static String LOGIN = "LOGIN";
     public final static String ROLE = "ROLE";
+    public static final String USERID = "USERID";
 
     private SessionAttributes() {
     }

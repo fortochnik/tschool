@@ -1,5 +1,6 @@
 package tstore.servlets;
 
+import tstore.model.enums.Role;
 import tstore.utils.SessionAttributes;
 
 import javax.servlet.RequestDispatcher;
@@ -25,14 +26,17 @@ public class AdminOrderListServlet extends HttpServlet {
 
         }
 
-        String roleAttribute = (String) session.getAttribute(SessionAttributes.ROLE);
-        if (session.getAttribute(SessionAttributes.LOGIN).equals("true") && (roleAttribute.equals("employee") || roleAttribute.equals("admin"))) {
+//        String roleAttribute = (String) session.getAttribute(SessionAttributes.ROLE);
+        if (session.getAttribute(SessionAttributes.LOGIN).equals("true") && (SessionAttributes.ROLE.equals(Role.ADMIN)
+                || SessionAttributes.ROLE.equals(Role.EMPLOYEE)))
+        {
             RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/admin/listOrder.jsp");
             rd.forward(request, response);
         }
 
-        if (session.getAttribute(SessionAttributes.LOGIN).equals("true") && roleAttribute.equals("client")) {
-            response.sendRedirect("index.jsp");
+        if (session.getAttribute(SessionAttributes.LOGIN).equals("true") && SessionAttributes.ROLE.equals(Role.CLIENT))
+        {
+            response.sendRedirect("/");
         }
 
     }

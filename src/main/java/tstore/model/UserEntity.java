@@ -17,27 +17,27 @@ public class UserEntity {
     @Column(name = "id")
     private int id;
 
-    @Column(name = "name")
+    @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "sername")
+    @Column(name = "sername", nullable = false)
     private String sername;
 
     @Column(name = "birthday")
     @Temporal(TemporalType.DATE)
     private Date birthday;
 
-    @Column(name = "email", unique = true)
+    @Column(name = "email", unique = true, nullable = false)
     private String email;
 
-    @Column(name = "password")
+    @Column(name = "password", nullable = false)
     private String password;
 
-    @Column(name = "role")
+    @Column(name = "role", nullable = false)
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    @OneToMany(mappedBy = "client")
+    @OneToMany(mappedBy = "client", fetch = FetchType.LAZY)
     private Set<OrderEntity> orders;
 
     public UserEntity() {

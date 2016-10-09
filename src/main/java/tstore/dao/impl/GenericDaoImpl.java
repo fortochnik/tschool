@@ -48,6 +48,7 @@ public class GenericDaoImpl<T, Id extends Serializable> implements GenericDao<T,
     }
 
     public void beginTransaction() {
+        session = getCurrentSession();
         currentTransaction = session.beginTransaction();
     }
 
@@ -56,7 +57,7 @@ public class GenericDaoImpl<T, Id extends Serializable> implements GenericDao<T,
         session.close();
     }
 
-    private Session getCurrentSession(){
+    protected Session getCurrentSession(){
         session = HibernateSessionFactory.getSessionFactory().openSession();
         return session;
     }

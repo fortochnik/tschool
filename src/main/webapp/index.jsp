@@ -29,6 +29,7 @@
 
 <body>
 
+<%--
 <!-- Navigation -->
 <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
     <div class="container">
@@ -60,6 +61,12 @@
     </div>
     <!-- /.container -->
 </nav>
+--%>
+<div class="container">
+    <div class="page-header">
+        <jsp:include page="/WEB-INF/views/header.jsp"/>
+    </div>
+</div>
 
 <!-- Page Content -->
 <div class="container">
