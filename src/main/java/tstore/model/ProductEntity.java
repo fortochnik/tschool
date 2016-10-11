@@ -11,7 +11,8 @@ import java.util.Set;
 @Table(name = "product")
 public class ProductEntity {
     @Id
-    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", unique = true, nullable = false)
     private int id;
 
     @Column(name = "name")
@@ -131,5 +132,37 @@ public class ProductEntity {
 
     public void setImages(Set<ImageEntity> images) {
         this.images = images;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        ProductEntity that = (ProductEntity) o;
+
+        if (id != that.id) return false;
+        if (!name.equals(that.name)) return false;
+        return category.equals(that.category);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id;
+        result = 31 * result + name.hashCode();
+        result = 31 * result + category.hashCode();
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "ProductEntity{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", category=" + category +
+                ", price=" + price +
+                ", count=" + count +
+                '}';
     }
 }

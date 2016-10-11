@@ -23,7 +23,7 @@
 
     <servlet>
         <servlet-name>Product</servlet-name>
-        <servlet-class>tstore.servlets.SimpleServlet</servlet-class>
+        <servlet-class>tstore.servlets.ProductServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>Product</servlet-name>
@@ -43,7 +43,7 @@
 
     <servlet>
         <servlet-name>UserProfile</servlet-name>
-        <servlet-class>tstore.servlets.SimpleServlet</servlet-class>
+        <servlet-class>tstore.servlets.ProductServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>UserProfile</servlet-name>
@@ -52,7 +52,7 @@
 
     <servlet>
         <servlet-name>OrderHistory</servlet-name>
-        <servlet-class>tstore.servlets.SimpleServlet</servlet-class>
+        <servlet-class>tstore.servlets.ProductServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>OrderHistory</servlet-name>
@@ -61,7 +61,7 @@
 
     <servlet>
         <servlet-name>Payment</servlet-name>
-        <servlet-class>tstore.servlets.SimpleServlet</servlet-class>
+        <servlet-class>tstore.servlets.ProductServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>Payment</servlet-name>
@@ -80,7 +80,7 @@
 
     <servlet>
         <servlet-name>AddProduct</servlet-name>
-        <servlet-class>tstore.servlets.SimpleServlet</servlet-class>
+        <servlet-class>tstore.servlets.ProductServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>AddProduct</servlet-name>
@@ -88,8 +88,17 @@
     </servlet-mapping>
 
     <servlet>
+        <servlet-name>AddProductToBasket</servlet-name>
+        <servlet-class>tstore.servlets.AddToBasketServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AddProductToBasket</servlet-name>
+        <url-pattern>/addtobasket</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
         <servlet-name>UpdateOrder</servlet-name>
-        <servlet-class>tstore.servlets.SimpleServlet</servlet-class>
+        <servlet-class>tstore.servlets.ProductServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>UpdateOrder</servlet-name>
@@ -98,7 +107,7 @@
 
     <servlet>
         <servlet-name>Statistic</servlet-name>
-        <servlet-class>tstore.servlets.SimpleServlet</servlet-class>
+        <servlet-class>tstore.servlets.ProductServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>Statistic</servlet-name>

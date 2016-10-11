@@ -10,6 +10,7 @@ import java.util.Set;
 @Table(name = "category")
 public class CategoryEntity {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
 
@@ -52,6 +53,27 @@ public class CategoryEntity {
 
     public void setProducts(Set<ProductEntity> products) {
         this.products = products;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        CategoryEntity that = (CategoryEntity) o;
+
+        if (id != that.id) return false;
+        if (level != that.level) return false;
+        return name.equals(that.name);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id;
+        result = 31 * result + level;
+        result = 31 * result + name.hashCode();
+        return result;
     }
 
     @Override

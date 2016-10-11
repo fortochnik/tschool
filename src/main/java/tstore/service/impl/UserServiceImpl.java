@@ -25,6 +25,13 @@ public class UserServiceImpl implements UserService {
         return userEntity;
     }
 
+    public UserEntity getUserById(Integer id) {
+        userDao.beginTransaction();
+        UserEntity userEntity = userDao.findById(UserEntity.class, id);
+        userDao.closeTransaction();
+        return userEntity;
+    }
+
     public void createUser(UserEntity userEntity) {
         userDao.beginTransaction();
         userDao.persist(userEntity);

@@ -61,6 +61,16 @@ public class OrderEntity {
     public OrderEntity() {
     }
 
+    /**
+     * use tis constructor for create new basket with state {@link BasketOrderState#BASKET) and order status {@link OrderStatus#DRAFT)
+     */
+    public OrderEntity(UserEntity client) {
+        this.client = client;
+        this.state = BasketOrderState.BASKET;
+
+        this.orderStatus = OrderStatus.DRAFT;
+    }
+
     public OrderEntity(UserEntity client, AddressEntity address, PaymentType paymentType,
                        PaymentStatus paymentStatus, OrderStatus orderStatus, DeliveryType deliveryType,
                        Date orderDate, Date deliveryDate, BasketOrderState state) {
@@ -165,21 +175,33 @@ public class OrderEntity {
         this.state = state;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        OrderEntity that = (OrderEntity) o;
+
+        if (id != that.id) return false;
+        if (!client.equals(that.client)) return false;
+        return state == that.state;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id;
+        result = 31 * result + client.hashCode();
+        result = 31 * result + state.hashCode();
+        return result;
+    }
 
     @Override
     public String toString() {
         return "OrderEntity{" +
                 "id=" + id +
-                ", clientId=" + client +
-                ", addressId=" + address +
-                ", paymentType=" + paymentType +
-                ", productList Size=" + productList.size() +
-                ", paymentStatus='" + paymentStatus + '\'' +
-                ", orderStatus='" + orderStatus + '\'' +
-                ", deliveryType='" + deliveryType + '\'' +
-                ", orderDate=" + orderDate +
-                ", deliveryDate=" + deliveryDate +
-                ", state='" + state + '\'' +
+                ", state=" + state +
+                ", orderStatus=" + orderStatus +
                 '}';
     }
 }

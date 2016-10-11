@@ -18,6 +18,7 @@
 
     <!-- Custom CSS -->
     <link href="${pageContext.request.contextPath}/resources/css/shop-homepage.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/resources/css/custom/spaces.css" rel="stylesheet">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -77,6 +78,9 @@
         <div class="col-md-3">
             <p class="lead">Shop Name</p>
             <div class="list-group">
+                <%--<c:forEach var="category" items="categories">
+                    <a href="<c:out value="category.id"/>" class="list-group-item">Category 1</a>
+                </c:forEach>--%>
                 <a href="#" class="list-group-item">Category 1</a>
                 <a href="#" class="list-group-item">Category 2</a>
                 <a href="#" class="list-group-item">Category 3</a>
@@ -245,17 +249,13 @@
                                <h4 class="pull-right">$<c:out value="${product.price}"/></h4>
                                <h4><a href="#"><c:out value="${product.name}"/></a>
                                </h4>
-                               <p>See more snippets like this online store item at <a target="_blank" href="http://www.bootsnipp.com">Bootsnipp - http://bootsnipp.com</a>.</p>
+                               <p><c:out value="${product.parameters}"/></p>
                            </div>
-                           <div class="ratings">
-                               <p class="pull-right">15 reviews</p>
-                               <p>
-                                   <span class="glyphicon glyphicon-star"></span>
-                                   <span class="glyphicon glyphicon-star"></span>
-                                   <span class="glyphicon glyphicon-star"></span>
-                                   <span class="glyphicon glyphicon-star"></span>
-                                   <span class="glyphicon glyphicon-star"></span>
-                               </p>
+                           <div class="button-block">
+                               <button id="product-<c:out value="${product.id}"/>" type="button"
+                                       class=" button btn btn-warning btn-sm " onclick="addToBasket(this.id)">
+                                   Buy
+                               </button>
                            </div>
                        </div>
                    </div>
@@ -290,6 +290,28 @@
 
 <!-- Bootstrap Core JavaScript -->
 <script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
+
+<script   src="http://code.jquery.com/jquery-3.1.1.min.js"
+          integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="   crossorigin="anonymous"></script>
+
+<script type="text/javascript">
+    $(function() {
+
+
+    })
+
+    addToBasket = function(id){
+        var productId = id;
+        $.ajax({
+            method: "POST",
+            url: "/addtobasket",
+            data: {
+                product: id
+            }
+        })
+    }
+
+</script>
 
 </body>
 

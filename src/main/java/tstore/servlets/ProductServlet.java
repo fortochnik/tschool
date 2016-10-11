@@ -17,7 +17,7 @@ import java.io.PrintWriter;
         description = "A sample annotated servlet",
         urlPatterns = {"/"}
 )*/
-public class SimpleServlet extends HttpServlet {
+public class ProductServlet extends HttpServlet {
 
     public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
