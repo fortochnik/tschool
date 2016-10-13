@@ -62,6 +62,7 @@ public class AddToBasketServlet extends HttpServlet {
 
     private void addProductToBasket(HttpServletRequest request) {
         int productId = getProductId(request);
+        int numberOfProduct = getNumberOfProduct(request);
         ProductEntity productToBasket = productService.getProductById(productId);
         UserEntity client = userService.getUserById(userId);
         OrderEntity basket = orderService.getBasketByUserId(userId);
@@ -75,15 +76,19 @@ public class AddToBasketServlet extends HttpServlet {
 
         if (productInBasketById == null){
             //new product in basket
-            productInBasketById = new ProductListEntity(productToBasket, NUMBER_OF_JUST_ADDED, basket);
+            productInBasketById = new ProductListEntity(productToBasket, numberOfProduct, basket);
             productInBasketService.save(productInBasketById);
         }
         else
         {
-            int count = productInBasketById.getCount();
-            productInBasketById.setCount(++count);
+            int number = productInBasketById.getCount() + numberOfProduct;
+            productInBasketById.setCount(number);
             productInBasketService.update(productInBasketById);
         }
+    }
+
+    private int getNumberOfProduct(HttpServletRequest request) {
+        return Integer.valueOf(request.getParameter("number"));
     }
 
     private int getProductId(HttpServletRequest request) {

@@ -26,7 +26,12 @@ public class UserIdentificationFilter implements Filter {
             session.setAttribute(SessionAttributes.LOGIN, "false");
 //            session.setAttribute(SessionAttributes.LOGIN, "true");
 //            session.setAttribute(SessionAttributes.ROLE, "admin");
-
+//        todo delete temporary part
+        /*temporary*/
+//            HttpSession session = request.getSession(true);
+            session.setAttribute(SessionAttributes.LOGIN, "true");
+            session.setAttribute(SessionAttributes.USERID, "2");
+        /*temporary*/
         }
         chain.doFilter(request, response);
     }

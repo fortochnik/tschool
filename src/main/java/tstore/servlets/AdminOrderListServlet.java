@@ -33,8 +33,7 @@ public class AdminOrderListServlet extends HttpServlet {
             RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/admin/listOrder.jsp");
             rd.forward(request, response);
         }
-
-        if (session.getAttribute(SessionAttributes.LOGIN).equals("true") && SessionAttributes.ROLE.equals(Role.CLIENT))
+        else
         {
             response.sendRedirect("/");
         }

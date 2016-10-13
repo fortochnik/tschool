@@ -31,7 +31,10 @@ public class UserServiceImpl implements UserService {
         userDao.closeTransaction();
         return userEntity;
     }
-
+    /*public UserEntity getUserById(String id) {
+        return getUserById(Integer.valueOf(id));
+    }
+*/
     public void createUser(UserEntity userEntity) {
         userDao.beginTransaction();
         userDao.persist(userEntity);

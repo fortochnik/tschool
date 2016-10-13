@@ -1,0 +1,18 @@
+.inline {
+    display: inline-block;
+    width: 50px;
+    margin-left: 10px;
+}
+
+.container-fluid {
+    padding-left:50px;
+}
+
+
+#selectbasic, #country {
+    width: 174px;
+}
+
+.control-group {clear:both; text-align:right; line-height:25px;}
+label {float:left; padding-right:10px;}
+form.left {float:left}

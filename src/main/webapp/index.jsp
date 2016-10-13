@@ -1,5 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page contentType="text/html" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -77,6 +77,7 @@
 
         <div class="col-md-3">
             <p class="lead">Shop Name</p>
+
             <div class="list-group">
                 <%--<c:forEach var="category" items="categories">
                     <a href="<c:out value="category.id"/>" class="list-group-item">Category 1</a>
@@ -242,24 +243,33 @@
             </div>--%>
             <div class="row">
                 <c:forEach items="${products}" var="product">
-                   <div class="col-sm-4 col-lg-4 col-md-4">
-                       <div class="thumbnail">
-                           <img src="http://placehold.it/320x150" alt="">
-                           <div class="caption">
-                               <h4 class="pull-right">$<c:out value="${product.price}"/></h4>
-                               <h4><a href="#"><c:out value="${product.name}"/></a>
-                               </h4>
-                               <p><c:out value="${product.parameters}"/></p>
-                           </div>
-                           <div class="button-block">
-                               <button id="product-<c:out value="${product.id}"/>" type="button"
-                                       class=" button btn btn-warning btn-sm " onclick="addToBasket(this.id)">
-                                   Buy
-                               </button>
-                           </div>
-                       </div>
-                   </div>
-               </c:forEach>
+                    <div class="col-sm-4 col-lg-4 col-md-4">
+                        <div class="thumbnail">
+                            <img src="http://placehold.it/320x150" alt="">
+
+                            <div class="caption">
+                                <h4 class="pull-right">$<c:out value="${product.price}"/></h4>
+                                <h4><a href="#"><c:out value="${product.name}"/></a>
+                                </h4>
+
+                                <p><c:out value="${product.parameters}"/></p>
+                            </div>
+                            <div class="button-block">
+                                <button id="product-<c:out value="${product.id}"/>" type="button"
+                                        class=" button btn btn-warning btn-sm " onclick="addToBasket(this.id)"
+                                        style="color: black">
+                                    Add to basket
+                                </button>
+                                <select class="selectpicker" id="number-product-"${product.id}" >
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                </select>
+
+                            </div>
+                        </div>
+                    </div>
+                </c:forEach>
             </div>
 
         </div>
@@ -291,22 +301,24 @@
 <!-- Bootstrap Core JavaScript -->
 <script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
 
-<script   src="http://code.jquery.com/jquery-3.1.1.min.js"
-          integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="   crossorigin="anonymous"></script>
+<script src="http://code.jquery.com/jquery-3.1.1.min.js"
+        integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
 
 <script type="text/javascript">
-    $(function() {
+    $(function () {
 
 
     })
 
-    addToBasket = function(id){
+    addToBasket = function (id) {
+        var number = $("#" + id).siblings(".selectpicker").val();
         var productId = id;
         $.ajax({
             method: "POST",
             url: "/addtobasket",
             data: {
-                product: id
+                product: id,
+                number: number
             }
         })
     }

@@ -8,6 +8,7 @@ import java.io.IOException;
 /**
  * Created by mipan on 03.10.2016.
  */
+@Deprecated
 public class LoginRoleFilter implements Filter {
     public void init(FilterConfig filterConfig) throws ServletException {
 
