@@ -40,7 +40,7 @@
     <label class="control-label">Email</label>
 
     <div class="controls  inline">
-        <input id="email" name="last-name" type="text" placeholder="email"
+        <input id="email" name="email" type="text" placeholder="email"
                class="input-xlarge" value="<c:out value="${userdata.email}"/>">
 
         <p class="help-block"></p>
@@ -51,22 +51,13 @@
 <div class="control-group">
     <label class="control-label">Date of Birth</label>
 
-    <div class='col-sm-6 controls inline'>
-        <div class="form-group">
-            <div class='input-group date' id='datetimepicker'>
-                <input type='text' class="form-control" value="<c:out value="${userdata.birthday}"/>"/>
-                                          <span class="input-group-addon">
-                                              <span class="glyphicon glyphicon-calendar"></span>
-                                          </span>
-            </div>
-        </div>
+    <div class="controls  inline">
+        <input type="text" <%--class="form-control"--%> id="datetimepicker2" value="<c:out value="${userdata.birthday}"/>" >
+        <p class="help-block"></p>
+
     </div>
-    <!-- <div class="controls inline">
-      <div data-date-format="dd-mm-yyyy" data-date="12-02-2012" id="dp3" class="input-append date">
-        <input type="text" readonly="" value="12-02-2012" size="16" class="span2">
-        <span class="add-on"><i class="icon-calendar"></i></span>
-      </div>
-                        </div> -->
+
+
 </div>
 <p class="help-block"></p>
 

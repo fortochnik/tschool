@@ -39,6 +39,10 @@ public class UserProfileServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+
+//        request.getAttribute();
+
         request.setAttribute("successInfoMessage", "error Info test");
         doGet(request,response);
         /*RequestDispatcher rd = request.getRequestDispatcher("/profile");

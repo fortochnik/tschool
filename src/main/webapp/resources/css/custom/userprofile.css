@@ -16,3 +16,7 @@
 .control-group {clear:both; text-align:right; line-height:25px;}
 label {float:left; padding-right:10px;}
 form.left {float:left}
+
+form .input-error {
+    border-color: #19b9e7;
+}

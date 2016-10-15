@@ -12,7 +12,7 @@
   <label class="control-label">Old Password</label>
 
   <div class="controls inline">
-    <input type="password" class="input-xlarge">
+    <input id="old-pass" type="password" class="input-xlarge">
 
     <p class="help-block"></p>
   </div>
@@ -21,16 +21,16 @@
   <label class="control-label">New Password</label>
 
   <div class="controls inline">
-    <input type="password" class="input-xlarge">
+    <input id="new-pass" type="password" class="input-xlarge">
 
     <p class="help-block"></p>
   </div>
 </div>
-<div class="control-group">
+<div class="control-group div-new-password">
   <label class="control-label">Repeat New Password</label>
 
   <div class="controls inline">
-    <input type="password" class="input-xlarge">
+    <input  id="new-pass2" type="password" class="input-xlarge">
 
     <p class="help-block"></p>
   </div>
