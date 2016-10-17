@@ -13,4 +13,8 @@ public interface UserService {
 //    UserEntity getUserById(String id);
     void createUser(UserEntity userEntity);
 
+    void update(UserEntity userEntity);
+
+
+    UserEntity getFullUserById(Integer id);
 }

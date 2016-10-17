@@ -48,6 +48,7 @@ public class AddToBasketServlet extends HttpServlet {
             //if user login - create or update basket
             if (session.getAttribute(SessionAttributes.LOGIN).equals("true")){
                 addProductToBasket(request);
+                response.setStatus(HttpServletResponse.SC_OK);
             }
             else
             {

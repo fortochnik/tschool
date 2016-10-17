@@ -6,7 +6,6 @@ import tstore.dao.OrderDao;
 import tstore.model.OrderEntity;
 import tstore.model.UserEntity;
 import tstore.model.enums.BasketOrderState;
-import tstore.utils.SessionAttributes;
 
 import javax.persistence.NoResultException;
 import java.util.List;
@@ -34,5 +33,22 @@ public class OrderDaoImpl extends GenericDaoImpl<OrderEntity, Integer> implement
         }
 
         return basket;
+    }
+
+    public List<OrderEntity> findOrdersByUser(UserEntity userEntity) {
+
+        String hql = "from OrderEntity where client = :user order by id desc";
+        Query query = getCurrentSession().createQuery(hql).setParameter("user", userEntity);
+        List list = query.list();
+        return list;
+
+//        Hibernate.initialize(userEntity.getOrders());
+//        Set<OrderEntity> orders = userEntity.getOrders();
+//        for (OrderEntity order : orders) {
+//            Hibernate.initialize(order.getProductList());
+//        }
+//
+//        return orders;
+
     }
 }

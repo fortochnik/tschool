@@ -1,11 +1,28 @@
 /**
- * Created by mipan on 15.10.2016.
+ * Created by mipan on 16.10.2016.
  */
 
 jQuery(document).ready(function () {
 
     /*
-     Login form validation
+    update basket on the ui
+    * */
+    $('.remove-product').on('click', function (e) {
+        $(this).parentsUntil("div").hide('slow', function(){$(this).remove();})
+    });
+
+    $('.refresh-product').on('click', function (e) {
+
+        price = $(this).parent().children(".product-price").text().replace(/[A-Za-z$-]/g, "");
+
+        number = $(this).parent().children(".selectnumber" ).val();
+        $(this).parent().children(".totul-product-price").replaceWith("<span class='totul-product-price'>" +price*number +"</span>");
+
+    });
+
+
+    /*
+     form validation
      */
     $('.userinfo-form input[type="text"], .password-form input[type="password"]').on('focus', function () {
         $(this).removeClass('input-error');

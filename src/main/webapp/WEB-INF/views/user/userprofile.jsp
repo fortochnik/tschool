@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <%--
   Created by IntelliJ IDEA.
   User: mipan
@@ -17,7 +18,8 @@
     <link href="${pageContext.request.contextPath}/resources/css/custom/ordershistory.css" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/resources/css/login/form-elements.css" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/resources/css/custom/userprofile.css" rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/resources/css/custom/bootstrap-datetimepicker.min.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/resources/css/custom/bootstrap-datetimepicker.min.css"
+          rel="stylesheet">
 </head>
 <body>
 <div class="container">
@@ -29,7 +31,7 @@
 <div class="well">
     <ul class="nav nav-tabs">
         <li class="active"><a href="#home" data-toggle="tab">Profile</a></li>
-        <li><a href="#profile" data-toggle="tab">Password</a></li>
+        <%--<li><a href="#profile" data-toggle="tab">Password</a></li>--%>
         <li><a href="#orders" data-toggle="tab">Order's history</a></li>
     </ul>
 
@@ -40,45 +42,30 @@
                     <form class="form-horizontal left userinfo-form" id="tab" method="post" action="profile">
                         <fieldset>
                             <jsp:include page="/WEB-INF/views/user/userprofile/info.jsp"/>
-                            <div>
-                                <button class="btn btn-primary">Update</button>
-                            </div>
-                            <c:if test="${not empty requestScope.get('errorInfoMessage')}">
-                                <p class="help-block"></p>
+                            <%-- <div>
+                                 <button class="btn btn-primary">Update</button>
+                             </div>--%>
 
-                                <div class="form-group top15">
-                                    <div class="alert alert-danger fade in ">
-                                        <a href="#" class="close" data-dismiss="alert">&times;</a>
-                                        <strong>Error!</strong> <c:out value="${requestScope.get('errorInfoMessage')}"/>
-                                    </div>
-                                </div>
-                            </c:if>
-                            <c:if test="${not empty requestScope.get('successInfoMessage')}">
-                                <p class="help-block"></p>
-
-                                <div class="form-group top15">
-                                    <div class="alert alert-success fade in">
-                                        <a href="#" class="close" data-dismiss="alert">&times;</a>
-                                        <strong>Success!</strong> <c:out
-                                            value="${requestScope.get('successInfoMessage')}"/>
-                                    </div>
-                                </div>
-                            </c:if>
+                        </fieldset>
+                        <p class="help-block"></p>
+                        <fieldset class="password-block">
+                            <jsp:include page="/WEB-INF/views/user/userprofile/changepassword.jsp"/>
                         </fieldset>
                     </form>
+
                 </div>
             </div>
         </div>
 
-        <div class="tab-pane fade" id="profile">
-            <div class="container">
-                <div class="row">
-                    <form id="tab2" class="left password-form" method="post" action="profile">
-                        <jsp:include page="/WEB-INF/views/user/userprofile/changepassword.jsp"/>
-                    </form>
-                </div>
-            </div>
-        </div>
+        <%-- <div class="tab-pane fade" id="profile">
+             <div class="container">
+                 <div class="row">
+                     <form id="tab2" class="left password-form" method="post" action="profile">
+                         <jsp:include page="/WEB-INF/views/user/userprofile/changepassword.jsp"/>
+                     </form>
+                 </div>
+             </div>
+         </div>--%>
 
         <div class="tab-pane fade" id="orders">
             <div class="container">
@@ -91,8 +78,40 @@
                 </div>
             </div>
         </div>
+        <c:if test="${not empty requestScope.get('errorInfoMessage')}">
+            <p class="help-block"></p>
+
+            <div class="form-group top15">
+                <div class="alert alert-danger fade in ">
+                    <a href="#" class="close" data-dismiss="alert">&times;</a>
+                    <strong>Error!</strong> <c:out value="${requestScope.get('errorInfoMessage')}"/>
+                </div>
+            </div>
+        </c:if>
+        <c:if test="${not empty requestScope.get('successInfoMessage')}">
+            <p class="help-block"></p>
+
+            <div class="form-group top15">
+                <div class="alert alert-success fade in">
+                    <a href="#" class="close" data-dismiss="alert">&times;</a>
+                    <strong>Success!</strong> <c:out
+                        value="${requestScope.get('successInfoMessage')}"/>
+                </div>
+            </div>
+        </c:if>
+        <c:if test="${not empty requestScope.get('passwordErrorMessage')}">
+            <p class="help-block"></p>
+
+            <div class="form-group top15">
+                <div class="alert alert-danger fade in ">
+                    <a href="#" class="close" data-dismiss="alert">&times;</a>
+                    <strong>Error!</strong> <c:out
+                        value="${requestScope.get('passwordErrorMessage')}"/>
+                </div>
+            </div>
+        </c:if>
         <div>
-            <button class="btn btn-primary" <%--onclick="submitForms()"--%>>Update</button>
+            <button class="btn btn-primary update" <%--onclick="submitForms()"--%>>Update</button>
         </div>
     </div>
 </div>
@@ -113,8 +132,13 @@
 <script src="${pageContext.request.contextPath}/resources/js/custom/bootstrap-datetimepicker.min.js"></script>
 <script type="text/javascript">
     $(function () {
-        $('#datetimepicker1').datetimepicker({language: 'ru',minuteStepping:10,defaultDate:"09.01.2015",daysOfWeekDisabled:[0,6]});
-        $('#datetimepicker2').datetimepicker({language: 'ru', pickTime:false, format: 'YYYY-MM-DD'});
+        $('#datetimepicker1').datetimepicker({
+            language: 'ru',
+            minuteStepping: 10,
+            defaultDate: "09.01.2015",
+            daysOfWeekDisabled: [0, 6]
+        });
+        $('#birthday').datetimepicker({language: 'ru', pickTime: false, format: 'YYYY-MM-DD'});
     });
 </script>
 

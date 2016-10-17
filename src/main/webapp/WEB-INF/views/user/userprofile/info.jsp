@@ -9,7 +9,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!-- Address form -->
 
-<h2>User Profile</h2>
+<h3>User Profile</h3>
 
 <!-- first-name input-->
 <div class="control-group ">
@@ -51,15 +51,16 @@
 <div class="control-group">
     <label class="control-label">Date of Birth</label>
 
-    <div class="controls  inline">
-        <input type="text" <%--class="form-control"--%> id="datetimepicker2" value="<c:out value="${userdata.birthday}"/>" >
-        <p class="help-block"></p>
+        <div class="controls  inline">
+            <input type="text" <%--class="form-control"--%> id="birthday" name="birthday" class="date-empty" value="<c:out value="${userdata.birthday}"/>" >
+            <p class="help-block"></p>
 
-    </div>
+        </div>
 
 
 </div>
 <p class="help-block"></p>
+<%--
 
 
 <!-- city input-->
@@ -117,3 +118,4 @@
         </select>
     </div>
 </div>
+--%>

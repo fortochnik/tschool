@@ -102,6 +102,14 @@
         <servlet-name>AddProductToBasket</servlet-name>
         <url-pattern>/addtobasket</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>UpdateBasket</servlet-name>
+        <servlet-class>tstore.servlets.UpdateBasket</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UpdateBasket</servlet-name>
+        <url-pattern>/updatebasket</url-pattern>
+    </servlet-mapping>
 
     <servlet>
         <servlet-name>UpdateOrder</servlet-name>

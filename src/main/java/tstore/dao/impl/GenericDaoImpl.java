@@ -7,6 +7,7 @@ import org.hibernate.query.Query;
 import tstore.dao.GenericDao;
 import tstore.utils.HibernateSessionFactory;
 
+import javax.transaction.Transactional;
 import java.io.Serializable;
 import java.util.List;
 
@@ -36,7 +37,7 @@ public class GenericDaoImpl<T, Id extends Serializable> implements GenericDao<T,
             delete(entity);
         }
     }
-
+    @Transactional
     public T findById(Class<T> clazz, Id id) {
         return (T)getCurrentSession().get(clazz.getName(), id);
     }
