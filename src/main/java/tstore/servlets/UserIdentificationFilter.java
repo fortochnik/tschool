@@ -30,7 +30,7 @@ public class UserIdentificationFilter implements Filter {
         /*temporary*/
 //            HttpSession session = request.getSession(true);
             session.setAttribute(SessionAttributes.LOGIN, "true");
-            session.setAttribute(SessionAttributes.USERID, "2");
+            session.setAttribute(SessionAttributes.USERID, "1");
         /*temporary*/
         }
         chain.doFilter(request, response);

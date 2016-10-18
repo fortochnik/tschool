@@ -20,3 +20,7 @@ form.left {float:left}
 form .input-error {
     border-color: #19b9e7;
 }
+
+input.count {
+    width:70px;!important;
+}

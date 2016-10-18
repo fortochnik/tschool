@@ -14,4 +14,6 @@ public interface OrderService {
     void createOrder(OrderEntity orderEntity);
 
     List<OrderEntity> getOrdersByUser(UserEntity userEntity);
+
+    void update(OrderEntity basketByUserId);
 }

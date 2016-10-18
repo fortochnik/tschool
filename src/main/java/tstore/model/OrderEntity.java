@@ -54,7 +54,7 @@ public class OrderEntity {
     @Enumerated(EnumType.STRING)
     private BasketOrderState state;
 
-    @OneToMany(mappedBy = "consignment")
+    @OneToMany(mappedBy = "consignment", fetch = FetchType.EAGER, cascade=CascadeType.ALL)
     private Set<ProductListEntity> productList;
 
 

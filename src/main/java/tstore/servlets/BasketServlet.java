@@ -1,7 +1,9 @@
 package tstore.servlets;
 
 import tstore.model.OrderEntity;
+import tstore.model.UserEntity;
 import tstore.service.impl.OrderServiceImpl;
+import tstore.service.impl.UserServiceImpl;
 import tstore.utils.SessionAttributes;
 
 import javax.servlet.RequestDispatcher;
@@ -23,6 +25,11 @@ public class BasketServlet extends HttpServlet {
             if (session.getAttribute(SessionAttributes.LOGIN).equals("true")){
                 String userId = (String) session.getAttribute(SessionAttributes.USERID);
                 OrderEntity basket = new OrderServiceImpl().getBasketByUserId(Integer.valueOf(userId));
+                if (basket == null){
+                    UserEntity userById = new UserServiceImpl().getUserById(Integer.valueOf(userId));
+                    basket = new OrderEntity(userById);
+                    new OrderServiceImpl().createOrder(basket);
+                }
                 request.setAttribute("basket", basket);
                 RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/user/basket.jsp");
                 rd.forward(request, response);

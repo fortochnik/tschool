@@ -20,9 +20,8 @@ import java.util.Set;
  */
 public class JsonParser {
 
-    public static Map<Integer, Integer> getBasket(String json, HttpServletRequest request){
+    public static Map<Integer, Integer> getBasket(String json, HttpServletRequest request) throws ParseException {
         Map<Integer, Integer> mapJson =null;
-        try {
 
             JSONParser parser = new JSONParser();
             JSONArray list = new JSONArray();
@@ -36,17 +35,10 @@ public class JsonParser {
             mapJson= new HashMap<Integer, Integer>();
             while (i.hasNext()) {
                 JSONObject slide = (JSONObject) i.next();
-                Integer product = (Integer)slide.get("product");
-                Integer count = (Integer)slide.get("count");
+                Integer product = Integer.valueOf((String)slide.get("product"));
+                Integer count = Integer.valueOf((String)slide.get("count"));
                 mapJson.put(product, count);
             }
-
-
-
-
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
 
 
         return mapJson;

@@ -6,19 +6,20 @@ jQuery(document).ready(function () {
 
     /*
     update basket on the ui
-    * */
+    */
     $('.remove-product').on('click', function (e) {
         $(this).parentsUntil("div").hide('slow', function(){$(this).remove();})
     });
 
-    $('.refresh-product').on('click', function (e) {
+    /*$('.refresh-product').on('click', function (e) {
 
         price = $(this).parent().children(".product-price").text().replace(/[A-Za-z$-]/g, "");
 
         number = $(this).parent().children(".selectnumber" ).val();
         $(this).parent().children(".totul-product-price").replaceWith("<span class='totul-product-price'>" +price*number +"</span>");
 
-    });
+    });*/
+
 
 
     /*

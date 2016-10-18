@@ -18,11 +18,11 @@ public class OrderServiceImpl implements OrderService {
 
     public OrderEntity getBasketByUserId(Integer userId) {
         orderDao.beginTransaction();
-//        List<OrderEntity> orderEntities = orderDao.findAll(OrderEntity.class);
         OrderEntity basket = orderDao.findBasketByUserId(userId);
-        Hibernate.initialize(basket.getProductList());
+        if (basket!=null) {
+            Hibernate.initialize(basket.getProductList());
+        }
         orderDao.closeTransaction();
-//        return orderEntities.get(0);
         return basket;
     }
 
@@ -50,6 +50,12 @@ public class OrderServiceImpl implements OrderService {
         orderDao.closeTransaction();
 
         return orderEntities;
+    }
+
+    public void update(OrderEntity orderEntity) {
+        orderDao.beginTransaction();
+        orderDao.update(orderEntity);
+        orderDao.closeTransaction();
     }
 
 }

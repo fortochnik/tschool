@@ -19,8 +19,8 @@
     <link href="${pageContext.request.contextPath}/resources/css/custom/ordershistory.css" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/resources/css/login/form-elements.css" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/resources/css/custom/userprofile.css" rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/resources/css/custom/bootstrap-datetimepicker.min.css"
-          rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/resources/css/custom/spaces.css" rel="stylesheet">
+
 </head>
 <body>
 <div class="container">
@@ -28,7 +28,7 @@
         <jsp:include page="/WEB-INF/views/header.jsp"/>
     </div>
 </div>
-<c:if test="${empty basket}">
+<c:if test="${empty basket.productList}">
     <div id="catlist1" class="catlist">
 
         <dl>
@@ -40,7 +40,7 @@
 
     </div>
 </c:if>
-<c:if test="${not empty basket}">
+<c:if test="${not empty basket.productList}">
 
 <div class="panel panel-default">
     <!-- Заголовок 3 панели -->
@@ -69,17 +69,14 @@
                                          alt="Product image" width="93"
                                          height="62"/>
                                     <strong>
-                                        <span class="product-price">
-                                            $<c:out value="${productInList.product.price}"/>
-                                        </span>
+                                        $<span class="product-price"><c:out
+                                            value="${productInList.product.price}"/></span>
                                         *
-                                        <select id="selectnumber-XXX" class="selectnumber" name="number-select-XX">
-                                            <option value="1">1</option>
-                                            <option value="2">2</option>
-                                            <option value="3">3</option>
-                                        </select>
-                                        ($<span class="totul-product-price"><c:out value="${totalProduct}"/></span>)
-                                        <span class="glyphicon glyphicon-refresh icn-space refresh-product"/>
+                                        <input type="text" class="count" value="<c:out value="${productInList.count}"/>"
+                                               maxlength="3"
+                                               onkeyup="this.value=this.value.replace(/[^0-9.]/g,'')"/>
+
+                                        ($<span class="total-product-price"><c:out value="${totalProduct}"/></span>)
                                         <span class="glyphicon glyphicon-remove icn-space remove-product"/>
                                     </strong>
                                     <a href="/product/<c:out value="${productInList.product.id}"/>">
@@ -92,25 +89,30 @@
                             </dl>
                         </c:forEach>
                     </div>
-                    <span class="pull-right">Total price: $<c:out value="${total}"/></span>
+                    <span class="pull-right total-price">Total price: $<c:out value="${total}"/></span>
 
-                    <div class="button-block">
-                        <button id="product-<c:out value="${product.id}"/>" type="button"
-                                class=" button btn btn-warning btn-sm  pull-right" style="color: black">
-                            Buy
+
+                </div>
+                <div class="button-block">
+                    <button id="product-save" type="button"
+                            class="pull-right button btn btn-warning btn-sm click-update"
+                            style="color: black">
+                        Save
+                    </button>
+                    <form method="post" action="pay">
+                        <button id="product-buy" type="submit"
+                                class=" button btn btn-warning btn-sm  button-block click-update" style="color: black">
+                            $Buy
                         </button>
-                    </div>
+                    </form>
+
                 </div>
             </div>
         </div>
     </div>
     </c:if>
 
-    <button id="product-<c:out value="${product.id}"/>" type="button"
-            class=" button btn btn-warning btn-sm " onclick="updateBasket()"
-            style="color: black">
-        Buy!
-    </button>
+
     <!-- jQuery -->
     <script src="${pageContext.request.contextPath}/resources/js/jquery.js"></script>
 
@@ -139,24 +141,40 @@
         });
     </script>
     <script type="text/javascript">
-        $(function () {
+        /* $(function () {
 
 
-        })
+         })*/
 
-        updateBasket = function () {
+        //        updateBasket = function () {
+        $('.click-update').on('click', function (e) {
+            var total = 0;
+            $('dt').each(function (index, item) {
+                var number = $(item).find(".count").val();
+                var price = $(item).find(".product-price").text();
+                if (number == "0") {
+                    $(item).find('.remove-product').click();
+                }
+                else {
+                    $(item).find(".total-product-price").replaceWith("<span class='total-product-price'>" + price * number + "</span>");
+                }
+                total = total + price * number;
+            });
+            $(".total-price").replaceWith("<span class=\"pull-right total-price\">Total price: $" + total + "</span>");
             /*var order = [
-                {pv: 1000, bv: 2000, mp: 3000, cp: 5000},
-                {pv: 2500, bv: 3500, mp: 2000, cp: 4444}
-            ];*/
-            var order ={basket:[]};
-            $('dt').each(function(index,item){
-                var count = $(item).find(".selectnumber").val();
+             {pv: 1000, bv: 2000, mp: 3000, cp: 5000},
+             {pv: 2500, bv: 3500, mp: 2000, cp: 4444}
+             ];*/
+            var order = {basket: []};
+            $('dt').each(function (index, item) {
+                var count = $(item).find(".count").val();
+
                 var product = $(item).attr('id').replace(/[A-Za-z$-]/g, "");
                 order.basket.push(
                         {product: product, count: count}
                 );
             });
+
             $.ajax({
                 type: 'POST', // it's easier to read GET request parameters
                 url: '/updatebasket',
@@ -165,16 +183,13 @@
                     loadProds: 1,
                     order: JSON.stringify(order) // look here!
                 },
-                success: function(data) {
-
-                },
-                error: function(data) {
-                    alert('fail');
+                success: function (data) {
+                    alert(data);
                 }
             });
 
 
-        }
+        });
 
     </script>
 </body>

@@ -1,5 +1,4 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
 <%--
   Created by IntelliJ IDEA.
   User: mipan
@@ -21,6 +20,7 @@
     <link href="${pageContext.request.contextPath}/resources/css/custom/bootstrap-datetimepicker.min.css"
           rel="stylesheet">
 </head>
+
 <body>
 <div class="container">
     <div class="page-header">

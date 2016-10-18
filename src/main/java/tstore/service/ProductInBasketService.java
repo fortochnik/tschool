@@ -14,4 +14,6 @@ public interface ProductInBasketService {
     void save(ProductListEntity productInBasketById);
 
     void update(ProductListEntity productInBasketById);
+
+    void delete(ProductListEntity productListEntity);
 }

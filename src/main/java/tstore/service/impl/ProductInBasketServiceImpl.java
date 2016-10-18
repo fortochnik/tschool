@@ -32,6 +32,12 @@ public class ProductInBasketServiceImpl implements ProductInBasketService {
         productListDao.closeTransaction();
     }
 
+    public void delete(ProductListEntity productListEntity) {
+        productListDao.beginTransaction();
+        productListDao.delete(productListEntity);
+        productListDao.closeTransaction();
+    }
+
 
 /*    public ProductListEntity getProductInBasketById(Integer idProduct, OrderEntity orderEntity) {
         productListDao.beginTransaction();

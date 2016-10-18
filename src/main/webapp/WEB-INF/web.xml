@@ -68,11 +68,20 @@
 
     <servlet>
         <servlet-name>Payment</servlet-name>
-        <servlet-class>tstore.servlets.ProductServlet</servlet-class>
+        <servlet-class>tstore.servlets.BuyServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>Payment</servlet-name>
         <url-pattern>/pay</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>PayFinish</servlet-name>
+        <servlet-class>tstore.servlets.BuyFinishServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>PayFinish</servlet-name>
+        <url-pattern>/payfinish</url-pattern>
     </servlet-mapping>
 
     <!--Admin's servlets-->
