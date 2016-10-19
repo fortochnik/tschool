@@ -4,10 +4,15 @@ import org.hibernate.Hibernate;
 import tstore.dao.OrderDao;
 import tstore.dao.impl.OrderDaoImpl;
 import tstore.model.OrderEntity;
+import tstore.model.ProductEntity;
+import tstore.model.ProductListEntity;
 import tstore.model.UserEntity;
 import tstore.service.OrderService;
+import tstore.service.ProductInBasketService;
+import tstore.service.ProductService;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by mipan on 11.10.2016.
@@ -56,6 +61,26 @@ public class OrderServiceImpl implements OrderService {
         orderDao.beginTransaction();
         orderDao.update(orderEntity);
         orderDao.closeTransaction();
+    }
+
+    public void updateBasketToOrder(OrderEntity basket) {
+        orderDao.beginTransaction();
+        ProductService productService = new ProductServiceImpl();
+        ProductInBasketService productInBasketService = new ProductInBasketServiceImpl();
+        Set<ProductListEntity> productList = basket.getProductList();
+        for (ProductListEntity productListEntity : productList) {
+            ProductEntity product = productListEntity.getProduct();
+            productListEntity.setPrice(product.getPrice());
+            int count = product.getCount() - productListEntity.getCount();
+            product.setCount(count);
+            productService.update(product);
+            productInBasketService.update(productListEntity);
+        }
+        orderDao.update(basket);
+
+
+        orderDao.closeTransaction();
+
     }
 
 }

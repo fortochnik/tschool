@@ -16,4 +16,6 @@ public interface OrderService {
     List<OrderEntity> getOrdersByUser(UserEntity userEntity);
 
     void update(OrderEntity basketByUserId);
+
+    void updateBasketToOrder(OrderEntity basket);
 }

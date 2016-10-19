@@ -29,6 +29,7 @@
 </div>
 
 <div class="inner-bg">
+
     <div class="container">
 
         <%-- <div class="row">
@@ -60,7 +61,7 @@
                     </div>
                     <div class="form-bottom">
 
-                        <form role="form" action="payfinish" method="post" class="pay-form">
+                        <form id="form-buy" role="form" action="payfinish" method="post" class="pay-form userinfo-form">
                             <div class="form-group">
                                 <label class="sr-only" for="form-country">Address</label>
                                 <select class="selectpicker show-tick" name="form-country" id="form-country"
@@ -76,22 +77,27 @@
                             <div class="form-group">
                                 <label class="sr-only" for="form-city">City</label>
                                 <input type="text" name="form-city" placeholder="City..."
-                                       class="form-city form-control" id="form-city"/>
+                                       class="form-city form-control " id="form-city"/>
                             </div>
                             <div class="form-group">
                                 <label class="sr-only" for="form-street">street</label>
                                 <input type="text" name="form-street" placeholder="street..."
-                                       class="form-street form-control" id="form-street"/>
+                                       class="form-street form-control " id="form-street"/>
                             </div>
                             <div class="form-group">
                                 <label class="sr-only" for="form-build">Building</label>
                                 <input type="text" name="form-build" placeholder="build..."
-                                       class="form-build form-control" id="form-build"/>
+                                       class="form-build form-control " id="form-build"/>
                             </div>
                             <div class="form-group">
                                 <label class="sr-only" for="form-apartment">Apartment</label>
                                 <input type="text" name="form-apartment" placeholder="apartment..."
-                                       class="form-apartment form-control" id="form-apartment"/>
+                                       class="form-apartment form-control " id="form-apartment"/>
+                            </div>
+                            <div class="form-group">
+                                <label class="sr-only" for="form-zipcode">Apartment</label>
+                                <input type="text" name="form-zipcode" placeholder="zipcode..."
+                                       class="form-zipcode form-control " id="form-zipcode"/>
                             </div>
 
 
@@ -100,10 +106,10 @@
                                     <div class="btn-group" data-toggle="buttons">
                                         <label class="control-label">payment type:</label>
                                         <label class="btn btn-default active">
-                                            <input type="radio" value="cash" name="payment" checked="">Cash
+                                            <input type="radio" value="CASH" name="payment" checked="">Cash
                                         </label>
                                         <label class="btn btn-default ">
-                                            <input type="radio" value="creditcard" name="payment">Credit card
+                                            <input type="radio" value="CREDIT_CARD" name="payment">Credit card
                                         </label>
                                     </div>
                                 </div>
@@ -116,21 +122,22 @@
                                     <div class="btn-group" data-toggle="buttons">
                                         <label class="control-label">delivery tipe</label>
                                         <label class="btn btn-default active">
-                                            <input type="radio" value="courier" name="delivery" checked="">Courier
+                                            <input type="radio" value="COURIER" name="delivery" checked="">Courier
                                         </label>
                                         <label class="btn btn-default ">
-                                            <input type="radio" value="post" name="delivery">Post
+                                            <input type="radio" value="POST" name="delivery">Post
                                         </label>
                                         <label class="btn btn-default ">
-                                            <input type="radio" value="pickup" name="delivery">Pick up
+                                            <input type="radio" value="PICKUP" name="delivery">Pick up
                                         </label>
                                     </div>
                                 </div>
                             </div>
-
+                        </form>
                             <p class="help-block"></p>
 
-                            <button type="submit" name="form-submit" value="finish" class="btn">Finish!</button>
+                            <button name="form-submit" value="finish" class="btn buy">Finish!</button>
+
                             <p class="help-block"></p>
                             <c:if test="${not empty requestScope.get('errorSignInMessage')}">
                                 <div class="form-group top15">
@@ -141,14 +148,14 @@
                                     </div>
                                 </div>
                             </c:if>
-                        </form>
+
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
+</div>
 
 
 <!-- jQuery -->
@@ -158,8 +165,7 @@
 <script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
 <%--<script src="resources/js/login/scripts.js"></script>--%>
 <!-- Custom -->
-<script src="${pageContext.request.contextPath}/resources/js/custom/profile.js"></script>
-
+<script src="${pageContext.request.contextPath}/resources/js/custom/payment.js"></script>
 
 
 </body>

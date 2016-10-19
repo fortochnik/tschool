@@ -37,6 +37,21 @@
             </dd>
         </dl>
 
+        <c:if test="${not empty deficiency}">
+            <c:forEach items="${deficiency}" var="product">
+                <p class="help-block"></p>
+
+                <div class="form-group top15">
+                    <div class="alert alert-warning fade in ">
+                        <a href="#" class="close" data-dismiss="alert">&times;</a>
+                        <c:out value="${product}"/>
+                    </div>
+                </div>
+
+            </c:forEach>
+
+        </c:if>
+
 
     </div>
 </c:if>
@@ -91,6 +106,22 @@
                     </div>
                     <span class="pull-right total-price">Total price: $<c:out value="${total}"/></span>
 
+                    <c:if test="${not empty deficiency}">
+                        <c:forEach items="${deficiency}" var="product">
+                            <p class="help-block"></p>
+
+                            <div class="form-group top15">
+                                <div class="alert alert-warning fade in ">
+                                    <a href="#" class="close" data-dismiss="alert">&times;</a>
+                                    <c:out value="${product}"/>
+                                </div>
+                            </div>
+
+                        </c:forEach>
+
+                    </c:if>
+
+
 
                 </div>
                 <div class="button-block">
@@ -99,12 +130,13 @@
                             style="color: black">
                         Save
                     </button>
-                    <form method="post" action="pay">
+
                         <button id="product-buy" type="submit"
-                                class=" button btn btn-warning btn-sm  button-block click-update" style="color: black">
+                                class="button btn btn-warning btn-sm  button-block click-buy" style="color: black">
                             $Buy
                         </button>
-                    </form>
+                        <form id="form-submit" method="post" action="pay">
+                        </form>
 
                 </div>
             </div>
@@ -147,13 +179,24 @@
          })*/
 
         //        updateBasket = function () {
+
+        $('.click-buy').on('click', function (e) {
+            $('.click-update').click();
+            document.getElementById("form-submit").submit();
+
+        });
+
+
         $('.click-update').on('click', function (e) {
             var total = 0;
             $('dt').each(function (index, item) {
                 var number = $(item).find(".count").val();
                 var price = $(item).find(".product-price").text();
-                if (number == "0") {
+                if (number == "0" || number == "") {
+                    $(item).find(".count").val("0");
                     $(item).find('.remove-product').click();
+                    number = 0;
+
                 }
                 else {
                     $(item).find(".total-product-price").replaceWith("<span class='total-product-price'>" + price * number + "</span>");
@@ -179,12 +222,12 @@
                 type: 'POST', // it's easier to read GET request parameters
                 url: '/updatebasket',
                 dataType: 'JSON',
+                async: false,
                 data: {
                     loadProds: 1,
                     order: JSON.stringify(order) // look here!
                 },
                 success: function (data) {
-                    alert(data);
                 }
             });
 

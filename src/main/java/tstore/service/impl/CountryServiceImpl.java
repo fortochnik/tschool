@@ -13,6 +13,17 @@ import java.util.List;
 public class CountryServiceImpl implements CountryService {
     CountryDao countryDao = new CountryDaoImpl();
     public List<CountryEntity> getAll() {
-        return countryDao.findAll(CountryEntity.class);
+        countryDao.beginTransaction();
+        List<CountryEntity> countryEntities = countryDao.findAll(CountryEntity.class);
+        countryDao.closeTransaction();
+        return countryEntities;
     }
+
+    public CountryEntity getByName(String country) {
+        countryDao.beginTransaction();
+        CountryEntity countryEntity = countryDao.findByName(country);
+        countryDao.closeTransaction();
+        return countryEntity;
+    }
+
 }

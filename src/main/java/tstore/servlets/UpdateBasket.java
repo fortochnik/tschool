@@ -33,13 +33,16 @@ public class UpdateBasket extends HttpServlet {
                 basketJson = JsonParser.getBasket(jsonOrder, request);
 
 
-                Integer userId = Integer.valueOf((String) request.getSession().getAttribute(SessionAttributes.USERID));
+                Integer userId = Integer.parseInt(request.getSession().getAttribute(SessionAttributes.USERID).toString());
 
                 OrderEntity basketByUserId = updateBasket(new OrderServiceImpl().getBasketByUserId(userId), basketJson, isLogin);
 
 //            new OrderServiceImpl().update(basketByUserId);
                 RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/views/user/payment.jsp");
                 rd.forward(request, response);
+            }
+            else {
+                //todo update cookies
             }
 
 

@@ -10,4 +10,6 @@ import java.util.List;
  */
 public interface CountryService {
     List<CountryEntity> getAll();
+
+    CountryEntity getByName(String country);
 }

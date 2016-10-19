@@ -19,18 +19,18 @@ public class UserIdentificationFilter implements Filter {
     public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) req;
         HttpServletResponse response = (HttpServletResponse) resp;
-
+        if (request.getCharacterEncoding() == null) {
+            request.setCharacterEncoding("UTF-8");
+        }
         HttpSession session = request.getSession(false);
         if (session == null){
             session = request.getSession(true);
             session.setAttribute(SessionAttributes.LOGIN, "false");
-//            session.setAttribute(SessionAttributes.LOGIN, "true");
-//            session.setAttribute(SessionAttributes.ROLE, "admin");
+
 //        todo delete temporary part
         /*temporary*/
-//            HttpSession session = request.getSession(true);
-            session.setAttribute(SessionAttributes.LOGIN, "true");
-            session.setAttribute(SessionAttributes.USERID, "1");
+//            session.setAttribute(SessionAttributes.LOGIN, "true");
+//            session.setAttribute(SessionAttributes.USERID, "1");
         /*temporary*/
         }
         chain.doFilter(request, response);

@@ -84,6 +84,15 @@
         <url-pattern>/payfinish</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>Success</servlet-name>
+        <servlet-class>tstore.servlets.SuccessServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Success</servlet-name>
+        <url-pattern>/success</url-pattern>
+    </servlet-mapping>
+
     <!--Admin's servlets-->
     <servlet>
         <servlet-name>OrderList</servlet-name>
@@ -160,5 +169,10 @@
         <!--<servlet-name>Product</servlet-name>-->
     </filter-mapping>
 
-
+    <jsp-config>
+        <jsp-property-group>
+            <url-pattern>*.jsp</url-pattern>
+            <page-encoding>UTF-8</page-encoding>
+        </jsp-property-group>
+    </jsp-config>
 </web-app>

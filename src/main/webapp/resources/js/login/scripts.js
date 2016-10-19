@@ -10,7 +10,7 @@ jQuery(document).ready(function() {
     
     $('.login-form').on('submit', function(e) {
     	
-    	$(this).find('input[type="text"]').each(function(){
+    	$(this).find('input[type="text"], input[type="password"]').each(function(){
     		if( $(this).val() == "" ) {
     			e.preventDefault();
     			$(this).addClass('input-error');
@@ -25,13 +25,13 @@ jQuery(document).ready(function() {
     /*
         Registration form validation
     */
-    $('.registration-form input[type="text"], .registration-form textarea').on('focus', function() {
+    $('.registration-form input[type="text"], input[type="password"], .registration-form textarea').on('focus', function() {
     	$(this).removeClass('input-error');
     });
     
     $('.registration-form').on('submit', function(e) {
     	
-    	$(this).find('input[type="text"], textarea').each(function(){
+    	$(this).find('input[type="text"], input[type="password"], textarea').each(function(){
     		if( $(this).val() == "" ) {
     			e.preventDefault();
     			$(this).addClass('input-error');

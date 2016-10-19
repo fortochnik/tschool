@@ -53,7 +53,6 @@ public class UserEntity {
         if (id != that.id) return false;
         if (!name.equals(that.name)) return false;
         if (!sername.equals(that.sername)) return false;
-        if (!birthday.equals(that.birthday)) return false;
         if (!email.equals(that.email)) return false;
         if (password != null ? !password.equals(that.password) : that.password != null) return false;
         return role == that.role;
@@ -65,7 +64,7 @@ public class UserEntity {
         int result = id;
         result = 31 * result + name.hashCode();
         result = 31 * result + sername.hashCode();
-        result = 31 * result + birthday.hashCode();
+
         result = 31 * result + email.hashCode();
         result = 31 * result + (password != null ? password.hashCode() : 0);
         result = 31 * result + role.hashCode();

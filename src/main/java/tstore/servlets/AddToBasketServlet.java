@@ -38,15 +38,12 @@ public class AddToBasketServlet extends HttpServlet {
         try
         {
             HttpSession session = request.getSession(false);
-//            todo delete temporary part
-            /*temporary*/
-            session.setAttribute(SessionAttributes.LOGIN, "true");
-            session.setAttribute(SessionAttributes.USERID, "1");
-            /*temporary*/
-            userId = Integer.valueOf((String) session.getAttribute(SessionAttributes.USERID));
+//
+//            userId = Integer.valueOf(id);
 
             //if user login - create or update basket
             if (session.getAttribute(SessionAttributes.LOGIN).equals("true")){
+                userId = Integer.parseInt(session.getAttribute(SessionAttributes.USERID).toString());
                 addProductToBasket(request);
                 response.setStatus(HttpServletResponse.SC_OK);
             }

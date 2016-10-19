@@ -21,7 +21,7 @@ public class OrderEntity {
     @JoinColumn(referencedColumnName = "id")
     private UserEntity client;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
     @JoinColumn(referencedColumnName = "id")
     private AddressEntity address;
 

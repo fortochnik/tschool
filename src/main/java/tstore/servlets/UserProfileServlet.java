@@ -29,17 +29,21 @@ public class UserProfileServlet extends HttpServlet {
 
         HttpSession session = request.getSession(false);
 
-        try {
-            UserEntity userEntity = getUserEntityById(session);
-            List<OrderEntity> ordersByUser = new OrderServiceImpl().getOrdersByUser(userEntity);
-            request.setAttribute("userdata", userEntity);
-            request.setAttribute("orders", ordersByUser);
+        if (session != null) {
+
+                UserEntity userEntity = getUserEntityById(session);
+                List<OrderEntity> ordersByUser = new OrderServiceImpl().getOrdersByUser(userEntity);
+                request.setAttribute("userdata", userEntity);
+                request.setAttribute("orders", ordersByUser);
 
 //            todo add orders to attributes
-            RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/views/user/userprofile.jsp");
-            rd.forward(request, response);
-        } catch (NullPointerException e) {
+                RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/views/user/userprofile.jsp");
+                rd.forward(request, response);
 
+        }
+        else
+        {
+            response.sendRedirect("/");
         }
     }
 
@@ -59,7 +63,7 @@ public class UserProfileServlet extends HttpServlet {
 
             UserEntity userEntity = getUserEntityById(session);
             UserEntity user = new UserServiceImpl().getUser(email);
-            if(!user.equals(userEntity)){
+            if(user!=null && !user.equals(userEntity)){
                 request.setAttribute("userdata", userEntity);
                 request.setAttribute("errorInfoMessage", MessageFormat.format("The email {0} already use", email));
                 RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/views/user/userprofile.jsp");
@@ -80,9 +84,6 @@ public class UserProfileServlet extends HttpServlet {
                 if (!oldPassword.equals(userEntity.getPassword())) {
                     request.setAttribute("passwordErrorMessage", "The current password is wrong!");
                     readyForSave = false;
-/*                    doGet(request,response);
-                    return;*/
-
                 } else {
                     if (!newPassword.equals(newPasswordRepeat) || newPassword.length() < 6) {
                         request.setAttribute("passwordErrorMessage", "The new passwords mast be identical " +
@@ -103,9 +104,11 @@ public class UserProfileServlet extends HttpServlet {
                 userEntity.setName(name);
                 userEntity.setSername(sername);
                 userEntity.setEmail(email);
-                SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-                Date date = formatter.parse(birthday);
-                userEntity.setBirthday(date);
+                if (birthday!="") {
+                    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+                    Date date = formatter.parse(birthday);
+                    userEntity.setBirthday(date);
+                }
                 new UserServiceImpl().update(userEntity);
                 request.setAttribute("successInfoMessage", "Saved.");
                 userEntity = getUserEntityById(session);
@@ -122,11 +125,11 @@ public class UserProfileServlet extends HttpServlet {
         } catch (Exception e) {
 //            todo logging and redirect to error page
         }
-
     }
 
     private UserEntity getUserEntityById(HttpSession session) {
-        Integer id = Integer.valueOf((String) session.getAttribute(SessionAttributes.USERID));
-        return new UserServiceImpl().getUserById(id);
+        int userId = Integer.parseInt(session.getAttribute(SessionAttributes.USERID).toString());
+//        Integer userId = Integer.valueOf(id);
+        return new UserServiceImpl().getUserById(userId);
     }
 }

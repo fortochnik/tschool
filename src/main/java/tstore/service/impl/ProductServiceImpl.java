@@ -31,4 +31,10 @@ public class ProductServiceImpl implements ProductService{
     public List<ProductEntity> getProductsByCategory() {
         return null;
     }
+
+    public void update(ProductEntity product) {
+        productDao.beginTransaction();
+        productDao.update(product);
+        productDao.closeTransaction();
+    }
 }

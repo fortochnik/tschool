@@ -12,4 +12,5 @@ public interface ProductService {
     List<ProductEntity> getAllProducts();
     List<ProductEntity> getProductsByCategory();
 
+    void update(ProductEntity product);
 }

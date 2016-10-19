@@ -7,12 +7,12 @@ jQuery(document).ready(function () {
     /*
      Login form validation
      */
-    $('.userinfo-form input[type="text"]').on('focus', function () {
+    $('.userinfo-form input[type="text"], .password-form input[type="password"]').on('focus', function () {
         $(this).removeClass('input-error');
     });
 
     //$('.login-form').on('submit', function(e) {
-    $('button.update').on('click', function (e) {
+    $('button.buy').on('click', function (e) {
 
         var bool = true;
 
@@ -58,7 +58,7 @@ jQuery(document).ready(function () {
         }
 
         if (bool) {
-            document.getElementById("tab").submit();
+            document.getElementById("form-buy").submit();
             //document.getElementById("tab2").submit();
         }
     });

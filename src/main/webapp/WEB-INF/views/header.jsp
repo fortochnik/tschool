@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: mipan
@@ -31,16 +32,26 @@
                 <li>
                     <a href="/">Catalog</a>
                 </li>
-                <li>
-                    <a href="/profile">Profile</a>
-                </li>
+                <c:if test="${LOGIN eq 'true'}">
+                    <li>
+                        <a href="/profile">Profile</a>
+                    </li>
+                </c:if>
                 <li>
                     <a href="/basket">Basket</a>
                 </li>
             </ul>
-            <ul class="nav navbar-nav navbar-right">
-                <li><a href="/login">Login/Sign in</a></li>
-            </ul>
+            <c:if test="${LOGIN eq 'false'}">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="/login">Login/Sign in</a></li>
+                </ul>
+            </c:if>
+
+            <c:if test="${LOGIN eq 'true'}">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="/logout">Logout</a></li>
+                </ul>
+            </c:if>
         </div>
         <!-- /.navbar-collapse -->
     </div>

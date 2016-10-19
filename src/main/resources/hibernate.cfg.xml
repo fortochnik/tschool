@@ -1,33 +1,34 @@
 <?xml version='1.0' encoding='utf-8'?>
 <!DOCTYPE hibernate-configuration PUBLIC
-    "-//Hibernate/Hibernate Configuration DTD//EN"
-    "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+        "-//Hibernate/Hibernate Configuration DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
-  <session-factory>
-    <property name="connection.url">jdbc:mysql://localhost:3306/tstore</property>
-    <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
-    <property name="connection.password">root</property>
-    <property name="connection.username">root</property>
-    <property name="hibernate.hbm2ddl.auto">update</property>
-    <property name="hibernate.c3p0.max_size">200</property>
-    <property name="current_session_context_class">thread</property>
-      <!--<property name="dialect">org.hibernate.dialect.MySQLInnoDBDialect</property>-->
-    <property name="dialect">org.hibernate.dialect.MySQLDialect</property>
+    <session-factory>
+        <property name="connection.url">jdbc:mysql://localhost:3306/tstore</property>
 
-    <property name="connection.autoReconnect">true</property>
-    <property name="connection.autoReconnectForPools">true</property>
-    <property name="connection.is-connection-validation-required">true</property>
+        <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
+        <property name="connection.password">root</property>
+        <property name="connection.username">root</property>
+        <property name="hibernate.hbm2ddl.auto">update</property>
+        <property name="hibernate.c3p0.max_size">200</property>
+        <property name="current_session_context_class">thread</property>
+        <!--<property name="dialect">org.hibernate.dialect.MySQLInnoDBDialect</property>-->
+        <property name="dialect">org.hibernate.dialect.MySQLDialect</property>
+
+        <property name="connection.autoReconnect">true</property>
+        <property name="connection.autoReconnectForPools">true</property>
+        <property name="connection.is-connection-validation-required">true</property>
 
 
-    <mapping class="tstore.model.AddressEntity"/>
-    <mapping class="tstore.model.CategoryEntity"/>
-    <mapping class="tstore.model.CountryEntity"/>
-    <mapping class="tstore.model.ImageEntity"/>
-    <mapping class="tstore.model.OrderEntity"/>
-    <mapping class="tstore.model.ProductEntity"/>
-    <mapping class="tstore.model.ProductListEntity"/>
-    <mapping class="tstore.model.UserEntity"/>
-    <!-- DB schema will be updated if needed -->
-    <!-- <property name="hbm2ddl.auto">update</property> -->
-  </session-factory>
+        <mapping class="tstore.model.AddressEntity"/>
+        <mapping class="tstore.model.CategoryEntity"/>
+        <mapping class="tstore.model.CountryEntity"/>
+        <mapping class="tstore.model.ImageEntity"/>
+        <mapping class="tstore.model.OrderEntity"/>
+        <mapping class="tstore.model.ProductEntity"/>
+        <mapping class="tstore.model.ProductListEntity"/>
+        <mapping class="tstore.model.UserEntity"/>
+        <!-- DB schema will be updated if needed -->
+        <!-- <property name="hbm2ddl.auto">update</property> -->
+    </session-factory>
 </hibernate-configuration>
