@@ -158,6 +158,28 @@
         <url-pattern>/login</url-pattern>
     </servlet-mapping>
 
+    <!--logout-->
+
+    <servlet>
+        <servlet-name>Logout</servlet-name>
+        <servlet-class>tstore.servlets.LogoutServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Logout</servlet-name>
+        <url-pattern>/logout</url-pattern>
+    </servlet-mapping>
+
+    <!--Errors-->
+    <error-page>
+        <error-code>404</error-code>
+        <location>/404.jsp</location>
+    </error-page>
+
+    <error-page>
+        <exception-type>java.lang.Exception</exception-type>
+        <location>/Error.jsp</location>
+    </error-page>
+
     <!--Filter-->
     <filter>
         <filter-name>UserIdentification</filter-name>

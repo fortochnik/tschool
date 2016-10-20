@@ -7,6 +7,7 @@ public class SessionAttributes {
     public final static String LOGIN = "LOGIN";
     public final static String ROLE = "ROLE";
     public static final String USERID = "USERID";
+    public static final String BASKET = "BASKET";
 
     private SessionAttributes() {
     }

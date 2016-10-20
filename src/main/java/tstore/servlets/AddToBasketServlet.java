@@ -15,10 +15,7 @@ import tstore.service.impl.UserServiceImpl;
 import tstore.utils.SessionAttributes;
 
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.*;
 import java.io.IOException;
 
 /**
@@ -35,28 +32,67 @@ public class AddToBasketServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        try
-        {
-            HttpSession session = request.getSession(false);
+        HttpSession session = request.getSession(false);
+        try {
 //
 //            userId = Integer.valueOf(id);
 
             //if user login - create or update basket
-            if (session.getAttribute(SessionAttributes.LOGIN).equals("true")){
+            if (session.getAttribute(SessionAttributes.LOGIN).equals("true")) {
                 userId = Integer.parseInt(session.getAttribute(SessionAttributes.USERID).toString());
                 addProductToBasket(request);
                 response.setStatus(HttpServletResponse.SC_OK);
             }
             else
             {
-//                todo work with cookies
+                Cookie[] cookies = request.getCookies();
+
+                boolean newProductInBasket = true;
+                String productId = String.valueOf(getProductId(request));
+                for (Cookie cookie : cookies) {
+                    if (cookie.getName().equals(productId)) {
+                        int number = Integer.parseInt(cookie.getValue()) + Integer.parseInt(request.getParameter("number"));
+                        cookie.setValue(String.valueOf(number));
+                        cookie.setMaxAge(60 * 60);
+                        response.addCookie(cookie);
+                        newProductInBasket = false;
+                        break;
+                    }
+                }
+                if (newProductInBasket) {
+                    Cookie cookie = new Cookie(productId, request.getParameter("number"));
+                    cookie.setMaxAge(60 * 60);
+                    response.addCookie(cookie);
+                }
             }
-        }
-        catch (NullPointerException e){
+        } catch (NullPointerException e) {
 //            todo NullPointerExc
         }
+        int basketCount = Integer.parseInt(session.getAttribute(SessionAttributes.BASKET).toString()) + Integer.parseInt(request.getParameter("number"));
+        session.setAttribute(SessionAttributes.BASKET, basketCount);
 
     }
+
+  /*  private HttpServletResponse addProductToCookies(HttpServletRequest request, HttpServletResponse response) {
+        Cookie[] cookies = request.getCookies();
+
+        boolean newProductInBasket = true;
+        for (Cookie cookie : cookies) {
+            if (cookie.getName().equals(request.getParameter("product"))) {
+                int number = Integer.parseInt(cookie.getValue()) + Integer.parseInt(request.getParameter("number"));
+                cookie.setValue(String.valueOf(number));
+                newProductInBasket = false;
+                break;
+            }
+        }
+        if (newProductInBasket) {
+            Cookie cookie = new Cookie(request.getParameter("product"), request.getParameter("number"));
+            response.addCookie(cookie);
+        }
+
+        return response;
+    }*/
+
 
     private void addProductToBasket(HttpServletRequest request) {
         int productId = getProductId(request);
@@ -72,13 +108,11 @@ public class AddToBasketServlet extends HttpServlet {
         //add product to product list of basket
         ProductListEntity productInBasketById = productInBasketService.getProductInBasketById(productToBasket, basket);
 
-        if (productInBasketById == null){
+        if (productInBasketById == null) {
             //new product in basket
             productInBasketById = new ProductListEntity(productToBasket, numberOfProduct, basket);
             productInBasketService.save(productInBasketById);
-        }
-        else
-        {
+        } else {
             int number = productInBasketById.getCount() + numberOfProduct;
             productInBasketById.setCount(number);
             productInBasketService.update(productInBasketById);
@@ -86,11 +120,11 @@ public class AddToBasketServlet extends HttpServlet {
     }
 
     private int getNumberOfProduct(HttpServletRequest request) {
-        return Integer.valueOf(request.getParameter("number"));
+        return Integer.parseInt(request.getParameter("number"));
     }
 
     private int getProductId(HttpServletRequest request) {
         String product = request.getParameter("product");
-        return Integer.valueOf(product.split("-")[1]);        
+        return Integer.parseInt(product.split("-")[1]);
     }
 }

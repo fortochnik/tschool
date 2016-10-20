@@ -129,7 +129,7 @@
 
                             <div class="caption">
                                 <h4 class="pull-right">$<c:out value="${product.price}"/></h4>
-                                <h4><a href="#"><c:out value="${product.name}"/></a>
+                                <h4><a href="/product/<c:out value="${productInList.product.id}"/>"><c:out value="${product.name}"/></a>
                                 </h4>
 
                                 <p><c:out value="${product.parameters}"/></p>

@@ -10,6 +10,7 @@ import tstore.utils.SessionAttributes;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -23,29 +24,48 @@ import java.util.Map;
 public class UpdateBasket extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String jsonOrder = request.getParameter("order");
+        int totalBasket;
         try {
-
-
-        /*if logged - pars and update order in db*/
             boolean isLogin = Boolean.valueOf((String) request.getSession().getAttribute(SessionAttributes.LOGIN));
+            Map<Integer, Integer> basketJson = null;
+            basketJson = JsonParser.getBasket(jsonOrder, request);
+            totalBasket = getTotalBasket(basketJson);
+        /*if logged - pars and update order in db*/
             if (isLogin) {
-                Map<Integer, Integer> basketJson = null;
-                basketJson = JsonParser.getBasket(jsonOrder, request);
-
-
                 Integer userId = Integer.parseInt(request.getSession().getAttribute(SessionAttributes.USERID).toString());
 
-                OrderEntity basketByUserId = updateBasket(new OrderServiceImpl().getBasketByUserId(userId), basketJson, isLogin);
+                OrderEntity basketByUserId = updateBasket(new OrderServiceImpl().getBasketByUserId(userId), basketJson);
 
-//            new OrderServiceImpl().update(basketByUserId);
-                RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/views/user/payment.jsp");
-                rd.forward(request, response);
+
             }
             else {
-                //todo update cookies
+                Cookie[] cookies = request.getCookies();
+
+                for (Cookie cookie : cookies) {
+                    try{
+                        int productId = Integer.parseInt(cookie.getName());
+
+
+                        if (basketJson.get(productId)==null){
+                            cookie.setMaxAge(0);
+                        }
+                        else {
+                            cookie.setValue(String.valueOf(basketJson.get(productId)));
+                        }
+
+                        response.addCookie(cookie);
+                    }
+                    catch (NumberFormatException e)
+                    {
+//                        todo excaption
+                    }
+
+                }
             }
-
-
+//todo update bascet count label
+            request.getSession().setAttribute(SessionAttributes.BASKET, totalBasket);
+            RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/views/user/payment.jsp");
+            rd.forward(request, response);
 
         }
         catch (ParseException e) {
@@ -56,7 +76,15 @@ public class UpdateBasket extends HttpServlet {
         }
     }
 
-    private OrderEntity updateBasket(OrderEntity basketByUserId, Map<Integer, Integer> basketJson, boolean isLogin) {
+    private int getTotalBasket(Map<Integer, Integer> basketJson) {
+        int totalBasket = 0;
+        for (Integer integer : basketJson.values()) {
+            totalBasket+=integer;
+        }
+        return totalBasket;
+    }
+
+    private OrderEntity updateBasket(OrderEntity basketByUserId, Map<Integer, Integer> basketJson) {
         Iterator<ProductListEntity> iter = basketByUserId.getProductList().iterator();
         while (iter.hasNext()) {
             ProductListEntity productListEntity = iter.next();
@@ -64,14 +92,14 @@ public class UpdateBasket extends HttpServlet {
             if (basketJson.containsKey(productIdInOldBasket) && basketJson.get(productIdInOldBasket) != 0) {
                 Integer count = basketJson.get(productIdInOldBasket);
                 productListEntity.setCount(count);
-                if (isLogin) {
+
                     new ProductInBasketServiceImpl().update(productListEntity);
-                }
+
             } else {
                 iter.remove();
-                if (isLogin) {
+
                     new ProductInBasketServiceImpl().delete(productListEntity);
-                }
+
             }
         }
         return basketByUserId;

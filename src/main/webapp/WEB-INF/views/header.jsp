@@ -38,7 +38,12 @@
                     </li>
                 </c:if>
                 <li>
-                    <a href="/basket">Basket</a>
+                    <a href="/basket">Basket
+                        <c:if test="${BASKET ne '0'}">
+                            (<c:out value="${BASKET}"/>)
+                        </c:if>
+                    </a>
+
                 </li>
             </ul>
             <c:if test="${LOGIN eq 'false'}">

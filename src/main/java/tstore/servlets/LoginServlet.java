@@ -1,10 +1,13 @@
 package tstore.servlets;
 
+import org.json.simple.parser.ParseException;
+import tstore.model.OrderEntity;
 import tstore.model.UserEntity;
 import tstore.model.enums.Role;
 import tstore.service.UserService;
+import tstore.service.impl.OrderServiceImpl;
 import tstore.service.impl.UserServiceImpl;
-import tstore.utils.SessionAttributes;
+import tstore.utils.*;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -13,64 +16,75 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+import static tstore.utils.UpdateBasket.updateBasketAfterLogin;
+
 /**
  * Created by mipan on 04.10.2016.
  */
 public class LoginServlet extends HttpServlet {
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        if (request.getParameter("form-login-submit")!=null) {
-            String login = request.getParameter("form-username");
-            String password = request.getParameter("form-password");
-
-            UserEntity userEntity = autorisation(login, password);
-            if(userEntity != null){
-                setUserDataToSession(request, userEntity);
-                response.sendRedirect("/");
-            }
-            else
-            {
-                request.setAttribute("errorSignInMessage", "login or password is wrong");
-                RequestDispatcher rd = request.getRequestDispatcher("login.jsp");
-                rd.forward(request, response);
-            }
-        }
-
-        if (request.getParameter("form-registration-submit")!=null){
-            String email = request.getParameter("form-email");
-
-            if (!isRegistered(email))
-            {
-                String name = request.getParameter("form-first-name");
-                String sername = request.getParameter("form-last-name");
+        try {
+            if (request.getParameter("form-login-submit") != null) {
+                String login = request.getParameter("form-username");
                 String password = request.getParameter("form-password");
-                UserEntity userEntity = new UserEntity(name, sername, null, email, password, Role.CLIENT);
 
-                UserService userService = new UserServiceImpl();
-                userService.createUser(userEntity);
+                UserEntity userEntity = autorisation(login, password);
+                if (userEntity != null) {
+                    setUserDataToSession(request, userEntity);
+                    OrderEntity basket = new OrderServiceImpl().getBasketByUserId(userEntity.getId());
 
-                setUserDataToSession(request, userEntity);
+                    updateBasketAfterLogin(basket, request);
 
-                response.sendRedirect("/");
+                    response.sendRedirect("/");
+                } else {
+                    request.setAttribute("errorSignInMessage", "login or password is wrong");
+                    RequestDispatcher rd = request.getRequestDispatcher("login.jsp");
+                    rd.forward(request, response);
+                }
+            }
+
+            //registration
+            if (request.getParameter("form-registration-submit") != null) {
+                String email = request.getParameter("form-email");
+
+                if (!isRegistered(email)) {
+                    String name = request.getParameter("form-first-name");
+                    String sername = request.getParameter("form-last-name");
+                    String password = request.getParameter("form-password");
+                    UserEntity userEntity = new UserEntity(name, sername, null, email, password, Role.CLIENT);
+
+                    UserService userService = new UserServiceImpl();
+                    userService.createUser(userEntity);
+
+                    setUserDataToSession(request, userEntity);
+
+
+                    OrderEntity basket = new OrderServiceImpl().getBasketByUserId(userEntity.getId());
+
+                    updateBasketAfterLogin(basket, request);
+
+                    response.sendRedirect("/");
                 /*RequestDispatcher rd = request.getRequestDispatcher(requestURL);
                 rd.forward(request, response);*/
-            }
-            else
-            {
+                } else {
                     request.getSession().invalidate();
                     request.logout();
                     request.setAttribute("errorSignUpMessage", "This email is registered.");
                     RequestDispatcher rd = request.getRequestDispatcher("login.jsp");
                     rd.forward(request, response);
+                }
             }
+        } catch (ParseException e) {
+            //todo loggong and exeption redirect
         }
 
     }
 
     private String getRequestURI(HttpServletRequest request) {
         String requestURL = request.getRequestURI();
-        if (requestURL.equals("/login"))
-        {
+        if (requestURL.equals("/login")) {
             requestURL = "/";
         }
         return requestURL;
@@ -83,21 +97,26 @@ public class LoginServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        RequestDispatcher rd = request.getRequestDispatcher("login.jsp");
-        rd.forward(request, response);
+        if (request.getSession().getAttribute(SessionAttributes.LOGIN).equals("false")) {
+            RequestDispatcher rd = request.getRequestDispatcher("login.jsp");
+            rd.forward(request, response);
+        }
+        else
+        {
+            response.sendRedirect("/");
+        }
     }
 
     private UserEntity autorisation(String login, String password) {
         UserService userService = new UserServiceImpl();
         return userService.getUser(login, password);
     }
+
     private boolean isRegistered(String login) {
         UserService userService = new UserServiceImpl();
         if (userService.getUser(login) != null) {
             return true;
-        }
-        else
-        {
+        } else {
             return false;
         }
     }

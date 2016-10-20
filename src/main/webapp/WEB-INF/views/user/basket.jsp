@@ -122,7 +122,6 @@
                     </c:if>
 
 
-
                 </div>
                 <div class="button-block">
                     <button id="product-save" type="button"
@@ -130,6 +129,7 @@
                             style="color: black">
                         Save
                     </button>
+                    <c:if test="${LOGIN eq 'true'}">
 
                         <button id="product-buy" type="submit"
                                 class="button btn btn-warning btn-sm  button-block click-buy" style="color: black">
@@ -137,6 +137,15 @@
                         </button>
                         <form id="form-submit" method="post" action="pay">
                         </form>
+                    </c:if>
+                    <c:if test="${LOGIN ne 'true'}">
+                        <button id="product-login" type="submit"
+                                class="button btn btn-warning btn-sm  button-block click-login" style="color: black">
+                            $Buy
+                        </button>
+                        <form id="form-login" method="get" action="login">
+                        </form>
+                    </c:if>
 
                 </div>
             </div>
@@ -183,6 +192,12 @@
         $('.click-buy').on('click', function (e) {
             $('.click-update').click();
             document.getElementById("form-submit").submit();
+
+        });
+
+        $('.click-login').on('click', function (e) {
+            $('.click-update').click();
+            document.getElementById("form-login").submit();
 
         });
 
