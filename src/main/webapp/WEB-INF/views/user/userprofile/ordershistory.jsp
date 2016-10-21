@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%--
   Created by IntelliJ IDEA.
   User: mipan
@@ -11,7 +12,11 @@
 
 
     <c:set var="stepafterdraft" value="${0}"/>
-    <c:if test="${orders[0].orderStatus == 'DRAFT'}">
+    <c:if test="${(orders[0].orderStatus == 'DRAFT') && (empty orders[0].productList )}">
+        <c:set var="stepafterdraft" value="${1}"/>
+    </c:if>
+    <c:if test="${(orders[0].orderStatus == 'DRAFT') && (not empty orders[0].productList )}">
+
         <c:set var="stepafterdraft" value="${stepafterdraft + 1}"/>
 
         <c:forEach items="${orders}" var="order" end="0">
@@ -19,7 +24,8 @@
                 <!-- Заголовок 3 панели -->
                 <div class="panel-heading">
                     <h4 class="panel-title">
-                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse<c:out value="${order.id}"/>">Order
+                        <a data-toggle="collapse" data-parent="#accordion"
+                           href="#collapse<c:out value="${order.id}"/>">Order
                             #
                             <c:out value="${order.id}"/></a>
                         <a href="/basket" class="con-order pull-right btn btn-warning btn-sm active"
@@ -61,6 +67,7 @@
                 </div>
             </div>
         </c:forEach>
+
     </c:if>
 
     <!-- 3 панель -->
@@ -101,14 +108,21 @@
                             <p class="help-block"></p>
                             <ul class="list-group">
                                 <li class="list-group-item"><b>State : </b><c:out value="${order.state}"/></li>
+                                <li class="list-group-item"><b>State : </b><c:out value="${order.state}"/></li>
                                 <li class="list-group-item"><b>Order date : </b><c:out value="${order.orderDate}"/></li>
-                                <li class="list-group-item"><b>Delivery date : </b><c:out value="${order.deliveryDate}"/></li>
-                                <li class="list-group-item"><b>Order status : </b><c:out value="${order.orderStatus}"/></li>
-                                <li class="list-group-item"><b>Delivery type : </b><c:out value="${order.deliveryType}"/></li>
-                                <li class="list-group-item"><b>Payment type : </b><c:out value="${order.paymentType}"/></li>
-                                <li class="list-group-item"><b>Payment status: </b><c:out value="${order.paymentStatus}"/></li>
-                                <li class="list-group-item"><b>Address: </b><c:out value="${order.address.zipcode}"/>; <c:out
-                                        value="${order.address.country.country}"/>, <c:out value="${order.address.city}"/>,
+                                    <%--<li class="list-group-item"><b>Delivery date : </b><c:out value="${order.deliveryDate}"/></li>--%>
+                                <li class="list-group-item"><b>Order status : </b><c:out value="${order.orderStatus}"/>
+                                </li>
+                                <li class="list-group-item"><b>Delivery type : </b><c:out
+                                        value="${order.deliveryType}"/></li>
+                                <li class="list-group-item"><b>Payment type : </b><c:out value="${order.paymentType}"/>
+                                </li>
+                                <li class="list-group-item"><b>Payment status: </b><c:out
+                                        value="${order.paymentStatus}"/></li>
+                                <li class="list-group-item"><b>Address: </b><c:out value="${order.address.zipcode}"/>;
+                                    <c:out
+                                            value="${order.address.country.country}"/>, <c:out
+                                            value="${order.address.city}"/>,
                                     street <c:out value="${order.address.street}"/>, <c:out
                                             value="${order.address.building}"/> app.<c:out
                                             value="${order.address.apartment}"/></li>

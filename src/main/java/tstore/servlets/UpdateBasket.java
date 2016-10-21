@@ -26,13 +26,13 @@ public class UpdateBasket extends HttpServlet {
         String jsonOrder = request.getParameter("order");
         int totalBasket;
         try {
-            boolean isLogin = Boolean.valueOf((String) request.getSession().getAttribute(SessionAttributes.LOGIN));
+            boolean isLogin = Boolean.valueOf((String) request.getSession(false).getAttribute(SessionAttributes.LOGIN));
             Map<Integer, Integer> basketJson = null;
             basketJson = JsonParser.getBasket(jsonOrder, request);
             totalBasket = getTotalBasket(basketJson);
         /*if logged - pars and update order in db*/
             if (isLogin) {
-                Integer userId = Integer.parseInt(request.getSession().getAttribute(SessionAttributes.USERID).toString());
+                Integer userId = Integer.parseInt(request.getSession(false).getAttribute(SessionAttributes.USERID).toString());
 
                 OrderEntity basketByUserId = updateBasket(new OrderServiceImpl().getBasketByUserId(userId), basketJson);
 
@@ -63,7 +63,7 @@ public class UpdateBasket extends HttpServlet {
                 }
             }
 //todo update bascet count label
-            request.getSession().setAttribute(SessionAttributes.BASKET, totalBasket);
+            request.getSession(false).setAttribute(SessionAttributes.BASKET, totalBasket);
             RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/views/user/payment.jsp");
             rd.forward(request, response);
 

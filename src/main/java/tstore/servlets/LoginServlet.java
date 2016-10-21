@@ -25,6 +25,7 @@ public class LoginServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+
         try {
             if (request.getParameter("form-login-submit") != null) {
                 String login = request.getParameter("form-username");
@@ -36,6 +37,7 @@ public class LoginServlet extends HttpServlet {
                     OrderEntity basket = new OrderServiceImpl().getBasketByUserId(userEntity.getId());
 
                     updateBasketAfterLogin(basket, request);
+
 
                     response.sendRedirect("/");
                 } else {
@@ -68,15 +70,16 @@ public class LoginServlet extends HttpServlet {
                     response.sendRedirect("/");
                 /*RequestDispatcher rd = request.getRequestDispatcher(requestURL);
                 rd.forward(request, response);*/
-                } else {
-                    request.getSession().invalidate();
-                    request.logout();
+                }
+                else
+                {
                     request.setAttribute("errorSignUpMessage", "This email is registered.");
                     RequestDispatcher rd = request.getRequestDispatcher("login.jsp");
                     rd.forward(request, response);
                 }
             }
         } catch (ParseException e) {
+            request.getSession(false).setAttribute(SessionAttributes.LOGIN, "false");
             //todo loggong and exeption redirect
         }
 
@@ -91,13 +94,13 @@ public class LoginServlet extends HttpServlet {
     }
 
     private void setUserDataToSession(HttpServletRequest request, UserEntity userEntity) {
-        request.getSession().setAttribute(SessionAttributes.LOGIN, "true");
-        request.getSession().setAttribute(SessionAttributes.ROLE, userEntity.getRole());
-        request.getSession().setAttribute(SessionAttributes.USERID, userEntity.getId());
+        request.getSession(false).setAttribute(SessionAttributes.LOGIN, "true");
+        request.getSession(false).setAttribute(SessionAttributes.ROLE, userEntity.getRole());
+        request.getSession(false).setAttribute(SessionAttributes.USERID, userEntity.getId());
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        if (request.getSession().getAttribute(SessionAttributes.LOGIN).equals("false")) {
+        if (request.getSession(false).getAttribute(SessionAttributes.LOGIN).equals("false")) {
             RequestDispatcher rd = request.getRequestDispatcher("login.jsp");
             rd.forward(request, response);
         }

@@ -1,5 +1,11 @@
 package tstore.servlets;
 
+import tstore.dao.ProductDao;
+import tstore.exceptions.PageNotFountException;
+import tstore.model.ProductEntity;
+import tstore.service.ProductService;
+import tstore.service.impl.ProductServiceImpl;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -12,33 +18,42 @@ import java.io.PrintWriter;
 /**
  * Created by mipan on 25.09.2016.
  */
-/*@WebServlet(
-        name = "AnnotatedServlet",
-        description = "A sample annotated servlet",
-        urlPatterns = {"/"}
-)*/
 public class ProductServlet extends HttpServlet {
 
     public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
         HttpSession session = request.getSession(false);
+        ProductService productService = new ProductServiceImpl();
+
+        int productId = getProductIdFromUri(request.getRequestURI());
+        ProductEntity product = productService.getProductById(productId);
+        if (product == null){
+//            todo logging
+            throw new PageNotFountException();
+        }
+
+        request.setAttribute("product", product);
+
         RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/product/product.jsp");
         rd.forward(request, response);
     }
 
+    private int getProductIdFromUri(String requestURI) {
+        int productId;
+        String[] split = requestURI.split("/");
+        try {
+            productId = Integer.parseInt(split[split.length - 1]);
+        }
+        catch (NumberFormatException e)
+        {
+            throw new PageNotFountException(e.getMessage());
+//            todo logging
+        }
+        return productId;
+    }
+
     public void doPost(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
-        String paramWidth = request.getParameter("width");
-        int width = Integer.parseInt(paramWidth);
-
-        String paramHeight = request.getParameter("height");
-        int height = Integer.parseInt(paramHeight);
-
-        long area = width * height;
-
-        PrintWriter writer = response.getWriter();
-        writer.println("<html>Area of the rectangle is: " + area + "</html>");
-        writer.flush();
-
+        response.sendRedirect("/");
     }
 }

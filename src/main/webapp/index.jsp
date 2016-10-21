@@ -129,7 +129,7 @@
 
                             <div class="caption">
                                 <h4 class="pull-right">$<c:out value="${product.price}"/></h4>
-                                <h4><a href="/product/<c:out value="${productInList.product.id}"/>"><c:out value="${product.name}"/></a>
+                                <h4><a href="/product/<c:out value="${product.id}"/>"><c:out value="${product.name}"/></a>
                                 </h4>
 
                                 <p><c:out value="${product.parameters}"/></p>
@@ -174,7 +174,7 @@
     <footer>
         <div class="row">
             <div class="col-lg-12">
-                <p>Copyright &copy; Your Website 2014</p>
+                <p>&copy; eShop 2016</p>
             </div>
         </div>
     </footer>
@@ -187,9 +187,9 @@
 
 <!-- Bootstrap Core JavaScript -->
 <script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
-
+<%--
 <script src="http://code.jquery.com/jquery-3.1.1.min.js"
-        integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+        integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>--%>
 
 <script type="text/javascript">
     $(function () {

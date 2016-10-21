@@ -29,7 +29,7 @@ public class UpdateBasket {
 
 
         if (basketInBD == null) {
-            int userId = Integer.parseInt(request.getSession().getAttribute(SessionAttributes.USERID).toString());
+            int userId = Integer.parseInt(request.getSession(false).getAttribute(SessionAttributes.USERID).toString());
             UserEntity userById = new UserServiceImpl().getUserById(Integer.valueOf(userId));
             basketInBD = new OrderEntity(userById);
             new OrderServiceImpl().createOrder(basketInBD);

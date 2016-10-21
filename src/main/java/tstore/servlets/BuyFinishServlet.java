@@ -4,19 +4,18 @@ import tstore.model.*;
 import tstore.model.enums.*;
 import tstore.service.impl.CountryServiceImpl;
 import tstore.service.impl.OrderServiceImpl;
-import tstore.service.impl.ProductServiceImpl;
 import tstore.utils.SessionAttributes;
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.text.MessageFormat;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
+
 
 /**
  * Created by mipan on 18.10.2016.
@@ -24,11 +23,9 @@ import java.util.Set;
 public class BuyFinishServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        int userId = Integer.parseInt(request.getSession().getAttribute(SessionAttributes.USERID).toString());
+        int userId = Integer.parseInt(request.getSession(false).getAttribute(SessionAttributes.USERID).toString());
         request.getParameterNames();
         OrderEntity basket = new OrderServiceImpl().getBasketByUserId(userId);
-
-//        List<String> deficiency = productNumberValidation(basket.getProductList());
 
 
             String country = request.getParameter("form-country");
@@ -42,10 +39,8 @@ public class BuyFinishServlet extends HttpServlet {
             PaymentType payment = PaymentType.valueOf(request.getParameter("payment"));
             DeliveryType delivery = DeliveryType.valueOf(request.getParameter("delivery"));
 
-
             CountryEntity countryEntity = new CountryServiceImpl().getByName(country);
             AddressEntity addressEntity = new AddressEntity(countryEntity, city, zipcode, street, building, apartment);
-
 
             basket.setAddress(addressEntity);
             basket.setDeliveryType(delivery);
@@ -53,6 +48,11 @@ public class BuyFinishServlet extends HttpServlet {
             basket.setPaymentStatus(PaymentStatus.NOT_PAID);
             basket.setOrderStatus(OrderStatus.PLACED);
             basket.setState(BasketOrderState.ORDER);
+
+            LocalDate localDate = LocalDate.now();
+            Instant instant = localDate.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant();
+            Date orderDate = Date.from(instant);
+            basket.setOrderDate(orderDate);
 
             new OrderServiceImpl().updateBasketToOrder(basket);
 
@@ -64,24 +64,11 @@ public class BuyFinishServlet extends HttpServlet {
         {
 //            todo logging Error and redirect to exception
         }
-
     }
-
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.sendRedirect("/");
     }
 
-   /* private List<String> productNumberValidation(Set<ProductListEntity> productList) {
-        List<String> deficiency = new ArrayList<String>();
-        for (ProductListEntity basketProductNote : productList) {
-            int orderNumber = basketProductNote.getCount();
-            ProductEntity productInStock = new ProductServiceImpl().getProductById(basketProductNote.getProduct().getId());
-            if (orderNumber > productInStock.getCount())
-            {
-                deficiency.add(MessageFormat.format("Sorry, but we have only {0} \"{1}\"", productInStock.getCount(), productInStock.getName()));
-            }
-        }
-        return deficiency;
-    }*/
+
 }

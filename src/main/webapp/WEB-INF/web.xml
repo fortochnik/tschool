@@ -27,6 +27,15 @@
         <servlet-name>Main</servlet-name>
         <url-pattern></url-pattern>
     </servlet-mapping>
+<!--
+    <servlet>
+        <servlet-name>ProductEmptyURI</servlet-name>
+        <servlet-class>tstore.servlets.MainServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ProductEmptyURI</servlet-name>
+        <url-pattern>/product</url-pattern>
+    </servlet-mapping>-->
 
     <servlet>
         <servlet-name>Product</servlet-name>
@@ -172,6 +181,11 @@
     <!--Errors-->
     <error-page>
         <error-code>404</error-code>
+        <location>/404.jsp</location>
+    </error-page>
+
+    <error-page>
+        <exception-type>tstore.exceptions.PageNotFountException</exception-type>
         <location>/404.jsp</location>
     </error-page>
 

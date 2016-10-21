@@ -26,7 +26,7 @@ import java.util.Set;
 public class BuyServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        int userId = Integer.parseInt(request.getSession().getAttribute(SessionAttributes.USERID).toString());
+        int userId = Integer.parseInt(request.getSession(false).getAttribute(SessionAttributes.USERID).toString());
         request.getParameterNames();
         OrderEntity basket = new OrderServiceImpl().getBasketByUserId(userId);
 

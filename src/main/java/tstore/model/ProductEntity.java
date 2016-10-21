@@ -18,7 +18,7 @@ public class ProductEntity {
     @Column(name = "name")
     private String name;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(referencedColumnName = "id")
     private CategoryEntity category;
 
