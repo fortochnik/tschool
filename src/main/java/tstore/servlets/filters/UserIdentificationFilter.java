@@ -1,4 +1,4 @@
-package tstore.servlets;
+package tstore.servlets.filters;
 
 import tstore.model.OrderEntity;
 import tstore.model.ProductListEntity;

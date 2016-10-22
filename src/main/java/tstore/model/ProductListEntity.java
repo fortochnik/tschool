@@ -24,7 +24,7 @@ public class ProductListEntity {
     @Column(name = "count", nullable = false)
     private int count;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(referencedColumnName = "id")
     private OrderEntity consignment;
 

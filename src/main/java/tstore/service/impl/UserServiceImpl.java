@@ -8,6 +8,7 @@ import tstore.model.UserEntity;
 import tstore.service.UserService;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -64,5 +65,12 @@ public class UserServiceImpl implements UserService {
         userEntity.getOrders();
         userDao.closeTransaction();
         return userEntity;
+    }
+
+    public List getTopTenUser() {
+        userDao.beginTransaction();
+        List topTenUser = userDao.getTopTenUser();
+        userDao.closeTransaction();
+        return topTenUser;
     }
 }

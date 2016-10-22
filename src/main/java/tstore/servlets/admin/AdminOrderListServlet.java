@@ -1,4 +1,4 @@
-package tstore.servlets;
+package tstore.servlets.admin;
 
 import tstore.model.enums.Role;
 import tstore.utils.SessionAttributes;

@@ -1,4 +1,4 @@
-package tstore.servlets;
+package tstore.servlets.product;
 
 import tstore.dao.ProductDao;
 import tstore.exceptions.PageNotFountException;

@@ -22,5 +22,5 @@ public interface GenericDao<T, Id extends Serializable> extends Transaction {
 
     List<T> findAll(Class<T> clazz);
 
-
+    void sessionFlush();
 }

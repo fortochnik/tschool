@@ -55,7 +55,18 @@ public class GenericDaoImpl<T, Id extends Serializable> implements GenericDao<T,
 
     public void closeTransaction() {
         currentTransaction.commit();
+//        session.flush();
         session.close();
+    }
+
+
+    public void rollbackTransaction() {
+        currentTransaction.rollback();
+//        session.close();
+    }
+
+    public void sessionFlush() {
+        session.flush();
     }
 
     protected Session getCurrentSession(){

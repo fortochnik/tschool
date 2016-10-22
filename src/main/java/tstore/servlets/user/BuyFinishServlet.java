@@ -1,4 +1,4 @@
-package tstore.servlets;
+package tstore.servlets.user;
 
 import tstore.model.*;
 import tstore.model.enums.*;

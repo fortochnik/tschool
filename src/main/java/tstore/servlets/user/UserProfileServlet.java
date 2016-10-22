@@ -1,4 +1,4 @@
-package tstore.servlets;
+package tstore.servlets.user;
 
 import tstore.model.OrderEntity;
 import tstore.model.UserEntity;

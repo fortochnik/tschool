@@ -39,7 +39,7 @@
 
     <servlet>
         <servlet-name>Product</servlet-name>
-        <servlet-class>tstore.servlets.ProductServlet</servlet-class>
+        <servlet-class>tstore.servlets.product.ProductServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>Product</servlet-name>
@@ -50,7 +50,7 @@
 
     <servlet>
         <servlet-name>Basket</servlet-name>
-        <servlet-class>tstore.servlets.BasketServlet</servlet-class>
+        <servlet-class>tstore.servlets.user.BasketServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>Basket</servlet-name>
@@ -59,7 +59,7 @@
 
     <servlet>
         <servlet-name>UserProfile</servlet-name>
-        <servlet-class>tstore.servlets.UserProfileServlet</servlet-class>
+        <servlet-class>tstore.servlets.user.UserProfileServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>UserProfile</servlet-name>
@@ -68,7 +68,7 @@
 
     <servlet>
         <servlet-name>OrderHistory</servlet-name>
-        <servlet-class>tstore.servlets.ProductServlet</servlet-class>
+        <servlet-class>tstore.servlets.product.ProductServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>OrderHistory</servlet-name>
@@ -77,7 +77,7 @@
 
     <servlet>
         <servlet-name>Payment</servlet-name>
-        <servlet-class>tstore.servlets.BuyServlet</servlet-class>
+        <servlet-class>tstore.servlets.user.BuyServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>Payment</servlet-name>
@@ -86,7 +86,7 @@
 
     <servlet>
         <servlet-name>PayFinish</servlet-name>
-        <servlet-class>tstore.servlets.BuyFinishServlet</servlet-class>
+        <servlet-class>tstore.servlets.user.BuyFinishServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>PayFinish</servlet-name>
@@ -105,7 +105,7 @@
     <!--Admin's servlets-->
     <servlet>
         <servlet-name>OrderList</servlet-name>
-        <servlet-class>tstore.servlets.AdminOrderListServlet</servlet-class>
+        <servlet-class>tstore.servlets.admin.AdminOrderListServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>OrderList</servlet-name>
@@ -114,7 +114,7 @@
 
     <servlet>
         <servlet-name>AddProduct</servlet-name>
-        <servlet-class>tstore.servlets.ProductServlet</servlet-class>
+        <servlet-class>tstore.servlets.product.ProductServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>AddProduct</servlet-name>
@@ -123,33 +123,36 @@
 
     <servlet>
         <servlet-name>AddProductToBasket</servlet-name>
-        <servlet-class>tstore.servlets.AddToBasketServlet</servlet-class>
+        <servlet-class>tstore.servlets.user.AddToBasketServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>AddProductToBasket</servlet-name>
         <url-pattern>/addtobasket</url-pattern>
     </servlet-mapping>
+
     <servlet>
         <servlet-name>UpdateBasket</servlet-name>
-        <servlet-class>tstore.servlets.UpdateBasket</servlet-class>
+        <servlet-class>tstore.servlets.user.UpdateBasket</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>UpdateBasket</servlet-name>
         <url-pattern>/updatebasket</url-pattern>
     </servlet-mapping>
 
+    <!--used servlet-->
+
     <servlet>
-        <servlet-name>UpdateOrder</servlet-name>
-        <servlet-class>tstore.servlets.ProductServlet</servlet-class>
+        <servlet-name>Category</servlet-name>
+        <servlet-class>tstore.servlets.admin.CategoryManagerServlet</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>UpdateOrder</servlet-name>
-        <url-pattern>/updateorder</url-pattern>
+        <servlet-name>Category</servlet-name>
+        <url-pattern>/category</url-pattern>
     </servlet-mapping>
 
     <servlet>
         <servlet-name>Statistic</servlet-name>
-        <servlet-class>tstore.servlets.ProductServlet</servlet-class>
+        <servlet-class>tstore.servlets.admin.StatisticServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>Statistic</servlet-name>
@@ -184,6 +187,8 @@
         <location>/404.jsp</location>
     </error-page>
 
+
+
     <error-page>
         <exception-type>tstore.exceptions.PageNotFountException</exception-type>
         <location>/404.jsp</location>
@@ -194,10 +199,14 @@
         <location>/Error.jsp</location>
     </error-page>
 
+    <error-page>
+        <location>/Error.jsp</location>
+    </error-page>
+
     <!--Filter-->
     <filter>
         <filter-name>UserIdentification</filter-name>
-        <filter-class>tstore.servlets.UserIdentificationFilter</filter-class>
+        <filter-class>tstore.servlets.filters.UserIdentificationFilter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>UserIdentification</filter-name>

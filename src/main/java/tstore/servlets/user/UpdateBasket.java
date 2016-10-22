@@ -1,4 +1,4 @@
-package tstore.servlets;
+package tstore.servlets.user;
 
 import org.json.simple.parser.ParseException;
 import tstore.model.OrderEntity;

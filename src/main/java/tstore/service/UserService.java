@@ -2,6 +2,8 @@ package tstore.service;
 
 import tstore.model.UserEntity;
 
+import java.util.List;
+
 /**
  * Created by mipan on 08.10.2016.
  */
@@ -17,4 +19,6 @@ public interface UserService {
 
 
     UserEntity getFullUserById(Integer id);
+
+    List getTopTenUser();
 }

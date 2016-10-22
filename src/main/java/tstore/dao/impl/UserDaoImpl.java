@@ -4,16 +4,19 @@ import org.hibernate.NonUniqueResultException;
 import org.hibernate.query.Query;
 import tstore.dao.UserDao;
 import tstore.model.UserEntity;
+import tstore.model.enums.BasketOrderState;
 import tstore.utils.HibernateSessionFactory;
+import tstore.utils.SessionAttributes;
 
 import javax.persistence.NoResultException;
 import java.text.MessageFormat;
+import java.util.List;
 
 /**
  * Created by mipan on 02.10.2016.
  */
 public class UserDaoImpl extends GenericDaoImpl<UserEntity, Integer> implements UserDao {
-    private  UserEntity user;
+    private UserEntity user;
 
     public UserEntity findByCredential(String login, String password) {
 
@@ -22,12 +25,9 @@ public class UserDaoImpl extends GenericDaoImpl<UserEntity, Integer> implements 
 
         try {
             user = (UserEntity) query.getSingleResult();
-        }
-         catch(NoResultException e) {
+        } catch (NoResultException e) {
             return null;
-        }
-        catch (NonUniqueResultException e)
-        {
+        } catch (NonUniqueResultException e) {
 //            todo Change exception (?)
 //            todo add logging
         }
@@ -42,16 +42,20 @@ public class UserDaoImpl extends GenericDaoImpl<UserEntity, Integer> implements 
 
         try {
             user = (UserEntity) query.getSingleResult();
-        }
-        catch(NoResultException e) {
+        } catch (NoResultException e) {
             return null;
-        }
-        catch (NonUniqueResultException e)
-        {
+        } catch (NonUniqueResultException e) {
 //            todo Change exception (?)
 //            todo add logging
         }
 
         return user;
+    }
+
+    public List getTopTenUser() {
+        String hql = "select client, count(client) as quantity from OrderEntity as orders inner join orders.client as client where orders.state != :basket group by client order by quantity desc";
+        Query query = getCurrentSession().createQuery(hql).setParameter("basket", BasketOrderState.BASKET).setMaxResults(10);
+        List list = query.list();
+        return list;
     }
 }

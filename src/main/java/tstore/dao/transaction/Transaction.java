@@ -8,4 +8,6 @@ public interface Transaction {
     void beginTransaction();
 
     void closeTransaction();
+
+    void rollbackTransaction();
 }

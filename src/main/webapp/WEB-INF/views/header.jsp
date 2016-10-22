@@ -45,6 +45,15 @@
                     </a>
 
                 </li>
+                <c:if test="${LOGIN eq 'true'}">
+                    <li>
+                        <a href="/statistic">Statistic</a>
+                    </li>
+                    <li>
+                        <a href="/category">Statistic</a>
+                    </li>
+                </c:if>
+
             </ul>
             <c:if test="${LOGIN eq 'false'}">
                 <ul class="nav navbar-nav navbar-right">
