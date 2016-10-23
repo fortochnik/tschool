@@ -227,7 +227,7 @@
 
 
     <error-page>
-        <exception-type>tstore.exceptions.PageNotFountException</exception-type>
+        <exception-type>tstore.exceptions.PageNotFoundException</exception-type>
         <location>/404.jsp</location>
     </error-page>
 

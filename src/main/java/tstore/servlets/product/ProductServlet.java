@@ -1,6 +1,6 @@
 package tstore.servlets.product;
 
-import tstore.exceptions.PageNotFountException;
+import tstore.exceptions.PageNotFoundException;
 import tstore.model.ProductEntity;
 import tstore.service.ProductService;
 import tstore.service.impl.ProductServiceImpl;
@@ -27,7 +27,7 @@ public class ProductServlet extends HttpServlet {
         ProductEntity product = productService.getProductById(productId);
         if (product == null){
 //            todo logging
-            throw new PageNotFountException();
+            throw new PageNotFoundException();
         }
 
         request.setAttribute("product", product);
@@ -44,7 +44,7 @@ public class ProductServlet extends HttpServlet {
         }
         catch (NumberFormatException e)
         {
-            throw new PageNotFountException(e.getMessage());
+            throw new PageNotFoundException(e.getMessage());
 //            todo logging
         }
         return productId;
