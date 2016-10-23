@@ -6,18 +6,28 @@ import tstore.model.AddressEntity;
 import tstore.service.AddressService;
 
 /**
+ * Service for management {@link AddressEntity}
+ *
  * Created by mipan on 02.10.2016.
  */
 public class AddressServiceImpl implements AddressService {
 
     private AddressDao addressDao = new AddressDaoImpl();
 
+    /**
+     * create address
+     * @param address Entity address for create
+     * */
     public void addAddress(AddressEntity address) {
         addressDao.beginTransaction();
         addressDao.persist(address);
         addressDao.closeTransaction();
     }
 
+    /**
+     * update address
+     * @param address Entity for update
+     * */
     public void updateAddress(AddressEntity address) {
         addressDao.beginTransaction();
         addressDao.update(address);

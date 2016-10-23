@@ -1,5 +1,6 @@
 package tstore.servlets;
 
+import org.apache.log4j.Logger;
 import tstore.model.CategoryEntity;
 import tstore.model.ProductEntity;
 import tstore.service.CategoryService;
@@ -14,12 +15,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.text.MessageFormat;
 import java.util.List;
 
 /**
  * Created by mipan on 26.09.2016.
  */
 public class MainServlet extends HttpServlet {
+    final static Logger logger = Logger.getLogger(MainServlet.class);
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         CategoryService categoryService = new CategoryServiceImpl();

@@ -1,5 +1,6 @@
 package tstore.servlets.admin;
 
+import org.apache.log4j.Logger;
 import tstore.model.CategoryEntity;
 import tstore.model.ProductEntity;
 import tstore.model.enums.Role;
@@ -27,6 +28,8 @@ import java.util.List;
  * Created by mipan on 23.10.2016.
  */
 public class AddProductServlet extends HttpServlet {
+    final static Logger logger = Logger.getLogger(AddProductServlet.class);
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession(false);
@@ -53,7 +56,6 @@ public class AddProductServlet extends HttpServlet {
                 (session.getAttribute(SessionAttributes.ROLE).equals(Role.EMPLOYEE) ||
                         session.getAttribute(SessionAttributes.ROLE).equals(Role.ADMIN))) {
 
-
             CategoryService categoryService = new CategoryServiceImpl();
             List<CategoryEntity> categories = categoryService.getCategories();
             request.setAttribute("categories", categories);
@@ -76,17 +78,15 @@ public class AddProductServlet extends HttpServlet {
                 Part secodImg = request.getPart("img2");
                 Part thirdImg = request.getPart("img3");
 
-//            productId=1;//todo delete
-
                 saveImage(productId, mainImg, 1);
                 saveImage(productId, secodImg, 2);
                 saveImage(productId, thirdImg, 3);
             } catch (NumberFormatException e) {
-//            todo logging
+                logger.error(MessageFormat.format("Invalid value fore ne product : {0}, {1}, {2}, {3}, {4}, {5}, {6}, {7}, {8}", name, category, parameters, weight, volume, price, count, company), e);
                 request.setAttribute("parsErrorMessage", "Some data is invalid");
 
             } catch (IOException e) {
-//            todo logging
+                logger.error("Problem with uplouded imeges", e);
                 request.setAttribute("parsErrorMessage", "Some problem with image save process. Please try again.");
 
             }
@@ -110,8 +110,6 @@ public class AddProductServlet extends HttpServlet {
         File uploads = new File("d:\\img\\");
         File file = new File(uploads, MessageFormat.format("{0}-image{1}.jpg", productId, index));
         Files.copy(fileContent, file.toPath());
-
-//        todo save url in db
 
         ImageService imageService = new ImageServiceImpl();
         imageService.save(MessageFormat.format("{0}-image{1}.jpg", productId, index), productId);

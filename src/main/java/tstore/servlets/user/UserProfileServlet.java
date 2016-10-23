@@ -1,5 +1,6 @@
 package tstore.servlets.user;
 
+import org.apache.log4j.Logger;
 import tstore.model.OrderEntity;
 import tstore.model.UserEntity;
 import tstore.service.impl.OrderServiceImpl;
@@ -23,6 +24,8 @@ import java.util.Set;
  * Created by mipan on 13.10.2016.
  */
 public class UserProfileServlet extends HttpServlet {
+    final static Logger logger = Logger.getLogger(UserProfileServlet.class);
+
     public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
         HttpSession session = request.getSession(false);
@@ -34,7 +37,6 @@ public class UserProfileServlet extends HttpServlet {
                 request.setAttribute("userdata", userEntity);
                 request.setAttribute("orders", ordersByUser);
 
-//            todo add orders to attributes
                 RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/views/user/userprofile.jsp");
                 rd.forward(request, response);
 
@@ -109,7 +111,8 @@ public class UserProfileServlet extends HttpServlet {
             RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/views/user/userprofile.jsp");
             rd.forward(request, response);
         } catch (Exception e) {
-//            todo logging and redirect to error page
+            logger.error("Error after parse cookies:", e);
+            throw new RuntimeException("Problem in update user profile", e);
         }
     }
 

@@ -1,5 +1,6 @@
 package tstore.servlets.user;
 
+import org.apache.log4j.Logger;
 import tstore.model.OrderEntity;
 import tstore.model.ProductEntity;
 import tstore.model.ProductListEntity;
@@ -17,12 +18,14 @@ import tstore.utils.SessionAttributes;
 import javax.servlet.ServletException;
 import javax.servlet.http.*;
 import java.io.IOException;
+import java.text.MessageFormat;
 
 /**
  * Created by mipan on 11.10.2016.
  */
 public class AddToBasketServlet extends HttpServlet {
 
+    final static Logger logger = Logger.getLogger(AddToBasketServlet.class);
     public static final int NUMBER_OF_JUST_ADDED = 1;
     private OrderService orderService = new OrderServiceImpl();
     private ProductService productService = new ProductServiceImpl();
@@ -62,7 +65,7 @@ public class AddToBasketServlet extends HttpServlet {
                 }
             }
         } catch (NullPointerException e) {
-//            todo NullPointerExc
+            logger.error("fail add product to basket: {0}", e);
         }
         int basketCount = Integer.parseInt(session.getAttribute(SessionAttributes.BASKET).toString()) + Integer.parseInt(request.getParameter("number"));
         session.setAttribute(SessionAttributes.BASKET, basketCount);

@@ -1,5 +1,7 @@
 package tstore.servlets;
 
+import org.apache.log4j.Logger;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -10,6 +12,8 @@ import java.io.*;
  * Created by mipan on 23.10.2016.
  */
 public class getImageServlet extends HttpServlet {
+    final static Logger logger = Logger.getLogger(getImageServlet.class);
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         BufferedInputStream bufferedInputStream = null;
@@ -26,8 +30,9 @@ public class getImageServlet extends HttpServlet {
                 output.write(data);
             }
         }
-        catch(IOException e){
-//            todo logging
+        catch(IOException e)
+        {
+            logger.error("Error on read from file system image process:", e);
 
         }finally{
             if (bufferedInputStream!=null)

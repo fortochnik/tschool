@@ -1,5 +1,6 @@
 package tstore.servlets.user;
 
+import org.apache.log4j.Logger;
 import tstore.model.OrderEntity;
 import tstore.model.ProductEntity;
 import tstore.model.ProductListEntity;
@@ -15,6 +16,7 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.*;
 import java.io.IOException;
+import java.text.MessageFormat;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -22,6 +24,8 @@ import java.util.Set;
  * Created by mipan on 04.10.2016.
  */
 public class BasketServlet extends HttpServlet {
+    final static Logger logger = Logger.getLogger(BasketServlet.class);
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         OrderEntity basket = null;
@@ -36,8 +40,8 @@ public class BasketServlet extends HttpServlet {
                     new OrderServiceImpl().createOrder(basket);
                 }
             }
-            else{
-//                todo create basket from cookies
+            else
+            {
                 basket = new OrderEntity();
                 basket.setState(BasketOrderState.BASKET);
                 basket.setOrderStatus(OrderStatus.DRAFT);
@@ -57,7 +61,8 @@ public class BasketServlet extends HttpServlet {
                     }
                     catch (NumberFormatException e)
                     {
-                        //todo do nothing (logging exception)
+                        logger.info(MessageFormat.format("Wrong cookie : {0}", cookie), e);
+
                     }
                 }
 
@@ -68,7 +73,7 @@ public class BasketServlet extends HttpServlet {
         }
         catch (NullPointerException e)
         {
-            //todo logging exception
+            logger.error("Problem with basket display", e);
         }
     }
 }

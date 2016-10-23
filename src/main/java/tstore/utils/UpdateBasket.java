@@ -1,5 +1,6 @@
 package tstore.utils;
 
+import org.apache.log4j.Logger;
 import org.json.simple.parser.ParseException;
 import tstore.model.OrderEntity;
 import tstore.model.ProductEntity;
@@ -12,14 +13,15 @@ import tstore.service.impl.UserServiceImpl;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import java.text.MessageFormat;
 import java.util.*;
 
 /**
  * Created by mipan on 20.10.2016.
  */
 public class UpdateBasket {
-    private UpdateBasket() {
-    }
+    final static Logger logger = Logger.getLogger(UpdateBasket.class);
+
 
     public static void updateBasketAfterLogin(OrderEntity basketInBD, HttpServletRequest request) throws ParseException {
         Map<Integer, Integer> orderInCookies = new HashMap<Integer, Integer>();
@@ -35,7 +37,7 @@ public class UpdateBasket {
             new OrderServiceImpl().createOrder(basketInBD);
         }
 
-//        todo add check it
+
         if (cookies != null) {
             for (Cookie cookie : cookies) {
                 try {
@@ -44,7 +46,8 @@ public class UpdateBasket {
                     orderInCookies.put(productId, addCount);
 
                 } catch (NumberFormatException e) {
-                    // todo logg do nothing
+                    logger.info(MessageFormat.format("Wrong cookie : {0}", cookie), e);
+
                 }
             }
 

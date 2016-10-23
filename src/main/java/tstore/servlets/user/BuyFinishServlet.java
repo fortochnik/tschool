@@ -1,5 +1,6 @@
 package tstore.servlets.user;
 
+import org.apache.log4j.Logger;
 import tstore.model.*;
 import tstore.model.enums.*;
 import tstore.service.impl.CountryServiceImpl;
@@ -21,6 +22,8 @@ import java.util.Date;
  * Created by mipan on 18.10.2016.
  */
 public class BuyFinishServlet extends HttpServlet {
+    final static Logger logger = Logger.getLogger(BuyFinishServlet.class);
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         int userId = Integer.parseInt(request.getSession(false).getAttribute(SessionAttributes.USERID).toString());
@@ -59,7 +62,10 @@ public class BuyFinishServlet extends HttpServlet {
         }
         else
         {
-//            todo logging Error and redirect to exception
+            logger.error("wrong data for buy. Validation fail.");
+            request.setAttribute("errorSignInMessage", "Sorry, all data ate necessary");
+            RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/user/payment.jsp");
+            rd.forward(request, response);
         }
     }
 

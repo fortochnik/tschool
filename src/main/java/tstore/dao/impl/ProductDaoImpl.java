@@ -1,5 +1,6 @@
 package tstore.dao.impl;
 
+import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Restrictions;
@@ -12,6 +13,7 @@ import tstore.model.enums.BasketOrderState;
 import javax.persistence.TypedQuery;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.text.MessageFormat;
 import java.util.List;
 import java.util.Map;
 
@@ -19,6 +21,7 @@ import java.util.Map;
  * Created by mipan on 28.09.2016.
  */
 public class ProductDaoImpl extends GenericDaoImpl<ProductEntity, Integer> implements ProductDao {
+    final static Logger logger = Logger.getLogger(ProductDaoImpl.class);
 
     public List<ProductEntity> getByCategoryId(int categoryId) {
         String hql = "from ProductEntity where category.id = :categoryId";
@@ -47,7 +50,7 @@ public class ProductDaoImpl extends GenericDaoImpl<ProductEntity, Integer> imple
             }
             catch (NumberFormatException e)
             {
-//                todo logging
+                logger.info(MessageFormat.format("Incorrect  value in min search field: {0} ", searchParameters.get("priceMin"), e));
             }
             if (priceMin.compareTo(BigDecimal.valueOf(-1))>0) {
                 criteria.add(Restrictions.ge("price", priceMin));
@@ -60,7 +63,7 @@ public class ProductDaoImpl extends GenericDaoImpl<ProductEntity, Integer> imple
             }
             catch (NumberFormatException e)
             {
-//                todo logging
+                logger.info(MessageFormat.format("Incorrect  value in max search field: {0} ", searchParameters.get("priceMax"), e));
             }
             if (priceMax.compareTo(BigDecimal.valueOf(-1))>0) {
                 criteria.add(Restrictions.le("price", priceMax));

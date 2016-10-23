@@ -1,5 +1,6 @@
 package tstore.servlets.filters;
 
+import org.apache.log4j.Logger;
 import tstore.model.OrderEntity;
 import tstore.model.ProductListEntity;
 import tstore.service.impl.OrderServiceImpl;
@@ -11,12 +12,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.text.MessageFormat;
 import java.util.Set;
 
 /**
  * Created by mipan on 03.10.2016.
  */
 public class UserIdentificationFilter implements Filter {
+    final static Logger logger = Logger.getLogger(UserIdentificationFilter.class);
     public void init(FilterConfig filterConfig) throws ServletException {
 
     }
@@ -48,7 +51,7 @@ public class UserIdentificationFilter implements Filter {
                         int count = Integer.parseInt(cookie.getValue());
                         countInBasket += count;
                     } catch (NumberFormatException e) {
-                        //todo do nothing (logging exception)
+                        logger.info(MessageFormat.format("Wrong cookie : {0}", cookie), e);
                     }
                 }
                 session.setAttribute(SessionAttributes.BASKET, countInBasket);

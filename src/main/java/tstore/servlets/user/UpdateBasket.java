@@ -1,5 +1,6 @@
 package tstore.servlets.user;
 
+import org.apache.log4j.Logger;
 import org.json.simple.parser.ParseException;
 import tstore.model.OrderEntity;
 import tstore.model.ProductListEntity;
@@ -15,6 +16,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.text.MessageFormat;
+import java.util.InvalidPropertiesFormatException;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -22,6 +25,8 @@ import java.util.Map;
  * Created by mipan on 17.10.2016.
  */
 public class UpdateBasket extends HttpServlet {
+    final static Logger logger = Logger.getLogger(UpdateBasket.class);
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String jsonOrder = request.getParameter("order");
         int totalBasket;
@@ -55,7 +60,8 @@ public class UpdateBasket extends HttpServlet {
                     }
                     catch (NumberFormatException e)
                     {
-//                        todo excaption
+                        logger.info(MessageFormat.format("Wrong cookie : {0}", cookie), e);
+
                     }
 
                 }
@@ -67,10 +73,12 @@ public class UpdateBasket extends HttpServlet {
 
         }
         catch (ParseException e) {
-//            todo logging and redirect to error page
+            logger.error("Error after parse cookies:", e);
+            throw new IllegalArgumentException("Error after parse cookies");
         }
         catch (Exception e) {
-            //todo redirect to error page
+            logger.error("Error after parse cookies:", e);
+            throw new RuntimeException("Problem in update basket process", e);
         }
     }
 

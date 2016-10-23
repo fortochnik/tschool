@@ -1,5 +1,6 @@
 package tstore.dao.impl;
 
+import org.apache.log4j.Logger;
 import org.hibernate.NonUniqueResultException;
 import org.hibernate.query.Query;
 import tstore.dao.UserDao;
@@ -17,6 +18,7 @@ import java.util.List;
  */
 public class UserDaoImpl extends GenericDaoImpl<UserEntity, Integer> implements UserDao {
     private UserEntity user;
+    final static Logger logger = Logger.getLogger(UserDaoImpl.class);
 
     public UserEntity findByCredential(String login, String password) {
 
@@ -26,10 +28,11 @@ public class UserDaoImpl extends GenericDaoImpl<UserEntity, Integer> implements 
         try {
             user = (UserEntity) query.getSingleResult();
         } catch (NoResultException e) {
+            logger.info(MessageFormat.format("No result UserDaoImpl by : {0} - {1} UserEntity ", login, password), e);
+
             return null;
         } catch (NonUniqueResultException e) {
-//            todo Change exception (?)
-//            todo add logging
+            logger.error(MessageFormat.format("Non Unique UserDaoImpl by : {0} - {1} UserEntity ", login, password), e);
         }
 
         return user;
@@ -43,10 +46,10 @@ public class UserDaoImpl extends GenericDaoImpl<UserEntity, Integer> implements 
         try {
             user = (UserEntity) query.getSingleResult();
         } catch (NoResultException e) {
+            logger.info(MessageFormat.format("No result UserDaoImpl by : {0} UserEntity ", login), e);
             return null;
         } catch (NonUniqueResultException e) {
-//            todo Change exception (?)
-//            todo add logging
+            logger.error(MessageFormat.format("Non Unique UserDaoImpl by : {0} UserEntity ", login), e);
         }
 
         return user;

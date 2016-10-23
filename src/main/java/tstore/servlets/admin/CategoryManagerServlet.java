@@ -1,6 +1,7 @@
 package tstore.servlets.admin;
 
 import com.sun.javaws.exceptions.InvalidArgumentException;
+import org.apache.log4j.Logger;
 import tstore.model.CategoryEntity;
 import tstore.model.enums.Role;
 import tstore.service.CategoryService;
@@ -14,12 +15,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.text.MessageFormat;
 import java.util.*;
 
 /**
  * Created by mipan on 22.10.2016.
  */
 public class CategoryManagerServlet extends HttpServlet {
+    final static Logger logger = Logger.getLogger(CategoryManagerServlet.class);
 
     private CategoryService categoryService = new CategoryServiceImpl();
 
@@ -58,7 +61,6 @@ public class CategoryManagerServlet extends HttpServlet {
 
             String[] categoryForDelete = request.getParameterValues("category-del-chbx");
             if (categoryForDelete != null) {
-//            todo change fixed value
                 NameNotDeleted = deleteCategory(categoryForDelete);
             }
 
@@ -117,7 +119,7 @@ public class CategoryManagerServlet extends HttpServlet {
                 }
 
             } catch (NumberFormatException e) {
-//                todo logging
+                logger.error(MessageFormat.format("Invalid value by deleted category : {0}", forDelete), e);
                 throw new IllegalArgumentException("Category id must be numeric");
             }
         }

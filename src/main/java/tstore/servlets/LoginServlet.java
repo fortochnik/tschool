@@ -1,5 +1,6 @@
 package tstore.servlets;
 
+import org.apache.log4j.Logger;
 import org.json.simple.parser.ParseException;
 import tstore.model.OrderEntity;
 import tstore.model.UserEntity;
@@ -16,6 +17,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.security.InvalidParameterException;
 
 import static tstore.utils.UpdateBasket.updateBasketAfterLogin;
 
@@ -23,9 +25,9 @@ import static tstore.utils.UpdateBasket.updateBasketAfterLogin;
  * Created by mipan on 04.10.2016.
  */
 public class LoginServlet extends HttpServlet {
+    final static Logger logger = Logger.getLogger(LoginServlet.class);
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
 
         try {
             if (request.getParameter("form-login-submit") != null) {
@@ -37,9 +39,6 @@ public class LoginServlet extends HttpServlet {
                     setUserDataToSession(request, userEntity);
                     OrderEntity basket = new OrderServiceImpl().getBasketByUserId(userEntity.getId());
                     updateBasketAfterLogin(basket, request);
-
-
-
                     response.sendRedirect("/");
                 } else {
                     request.setAttribute("errorSignInMessage", "login or password is wrong");
@@ -47,7 +46,6 @@ public class LoginServlet extends HttpServlet {
                     rd.forward(request, response);
                 }
             }
-
             //registration
             if (request.getParameter("form-registration-submit") != null) {
                 String email = request.getParameter("form-email");
@@ -60,14 +58,9 @@ public class LoginServlet extends HttpServlet {
 
                     UserService userService = new UserServiceImpl();
                     userService.createUser(userEntity);
-
                     setUserDataToSession(request, userEntity);
-
-
                     OrderEntity basket = new OrderServiceImpl().getBasketByUserId(userEntity.getId());
-
                     updateBasketAfterLogin(basket, request);
-
                     response.sendRedirect("/");
                 }
                 else
@@ -79,12 +72,10 @@ public class LoginServlet extends HttpServlet {
             }
         } catch (ParseException e) {
             request.getSession(false).setAttribute(SessionAttributes.LOGIN, "false");
-            //todo loggong and exeption redirect
+            logger.info("Invalid parameters on Login/Signin page");
+            throw new InvalidParameterException("Invalid parameters on Login/Signin page");
         }
     }
-
-
-
     private String getRequestURI(HttpServletRequest request) {
         String requestURL = request.getRequestURI();
         if (requestURL.equals("/login")) {

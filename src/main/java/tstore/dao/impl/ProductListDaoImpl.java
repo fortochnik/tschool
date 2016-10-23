@@ -1,5 +1,6 @@
 package tstore.dao.impl;
 
+import org.apache.log4j.Logger;
 import org.hibernate.NonUniqueResultException;
 import org.hibernate.query.Query;
 import tstore.dao.ProductListDao;
@@ -12,27 +13,30 @@ import javax.persistence.NoResultException;
 import javax.persistence.TemporalType;
 import javax.persistence.TypedQuery;
 import java.math.BigDecimal;
+import java.text.MessageFormat;
 import java.util.*;
 
 /**
  * Created by mipan on 11.10.2016.
  */
 public class ProductListDaoImpl extends GenericDaoImpl<ProductListEntity, Integer> implements ProductListDao {
+    final static Logger logger = Logger.getLogger(ProductListDaoImpl.class);
     private ProductListEntity productInBasket;
     public ProductListEntity findProductInBasketById(ProductEntity productEntity, OrderEntity orderEntity) {
         String hql = "from ProductListEntity where product = :productEntity and consignment = :orderEntity";
         Query query = getCurrentSession().createQuery(hql).setParameter("productEntity", productEntity).setParameter("orderEntity", orderEntity);
 
         try {
+
             productInBasket = (ProductListEntity) query.getSingleResult();
         }
         catch(NoResultException e) {
+            logger.info(MessageFormat.format("No result ProductListDaoImpl by : {0}  productEntity ", productEntity), e);
             return null;
         }
         catch (NonUniqueResultException e)
         {
-//            todo Change exception (?)
-//            todo add logging
+            logger.info(MessageFormat.format("No Unique ProductListDaoImpl by : {0}  productEntity ", productEntity), e);
         }
 
         return productInBasket;

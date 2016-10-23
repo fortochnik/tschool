@@ -1,5 +1,6 @@
 package tstore.dao.impl;
 
+import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.NonUniqueResultException;
 import org.hibernate.query.Query;
@@ -14,13 +15,14 @@ import javax.persistence.NoResultException;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import java.text.MessageFormat;
 import java.util.List;
 
 /**
  * Created by mipan on 28.09.2016.
  */
 public class OrderDaoImpl extends GenericDaoImpl<OrderEntity, Integer> implements OrderDao {
-
+    final static Logger logger = Logger.getLogger(OrderDaoImpl.class);
     public OrderEntity findBasketByUserId(Integer userId) {
         OrderEntity basket = null;
 
@@ -29,10 +31,11 @@ public class OrderDaoImpl extends GenericDaoImpl<OrderEntity, Integer> implement
         try {
             basket = (OrderEntity) query.getSingleResult();
         } catch (NoResultException e) {
+            logger.info(MessageFormat.format("No result OrderEntity by : {0}  userId ", userId), e);
             return null;
         } catch (NonUniqueResultException e) {
-//            todo Change exception (?)
-//            todo add logging
+            logger.error(MessageFormat.format("No Unique OrderEntity by : {0}  userId ", userId), e);
+
         }
 
         return basket;

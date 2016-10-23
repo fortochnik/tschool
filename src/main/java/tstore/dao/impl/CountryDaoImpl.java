@@ -7,11 +7,13 @@ import tstore.model.CountryEntity;
 import tstore.model.enums.BasketOrderState;
 
 import javax.persistence.NoResultException;
+import org.apache.log4j.Logger;
 
 /**
  * Created by mipan on 02.10.2016.
  */
 public class CountryDaoImpl extends GenericDaoImpl<CountryEntity, Integer> implements CountryDao {
+    final static Logger logger = Logger.getLogger(CountryDaoImpl.class);
     public CountryEntity findByName(String country) {
         CountryEntity countryEntity = null;
         String hql = "from CountryEntity where country = :country";
@@ -20,12 +22,12 @@ public class CountryDaoImpl extends GenericDaoImpl<CountryEntity, Integer> imple
             countryEntity = (CountryEntity) query.getSingleResult();
         }
         catch(NoResultException e) {
+            logger.info("No result single result", e);
             return null;
         }
         catch (NonUniqueResultException e)
         {
-//            todo Change exception (?)
-//            todo add logging
+            logger.error("Non unique  CountryEntity by country : " + country, e);
         }
 
         return countryEntity;

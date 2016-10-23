@@ -1,5 +1,6 @@
 package tstore.dao.impl;
 
+import org.apache.log4j.Logger;
 import org.hibernate.NonUniqueResultException;
 import org.hibernate.query.Query;
 import tstore.dao.ImageDao;
@@ -15,6 +16,7 @@ import java.util.List;
  * Created by mipan on 28.09.2016.
  */
 public class ImageDaoImpl extends GenericDaoImpl<ImageEntity, Integer> implements ImageDao {
+    final static Logger logger = Logger.getLogger(ImageDaoImpl.class);
 
     public ImageEntity getImage(int productId, int imageIndex) {
         ImageEntity imageEntity = null;
@@ -24,10 +26,10 @@ public class ImageDaoImpl extends GenericDaoImpl<ImageEntity, Integer> implement
         try {
             imageEntity = (ImageEntity) query.getSingleResult();
         } catch (NoResultException e) {
+            logger.info(MessageFormat.format("No result Image by : {0}  productId and {1} image index", productId, imageIndex), e);
             return null;
         } catch (NonUniqueResultException e) {
-//            todo Change exception (?)
-//            todo add logging
+            logger.error(MessageFormat.format("Non unique Image by : {0} productId and {1} image index", productId, imageIndex), e);
         }
 
         return imageEntity;
