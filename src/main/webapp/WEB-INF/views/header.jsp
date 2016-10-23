@@ -43,7 +43,7 @@
                             (<c:out value="${BASKET}"/>)
                         </c:if>
                     </a>
-
+                    <span>|</span>
                 </li>
                 <c:if test="${(LOGIN eq 'true') and ((ROLE eq 'EMPLOYEE') or (ROLE eq 'ADMIN'))}">
                     <li>
@@ -54,6 +54,9 @@
                     </li>
                     <li>
                         <a href="/orders">Orders</a>
+                    </li>
+                    <li>
+                        <a href="/add">Add new product</a>
                     </li>
                 </c:if>
 

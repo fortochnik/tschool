@@ -57,23 +57,30 @@ public class OrderDaoImpl extends GenericDaoImpl<OrderEntity, Integer> implement
 
     public List<OrderEntity> find(String orderNumber, String userEmail) {
 
-        int orderId = Integer.parseInt(orderNumber);
+
         Query query = null;
         if (orderNumber != "" && userEmail != "") {
+            int orderId = Integer.parseInt(orderNumber);
             String hql = "from OrderEntity where client.email = :email and id = :orderNumber order by id desc";
             query = getCurrentSession().createQuery(hql).setParameter("email", userEmail).setParameter("orderNumber", orderId);
         }
-        if (orderNumber == "" && userEmail != null) {
+        if (orderNumber == "" && userEmail != "") {
             String hql = "from OrderEntity where client.email = :email order by id desc";
             query = getCurrentSession().createQuery(hql).setParameter("email", userEmail);
         }
-        if (orderNumber != null && userEmail == "") {
+        if (orderNumber != "" && userEmail == "") {
+            int orderId = Integer.parseInt(orderNumber);
             String hql = "from OrderEntity where id = :orderNumber order by id desc";
             query = getCurrentSession().createQuery(hql).setParameter("orderNumber", orderId);
         }
 
-        List list = query.list();
-        return list;
+        if (query!=null) {
+            List list = query.list();
+            return list;
+        }
+        else {
+            return null;
+        }
     }
 
     public List<OrderEntity> findNotDelivered() {

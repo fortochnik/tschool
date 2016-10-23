@@ -62,7 +62,7 @@ button.btn {
     font-size: 16px;
     font-weight: 300;
     line-height: 50px;
-    color: #fff;
+    color: #000;
     -moz-border-radius: 4px; -webkit-border-radius: 4px; border-radius: 4px;
     text-shadow: none;
     -moz-box-shadow: none; -webkit-box-shadow: none; box-shadow: none;
@@ -76,10 +76,10 @@ button.btn {
 
 }
 
-button.btn:hover { opacity: 0.6; color: #fff; }
+button.btn:hover { opacity: 0.6; color: #000; }
 
-button.btn:active { outline: 0; opacity: 0.6; color: #fff; -moz-box-shadow: none; -webkit-box-shadow: none; box-shadow: none; }
+button.btn:active { outline: 0; opacity: 0.6; color: #000; -moz-box-shadow: none; -webkit-box-shadow: none; box-shadow: none; }
 
-button.btn:focus { outline: 0; opacity: 0.6; background: #19b9e7; color: #fff; }
+button.btn:focus { outline: 0; opacity: 0.6; background: #19b9e7; color: #000; }
 
-button.btn:active:focus, button.btn.active:focus { outline: 0; opacity: 0.6; background: #19b9e7; color: #fff; }
+button.btn:active:focus, button.btn.active:focus { outline: 0; opacity: 0.6; background: #19b9e7; color: #000; }

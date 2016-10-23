@@ -104,15 +104,7 @@
 
     <!--Admin's servlets-->
 
-
-    <servlet>
-        <servlet-name>AddProduct</servlet-name>
-        <servlet-class>tstore.servlets.product.ProductServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>AddProduct</servlet-name>
-        <url-pattern>/add</url-pattern>
-    </servlet-mapping>
+<!--
 
     <servlet>
         <servlet-name>AddProductToBasket</servlet-name>
@@ -130,9 +122,19 @@
     <servlet-mapping>
         <servlet-name>UpdateBasket</servlet-name>
         <url-pattern>/updatebasket</url-pattern>
-    </servlet-mapping>
+    </servlet-mapping>-->
 
     <!--used servlet-->
+
+
+    <servlet>
+        <servlet-name>AddProduct</servlet-name>
+        <servlet-class>tstore.servlets.admin.AddProductServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AddProduct</servlet-name>
+        <url-pattern>/add</url-pattern>
+    </servlet-mapping>
 
     <servlet>
         <servlet-name>Modifyorder</servlet-name>
@@ -169,6 +171,18 @@
         <servlet-name>Statistic</servlet-name>
         <url-pattern>/statistic</url-pattern>
     </servlet-mapping>
+
+
+    <!--image servlet-->
+    <servlet>
+        <servlet-name>Images</servlet-name>
+        <servlet-class>tstore.servlets.getImageServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Images</servlet-name>
+        <url-pattern>/image</url-pattern>
+    </servlet-mapping>
+
 
     <!--login page-->
 
