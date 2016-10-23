@@ -34,15 +34,11 @@ public class UserServiceImpl implements UserService {
     public UserEntity getUserById(Integer id) {
         userDao.beginTransaction();
         UserEntity userEntity = userDao.findById(UserEntity.class, id);
-//        Hibernate.initialize(userEntity.getOrders());
         userDao.closeTransaction();
         Hibernate.initialize(userEntity);
         return userEntity;
     }
-    /*public UserEntity getUserById(String id) {
-        return getUserById(Integer.valueOf(id));
-    }
-*/
+
     public void createUser(UserEntity userEntity) {
         userDao.beginTransaction();
         userDao.persist(userEntity);

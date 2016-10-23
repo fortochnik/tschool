@@ -54,20 +54,6 @@
 
   <div class="inner-bg">
     <div class="container">
-
-     <%-- <div class="row">
-        <div class="col-sm-8 col-sm-offset-2 text">
-          <h1>Bootstrap Login &amp; Register Forms</h1>
-          <div class="description">
-            <p>
-              This is a free responsive <strong>"login and register forms"</strong> template made with Bootstrap.
-              Download it on <a href="http://azmind.com" target="_blank"><strong>AZMIND</strong></a>,
-              customize and use it as you like!
-            </p>
-          </div>
-        </div>
-      </div>--%>
-
       <div class="row">
         <div class="col-sm-5">
 
@@ -104,22 +90,6 @@
               </form>
             </div>
           </div>
-
-          <%--<div class="social-login">
-            <h3>...or login with:</h3>
-            <div class="social-login-buttons">
-              <a class="btn btn-link-1 btn-link-1-facebook" href="#">
-                <i class="fa fa-facebook"></i> Facebook
-              </a>
-              <a class="btn btn-link-1 btn-link-1-twitter" href="#">
-                <i class="fa fa-twitter"></i> Twitter
-              </a>
-              <a class="btn btn-link-1 btn-link-1-google-plus" href="#">
-                <i class="fa fa-google-plus"></i> Google Plus
-              </a>
-            </div>
-          </div>--%>
-
         </div>
 
         <div class="col-sm-1 middle-border"></div>

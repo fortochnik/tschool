@@ -1,70 +1,92 @@
 package tstore.servlets.admin;
 
+import com.sun.javaws.exceptions.InvalidArgumentException;
 import tstore.model.CategoryEntity;
+import tstore.model.enums.Role;
 import tstore.service.CategoryService;
 import tstore.service.impl.CategoryServiceImpl;
+import tstore.utils.SessionAttributes;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.Enumeration;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by mipan on 22.10.2016.
  */
 public class CategoryManagerServlet extends HttpServlet {
+
     private CategoryService categoryService = new CategoryServiceImpl();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession(false);
+        if (session.getAttribute(SessionAttributes.LOGIN).equals("true") &&
+                (session.getAttribute(SessionAttributes.ROLE).equals(Role.EMPLOYEE) ||
+                        session.getAttribute(SessionAttributes.ROLE).equals(Role.ADMIN))) {
 
-        CategoryService categoryService = new CategoryServiceImpl();
-        List<CategoryEntity> categories = categoryService.getCategories();
-        request.setAttribute("categoryexist", categories);
 
-        RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/admin/category.jsp");
-        rd.forward(request, response);
+            CategoryService categoryService = new CategoryServiceImpl();
+            List<CategoryEntity> categories = categoryService.getCategories();
+            request.setAttribute("categoryexist", categories);
+
+            RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/admin/category.jsp");
+            rd.forward(request, response);
+        } else {
+
+            RequestDispatcher rd = request.getRequestDispatcher("/");
+            rd.forward(request, response);
+        }
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Map<String, String[]> parameterMap = request.getParameterMap();
+        HttpSession session = request.getSession(false);
+        if (session.getAttribute(SessionAttributes.LOGIN).equals("true") &&
+                (session.getAttribute(SessionAttributes.ROLE).equals(Role.EMPLOYEE) ||
+                        session.getAttribute(SessionAttributes.ROLE).equals(Role.ADMIN))) {
+            Map<String, String[]> parameterMap = request.getParameterMap();
+            List<String> NameNotDeleted = null;
+            if (request.getParameter("update-form") != null) {
+                updateNameCategory(parameterMap);
+            }
 
-        if (request.getParameter("update-form") != null) {
-            updateNameCategory(parameterMap);
-        }
-
-        String[] categoryForDelete = request.getParameterValues("category-del-chbx");
-        if (categoryForDelete!=null) {
+            String[] categoryForDelete = request.getParameterValues("category-del-chbx");
+            if (categoryForDelete != null) {
 //            todo change fixed value
-            deleteCategory(categoryForDelete);
+                NameNotDeleted = deleteCategory(categoryForDelete);
+            }
+
+            String[] categoryForCreate = request.getParameterValues("category-new");
+            if (categoryForCreate != null) {
+
+                createCategory(categoryForCreate);
+            }
+            if (NameNotDeleted != null) {
+                request.setAttribute("notdeleted", NameNotDeleted);
+            }
+
+            CategoryService categoryService = new CategoryServiceImpl();
+            List<CategoryEntity> categories = categoryService.getCategories();
+            request.setAttribute("categoryexist", categories);
+
+            RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/admin/category.jsp");
+            rd.forward(request, response);
+        } else {
+
+            RequestDispatcher rd = request.getRequestDispatcher("/");
+            rd.forward(request, response);
         }
-
-        String[] categoryForCreate = request.getParameterValues("category-new");
-        if (categoryForCreate != null) {
-
-            createCategory(categoryForCreate);
-        }
-/*    -----------*/
-
-
-        CategoryService categoryService = new CategoryServiceImpl();
-        List<CategoryEntity> categories = categoryService.getCategories();
-        request.setAttribute("categoryexist", categories);
-
-        RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/admin/category.jsp");
-        rd.forward(request, response);
     }
 
     private void createCategory(String[] categoryForCreate) {
         for (String categoryName : categoryForCreate) {
-            if (categoryName!="") {
+            if (!categoryName.equals("")) {
                 categoryService.create(categoryName);
             }
         }
@@ -83,10 +105,22 @@ public class CategoryManagerServlet extends HttpServlet {
         }
     }
 
-    private String deleteCategory(String[] categoriesId) {
+    private List<String> deleteCategory(String[] categoriesId) {
+        List<String> notDeleted = new ArrayList<String>();
         CategoryService categoryService = new CategoryServiceImpl();
-        categoryService.deleteById(4);
-//        String notDeletedcategory = categoryService.deleteAll(categoriesId);
-        return null;
+        for (String forDelete : categoriesId) {
+            try {
+                int categoryId = Integer.parseInt(forDelete);
+                String name = categoryService.deleteById(categoryId);
+                if (name != null) {
+                    notDeleted.add(name);
+                }
+
+            } catch (NumberFormatException e) {
+//                todo logging
+                throw new IllegalArgumentException("Category id must be numeric");
+            }
+        }
+        return notDeleted;
     }
 }

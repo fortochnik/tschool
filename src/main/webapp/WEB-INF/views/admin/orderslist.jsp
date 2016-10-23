@@ -149,10 +149,7 @@
                                 type="submit" <%--onclick="submitForms()"--%>>
                             modify
                         </button>
-                            <%--
-                            <input hidden name="modify" value="<c:out value="${order.id}"/>">
-                            <a href="#" class="con-order pull-right btn btn-warning btn-sm active"
-                               aria-pressed="true">modify</a>--%>
+
                     </form>
                     <!-- Содержимое 3 панели -->
                     <div class="container">
@@ -165,7 +162,7 @@
                                             <c:set var="totalProduct"
                                                    value="${productInList.price * productInList.count}"/>
                                             <c:set var="total" value="${total + totalProduct}"/>
-                                            <dt><img src="http://placehold.it/300x200"
+                                            <dt><img src="/image?image=${productInList.product.id}-image1.jpg"
                                                      alt="Product image" width="93"
                                                      height="62"/><strong>$<c:out value="${productInList.price}"/> *
                                                 <c:out

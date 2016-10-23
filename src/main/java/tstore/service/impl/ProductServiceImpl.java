@@ -6,6 +6,7 @@ import tstore.model.ProductEntity;
 import tstore.service.ProductService;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by mipan on 09.10.2016.
@@ -36,5 +37,19 @@ public class ProductServiceImpl implements ProductService{
         productDao.beginTransaction();
         productDao.update(product);
         productDao.closeTransaction();
+    }
+
+    public int save(ProductEntity productEntity) {
+        productDao.beginTransaction();
+        productDao.persist(productEntity);
+        productDao.closeTransaction();
+        return productEntity.getId();
+    }
+
+    public List<ProductEntity> getBySearch(Map<String, String> searchParameters) {
+        productDao.beginTransaction();
+        List<ProductEntity> productEntities = productDao.findByCriteria(searchParameters);
+        productDao.closeTransaction();
+        return productEntities;
     }
 }

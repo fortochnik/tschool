@@ -30,3 +30,10 @@ body {
 footer {
     margin: 50px 0;
 }
+
+div.img-height-max {
+    max-height: 300px;
+}
+div.img-height-min {
+    max-height: 300px;
+}

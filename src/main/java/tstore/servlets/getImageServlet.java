@@ -27,6 +27,7 @@ public class getImageServlet extends HttpServlet {
             }
         }
         catch(IOException e){
+//            todo logging
 
         }finally{
             if (bufferedInputStream!=null)
@@ -37,8 +38,6 @@ public class getImageServlet extends HttpServlet {
             {
                 output.close();
             }
-
-            // close the streams
         }
     }
 }

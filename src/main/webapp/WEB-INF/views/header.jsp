@@ -43,11 +43,11 @@
                             (<c:out value="${BASKET}"/>)
                         </c:if>
                     </a>
-                    <span>|</span>
+
                 </li>
                 <c:if test="${(LOGIN eq 'true') and ((ROLE eq 'EMPLOYEE') or (ROLE eq 'ADMIN'))}">
                     <li>
-                        <a href="/statistic">Statistic</a>
+                         <a href="/statistic"> Statistic</a>
                     </li>
                     <li>
                         <a href="/category">Categories</a>

@@ -28,51 +28,27 @@ public class CategoryServiceImpl implements CategoryService {
 
     public String deleteAll(String[] categoriesId) {
         categoryDao.beginTransaction();
-
-
         int categoryId = Integer.parseInt(categoriesId[0]);
         CategoryEntity categoryEntity = categoryDao.findById(CategoryEntity.class, categoryId);
         categoryDao.delete(categoryEntity);
-
-//        categoryDao.deleteById(categoryId);
-
-       /* for (String catId : categoriesId) {
-
-            int categoryId = Integer.parseInt(catId);
-            CategoryEntity categoryEntity = categoryDao.findById(CategoryEntity.class, categoryId);
-            List<ProductEntity> productEntityList = productDao.getByCategoryId(categoryId);
-            try {
-                if (productEntityList.size() == 0) {
-
-                    categoryDao.delete(categoryEntity);
-
-                } else {
-                    categoryDao.rollbackTransaction();
-                    return categoryEntity.getName();
-                }
-            }
-            catch (PersistenceException e)
-            {
-//                todo logging
-                System.out.println("d");
-
-            }
-            catch (Exception e)
-            {
-                System.out.println("d");
-            }
-
-        }
-        categoryDao.closeTransaction();*/
         categoryDao.closeTransaction();
         return null;
     }
 
-    public void deleteById(int id) {
+    public String deleteById(int id) {
         categoryDao.beginTransaction();
         CategoryEntity categoryEntity = categoryDao.findById(CategoryEntity.class, id);
-        categoryDao.delete(categoryEntity);
-        categoryDao.closeTransaction();
+        if (categoryEntity.getProducts().size() == 0) {
+            categoryDao.delete(categoryEntity);
+            categoryDao.closeTransaction();
+        }
+        else
+        {
+            String name = categoryEntity.getName();
+            categoryDao.closeTransaction();
+            return name;
+        }
+        return null;
     }
 
     public CategoryEntity get(int id) {

@@ -3,8 +3,10 @@ package tstore.servlets.admin;
 import tstore.model.OrderEntity;
 import tstore.model.enums.OrderStatus;
 import tstore.model.enums.PaymentStatus;
+import tstore.model.enums.Role;
 import tstore.service.OrderService;
 import tstore.service.impl.OrderServiceImpl;
+import tstore.utils.SessionAttributes;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -27,8 +29,10 @@ public class ModifyOrders extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
         HttpSession session = request.getSession(false);
+        if (session.getAttribute(SessionAttributes.LOGIN).equals("true") &&
+                (session.getAttribute(SessionAttributes.ROLE).equals(Role.EMPLOYEE) ||
+                        session.getAttribute(SessionAttributes.ROLE).equals(Role.ADMIN))) {
         OrderService orderService = new OrderServiceImpl();
         OrderEntity order = null;
         String modifyOrderId = request.getParameter("modify");
@@ -54,6 +58,12 @@ public class ModifyOrders extends HttpServlet {
         RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/admin/modifyOrder.jsp");
         rd.forward(request, response);
 
+        }
+        else
+        {
 
+            RequestDispatcher rd = request.getRequestDispatcher("/");
+            rd.forward(request, response);
+        }
     }
 }

@@ -69,15 +69,15 @@
                                 <li data-target="#carousel-example-generic" data-slide-to="1"></li>
                                 <li data-target="#carousel-example-generic" data-slide-to="2"></li>
                             </ol>
-                            <div class="carousel-inner">
-                                <div class="item active">
-                                    <img class="slide-image" src="http://placehold.it/800x300" alt="">
+                            <div class="carousel-inner ">
+                                <div class="item active img-height-max img-height-min">
+                                    <a href="/image?image=${product.id}-image1.jpg"> <img src="/image?image=${product.id}-image1.jpg" alt="Product image" width="800" height="300"/></a>
                                 </div>
-                                <div class="item">
-                                    <img class="slide-image" src="http://placehold.it/800x300" alt="">
+                                <div class="item img-height-max">
+                                    <a href="/image?image=${product.id}-image2.jpg"> <img src="/image?image=${product.id}-image2.jpg" alt="Product image" width="800" height="300"/></a>
                                 </div>
-                                <div class="item">
-                                    <img class="slide-image" src="http://placehold.it/800x300" alt="">
+                                <div class="item img-height-max">
+                                    <a href="/image?image=${product.id}-image3.jpg"><img src="/image?image=${product.id}-image3.jpg" alt="Product image" width="800" height="300"/></a>
                                 </div>
                             </div>
                             <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
@@ -103,55 +103,6 @@
             </div>
 
             <div class="well">
-
-                <%--<div class="text-right">
-                  <a class="btn btn-success">Leave a Review</a>
-                </div>
-
-                <hr>
-
-                <div class="row">
-                  <div class="col-md-12">
-                    <span class="glyphicon glyphicon-star"></span>
-                    <span class="glyphicon glyphicon-star"></span>
-                    <span class="glyphicon glyphicon-star"></span>
-                    <span class="glyphicon glyphicon-star"></span>
-                    <span class="glyphicon glyphicon-star-empty"></span>
-                    Anonymous
-                    <span class="pull-right">10 days ago</span>
-                    <p>This product was great in terms of quality. I would definitely buy another!</p>
-                  </div>
-                </div>
-
-                <hr>
-
-                <div class="row">
-                  <div class="col-md-12">
-                    <span class="glyphicon glyphicon-star"></span>
-                    <span class="glyphicon glyphicon-star"></span>
-                    <span class="glyphicon glyphicon-star"></span>
-                    <span class="glyphicon glyphicon-star"></span>
-                    <span class="glyphicon glyphicon-star-empty"></span>
-                    Anonymous
-                    <span class="pull-right">12 days ago</span>
-                    <p>I've alredy ordered another one!</p>
-                  </div>
-                </div>
-
-                <hr>
-
-                <div class="row">
-                  <div class="col-md-12">
-                    <span class="glyphicon glyphicon-star"></span>
-                    <span class="glyphicon glyphicon-star"></span>
-                    <span class="glyphicon glyphicon-star"></span>
-                    <span class="glyphicon glyphicon-star"></span>
-                    <span class="glyphicon glyphicon-star-empty"></span>
-                    Anonymous
-                    <span class="pull-right">15 days ago</span>
-                    <p>I've seen some better than this, but not at this price. I definitely recommend this item.</p>
-                  </div>
-                </div>--%>
                 <ul class="list-group">
                     <li class="list-group-item"><b>Weight : </b><c:out value="${product.weight}"/></li>
                     <li class="list-group-item"><b>Volume : </b><c:out value="${product.volume}"/></li>

@@ -29,19 +29,15 @@ public class BasketServlet extends HttpServlet {
         try {
             if (session.getAttribute(SessionAttributes.LOGIN).equals("true")){
                 int userId = Integer.parseInt(session.getAttribute(SessionAttributes.USERID).toString());
-//                Integer userId = Integer.valueOf(id);
                 basket = new OrderServiceImpl().getBasketByUserId(userId);
                 if (basket == null){
                     UserEntity userById = new UserServiceImpl().getUserById(Integer.valueOf(userId));
                     basket = new OrderEntity(userById);
                     new OrderServiceImpl().createOrder(basket);
                 }
-
-
             }
             else{
 //                todo create basket from cookies
-//                response.sendRedirect("/login");
                 basket = new OrderEntity();
                 basket.setState(BasketOrderState.BASKET);
                 basket.setOrderStatus(OrderStatus.DRAFT);

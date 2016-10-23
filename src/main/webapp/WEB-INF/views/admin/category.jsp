@@ -48,8 +48,11 @@
 
                                 <%--<button id="add-new" class="btn btn-primary btn-xs">Add Field:</button>--%>
                                 <i id="add-new" class="fa fa-plus-circle " aria-hidden="true"></i>
+
                                 <p class="help-block"></p>
+
                                 <p class="help-block"></p>
+
                                 <div id="items">
                                     <div><input type="text" name="category-new"></div>
                                 </div>
@@ -69,6 +72,7 @@
             </form>
         </div>
         <p class="help-block"></p>
+
         <form name="form-category-exist" method="post" action="/category" id="tab" class="userinfo-form">
             <div class="row">
                 <div class="col-sm-5">
@@ -122,11 +126,20 @@
                                         </c:forEach>
                                         </tbody>
                                     </table>
+                                    <c:if test="${not empty notdeleted}">
+                                        <div class="form-group top15">
+                                            <div class="alert alert-danger fade in ">
+                                                This categories have products. Can not be delete:
+                                                <c:forEach items="${notdeleted}" var="item">
+                                                    <c:out value="${item}"/>,
+                                                </c:forEach>
 
+                                            </div>
+                                        </div>
+                                    </c:if>
 
                                 </div>
                             </ul>
-
 
                         </div>
 

@@ -55,14 +55,12 @@ public class GenericDaoImpl<T, Id extends Serializable> implements GenericDao<T,
 
     public void closeTransaction() {
         currentTransaction.commit();
-//        session.flush();
         session.close();
     }
 
 
     public void rollbackTransaction() {
         currentTransaction.rollback();
-//        session.close();
     }
 
     public void sessionFlush() {
@@ -70,7 +68,7 @@ public class GenericDaoImpl<T, Id extends Serializable> implements GenericDao<T,
     }
 
     protected Session getCurrentSession(){
-        session = HibernateSessionFactory.getSessionFactory().openSession();
+        session = HibernateSessionFactory.getSessionFactory().getCurrentSession();
         return session;
     }
 }

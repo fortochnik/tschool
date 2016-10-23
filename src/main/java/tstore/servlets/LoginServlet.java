@@ -11,6 +11,7 @@ import tstore.utils.*;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -35,8 +36,8 @@ public class LoginServlet extends HttpServlet {
                 if (userEntity != null) {
                     setUserDataToSession(request, userEntity);
                     OrderEntity basket = new OrderServiceImpl().getBasketByUserId(userEntity.getId());
-
                     updateBasketAfterLogin(basket, request);
+
 
 
                     response.sendRedirect("/");
@@ -68,8 +69,6 @@ public class LoginServlet extends HttpServlet {
                     updateBasketAfterLogin(basket, request);
 
                     response.sendRedirect("/");
-                /*RequestDispatcher rd = request.getRequestDispatcher(requestURL);
-                rd.forward(request, response);*/
                 }
                 else
                 {
@@ -82,8 +81,9 @@ public class LoginServlet extends HttpServlet {
             request.getSession(false).setAttribute(SessionAttributes.LOGIN, "false");
             //todo loggong and exeption redirect
         }
-
     }
+
+
 
     private String getRequestURI(HttpServletRequest request) {
         String requestURL = request.getRequestURI();

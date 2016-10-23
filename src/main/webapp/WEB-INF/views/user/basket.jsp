@@ -58,13 +58,11 @@
 <c:if test="${not empty basket.productList}">
 
 <div class="panel panel-default">
-    <!-- Заголовок 3 панели -->
     <div class="panel-heading">
         <h4 class="panel-title">
             <a data-toggle="collapse" data-parent="#accordion" href="#collapse<c:out value="${basket.id}"/>">Order
                 #
                 <c:out value="${basket.id}"/></a>
-                <%--<a href="/basket" class="con-order pull-right btn btn-warning btn-sm active" aria-pressed="true">Continue to basket</a>--%>
         </h4>
     </div>
     <div id="collapse<c:out value="${basket.id}"/>" class="panel-collapse collapse in">
@@ -80,7 +78,7 @@
                                        value="${productInList.product.price * productInList.count}"/>
                                 <c:set var="total" value="${total + totalProduct}"/>
                                 <dt id="product-<c:out value="${productInList.product.id}"/>">
-                                    <img src="http://placehold.it/300x200"
+                                    <img src="/image?image=${productInList.product.id}-image1.jpg"
                                          alt="Product image" width="93"
                                          height="62"/>
                                     <strong>
@@ -118,10 +116,7 @@
                             </div>
 
                         </c:forEach>
-
                     </c:if>
-
-
                 </div>
                 <div class="button-block">
                     <button id="product-save" type="button"
@@ -219,10 +214,7 @@
                 total = total + price * number;
             });
             $(".total-price").replaceWith("<span class=\"pull-right total-price\">Total price: $" + total + "</span>");
-            /*var order = [
-             {pv: 1000, bv: 2000, mp: 3000, cp: 5000},
-             {pv: 2500, bv: 3500, mp: 2000, cp: 4444}
-             ];*/
+
             var order = {basket: []};
             $('dt').each(function (index, item) {
                 var count = $(item).find(".count").val();
@@ -245,8 +237,6 @@
                 success: function (data) {
                 }
             });
-
-
         });
 
     </script>

@@ -12,7 +12,7 @@ public interface CategoryService {
 
     String deleteAll(String[] categoriesId);
 
-    void deleteById(int id);
+    String deleteById(int id);
 
     CategoryEntity get(int id);
 

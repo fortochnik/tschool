@@ -57,16 +57,6 @@
             </div>
         </div>
 
-        <%-- <div class="tab-pane fade" id="profile">
-             <div class="container">
-                 <div class="row">
-                     <form id="tab2" class="left password-form" method="post" action="profile">
-                         <jsp:include page="/WEB-INF/views/user/userprofile/changepassword.jsp"/>
-                     </form>
-                 </div>
-             </div>
-         </div>--%>
-
         <div class="tab-pane fade" id="orders">
             <div class="container">
                 <div class="row">

@@ -58,11 +58,4 @@ public class ProductInBasketServiceImpl implements ProductInBasketService {
         return proceeds;
     }
 
-
-/*    public ProductListEntity getProductInBasketById(Integer idProduct, OrderEntity orderEntity) {
-        productListDao.beginTransaction();
-        ProductListEntity productInBasketById = productListDao.findProductInBasketById(idProduct, orderEntity);
-        productListDao.closeTransaction();
-        return productInBasketById;
-    }*/
 }

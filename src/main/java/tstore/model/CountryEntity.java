@@ -13,7 +13,6 @@ public class CountryEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    @Column(name = "country_id",  unique = true, nullable = false)
     @Column(name = "id",  unique = true, nullable = false)
     private int id;
 

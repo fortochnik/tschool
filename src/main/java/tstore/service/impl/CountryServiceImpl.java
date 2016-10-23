@@ -11,7 +11,7 @@ import java.util.List;
  * Created by mipan on 18.10.2016.
  */
 public class CountryServiceImpl implements CountryService {
-    CountryDao countryDao = new CountryDaoImpl();
+    protected CountryDao countryDao = new CountryDaoImpl();
     public List<CountryEntity> getAll() {
         countryDao.beginTransaction();
         List<CountryEntity> countryEntities = countryDao.findAll(CountryEntity.class);

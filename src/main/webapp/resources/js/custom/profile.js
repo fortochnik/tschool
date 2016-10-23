@@ -7,7 +7,7 @@ jQuery(document).ready(function () {
     /*
      Login form validation
      */
-    $('.userinfo-form input[type="text"]').on('focus', function () {
+    $('.userinfo-form input[type="text"], .userinfo-form textarea').on('focus', function () {
         $(this).removeClass('input-error');
     });
 

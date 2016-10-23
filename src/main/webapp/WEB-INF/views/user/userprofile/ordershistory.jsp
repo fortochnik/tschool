@@ -45,9 +45,11 @@
                                             <c:set var="totalProduct"
                                                    value="${productInList.product.price * productInList.count}"/>
                                             <c:set var="total" value="${total + totalProduct}"/>
-                                            <dt><img src="http://placehold.it/300x200"
+                                            <dt>
+                                                <img src="/image?image=${productInList.product.id}-image1.jpg"
                                                      alt="Product image" width="93"
-                                                     height="62"/><strong>$<c:out
+                                                     height="62"/>
+                                                <strong>$<c:out
                                                     value="${productInList.product.price}"/> *
                                                 <c:out
                                                         value="${productInList.count}"/> ($<c:out
@@ -92,9 +94,9 @@
                                     <dl>
                                         <c:set var="totalProduct" value="${productInList.price * productInList.count}"/>
                                         <c:set var="total" value="${total + totalProduct}"/>
-                                        <dt><img src="http://placehold.it/300x200"
+                                        <dt><img src="/image?image=${productInList.product.id}-image1.jpg"
                                                  alt="Product image" width="93"
-                                                 height="62"/><strong>$<c:out value="${productInList.price}"/> * <c:out
+                                                 height="62"/> * <c:out
                                                 value="${productInList.count}"/> ($<c:out
                                                 value="${totalProduct}"/>)</strong><a
                                                 href="/product/<c:out value="${productInList.product.id}"/>"><c:out
@@ -136,23 +138,5 @@
             </div>
         </div>
     </c:forEach>
-    <%--<div class="panel panel-default">
-      <!-- Заголовок 3 панели -->
-      <div class="panel-heading">
-        <h4 class="panel-title">
-          <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree">3.
-            Order</a>
-        </h4>
-      </div>
-      <div id="collapseThree" class="panel-collapse collapse">
-        <!-- Содержимое 3 панели -->
-        <div class="panel-body">
-          <p>Создание сайта - это трудоемкий процесс, который состоит из нескольких
-            этапов. В качестве примера рассмотрим создание сайта визитки на этом <a
-                    href="http://itchief.ru/lessons/bootstrap-3/website-creation-business-cards-(part-1)"
-                    target="_blank">уроке</a>, в котором рассмотрим процесс загрузки
-            необходимых пакетов и проектирования макета сайта.</p>
-        </div>
-      </div>
-    </div>--%>
+
 </div>

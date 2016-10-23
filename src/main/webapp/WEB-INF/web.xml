@@ -27,6 +27,18 @@
         <servlet-name>Main</servlet-name>
         <url-pattern></url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>Search</servlet-name>
+        <servlet-class>tstore.servlets.SearchServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Search</servlet-name>
+        <url-pattern>/search</url-pattern>
+    </servlet-mapping>
+
+
+
 <!--
     <servlet>
         <servlet-name>ProductEmptyURI</servlet-name>
@@ -102,10 +114,6 @@
         <url-pattern>/success</url-pattern>
     </servlet-mapping>
 
-    <!--Admin's servlets-->
-
-<!--
-
     <servlet>
         <servlet-name>AddProductToBasket</servlet-name>
         <servlet-class>tstore.servlets.user.AddToBasketServlet</servlet-class>
@@ -115,6 +123,7 @@
         <url-pattern>/addtobasket</url-pattern>
     </servlet-mapping>
 
+    <!--Admin's servlets-->
     <servlet>
         <servlet-name>UpdateBasket</servlet-name>
         <servlet-class>tstore.servlets.user.UpdateBasket</servlet-class>
@@ -122,14 +131,17 @@
     <servlet-mapping>
         <servlet-name>UpdateBasket</servlet-name>
         <url-pattern>/updatebasket</url-pattern>
-    </servlet-mapping>-->
-
-    <!--used servlet-->
+    </servlet-mapping>
 
 
     <servlet>
         <servlet-name>AddProduct</servlet-name>
         <servlet-class>tstore.servlets.admin.AddProductServlet</servlet-class>
+        <multipart-config>
+            <max-file-size>10485760</max-file-size>
+            <max-request-size>20971520</max-request-size>
+            <file-size-threshold>5242880</file-size-threshold>
+        </multipart-config>
     </servlet>
     <servlet-mapping>
         <servlet-name>AddProduct</servlet-name>

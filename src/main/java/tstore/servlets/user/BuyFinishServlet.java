@@ -26,15 +26,13 @@ public class BuyFinishServlet extends HttpServlet {
         int userId = Integer.parseInt(request.getSession(false).getAttribute(SessionAttributes.USERID).toString());
         request.getParameterNames();
         OrderEntity basket = new OrderServiceImpl().getBasketByUserId(userId);
-
-
             String country = request.getParameter("form-country");
             String city = request.getParameter("form-city");
             String street = request.getParameter("form-street");
             String building = request.getParameter("form-build");
             String apartment = request.getParameter("form-apartment");
             String zipcode = request.getParameter("form-zipcode");
-        if (country!="" && city!="" && street!="" && building!="" && apartment!="")
+        if (!country.equals("") && !city.equals("") && !street.equals("") && !building.equals("") && !apartment.equals(""))
         {
             PaymentType payment = PaymentType.valueOf(request.getParameter("payment"));
             DeliveryType delivery = DeliveryType.valueOf(request.getParameter("delivery"));
@@ -58,7 +56,6 @@ public class BuyFinishServlet extends HttpServlet {
 
             RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/success.jsp");
             rd.forward(request, response);
-
         }
         else
         {

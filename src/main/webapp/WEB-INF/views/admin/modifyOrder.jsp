@@ -56,9 +56,10 @@
                                         <c:set var="totalProduct"
                                                value="${productInList.price * productInList.count}"/>
                                         <c:set var="total" value="${total + totalProduct}"/>
-                                        <dt><img src="http://placehold.it/300x200"
+                                        <dt><img src="/image?image=${productInList.product.id}-image1.jpg"
                                                  alt="Product image" width="93"
-                                                 height="62"/><strong>$<c:out value="${productInList.price}"/> *
+                                                 height="62"/>
+                                            <strong>$<c:out value="${productInList.price}"/> *
                                             <c:out
                                                     value="${productInList.count}"/> ($<c:out
                                                     value="${totalProduct}"/>)</strong><a

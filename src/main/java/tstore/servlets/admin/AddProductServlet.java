@@ -1,15 +1,26 @@
 package tstore.servlets.admin;
 
 import tstore.model.CategoryEntity;
+import tstore.model.ProductEntity;
+import tstore.model.enums.Role;
 import tstore.service.CategoryService;
+import tstore.service.ImageService;
+import tstore.service.ProductService;
 import tstore.service.impl.CategoryServiceImpl;
+import tstore.service.impl.ImageServiceImpl;
+import tstore.service.impl.ProductServiceImpl;
+import tstore.utils.SessionAttributes;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.*;
+import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.math.BigDecimal;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.text.MessageFormat;
 import java.util.List;
 
 /**
@@ -18,18 +29,116 @@ import java.util.List;
 public class AddProductServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession(false);
+        if (session.getAttribute(SessionAttributes.LOGIN).equals("true") &&
+                (session.getAttribute(SessionAttributes.ROLE).equals(Role.EMPLOYEE) ||
+                        session.getAttribute(SessionAttributes.ROLE).equals(Role.ADMIN))) {
 
-        CategoryService categoryService = new CategoryServiceImpl();
-        List<CategoryEntity> categories = categoryService.getCategories();
-        request.setAttribute("categories", categories);
+            CategoryService categoryService = new CategoryServiceImpl();
+            List<CategoryEntity> categories = categoryService.getCategories();
+            request.setAttribute("categories", categories);
 
-//        request.setAttribute("orders", orderEntityList);
-        RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/admin/addProduct.jsp");
-        rd.forward(request, response);
+            RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/admin/addProduct.jsp");
+            rd.forward(request, response);
+        } else {
+            RequestDispatcher rd = request.getRequestDispatcher("/");
+            rd.forward(request, response);
+        }
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doPost(req, resp);
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession(false);
+        if (session.getAttribute(SessionAttributes.LOGIN).equals("true") &&
+                (session.getAttribute(SessionAttributes.ROLE).equals(Role.EMPLOYEE) ||
+                        session.getAttribute(SessionAttributes.ROLE).equals(Role.ADMIN))) {
+
+
+            CategoryService categoryService = new CategoryServiceImpl();
+            List<CategoryEntity> categories = categoryService.getCategories();
+            request.setAttribute("categories", categories);
+
+            int productId;
+
+            String name = request.getParameter("name");
+            String category = request.getParameter("form-category");
+            String parameters = request.getParameter("parameters");
+            String weight = request.getParameter("weight");
+            String volume = request.getParameter("volume");
+            String price = request.getParameter("price");
+            String count = request.getParameter("count");
+            String company = request.getParameter("company");
+
+            try {
+                productId = createProduct(name, category, parameters, weight, volume, price, count, company);
+
+                Part mainImg = request.getPart("img1");
+                Part secodImg = request.getPart("img2");
+                Part thirdImg = request.getPart("img3");
+
+//            productId=1;//todo delete
+
+                saveImage(productId, mainImg, 1);
+                saveImage(productId, secodImg, 2);
+                saveImage(productId, thirdImg, 3);
+            } catch (NumberFormatException e) {
+//            todo logging
+                request.setAttribute("parsErrorMessage", "Some data is invalid");
+
+            } catch (IOException e) {
+//            todo logging
+                request.setAttribute("parsErrorMessage", "Some problem with image save process. Please try again.");
+
+            }
+
+            request.setAttribute("parsSuccessMessage", "Created");
+            RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/admin/addProduct.jsp");
+            rd.forward(request, response);
+
+        } else {
+
+            RequestDispatcher rd = request.getRequestDispatcher("/");
+            rd.forward(request, response);
+        }
+
+    }
+
+    private void saveImage(int productId, Part filePart, int index) throws IOException {
+
+        String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString(); // MSIE fix.
+        InputStream fileContent = filePart.getInputStream();
+        File uploads = new File("d:\\img\\");
+        File file = new File(uploads, MessageFormat.format("{0}-image{1}.jpg", productId, index));
+        Files.copy(fileContent, file.toPath());
+
+//        todo save url in db
+
+        ImageService imageService = new ImageServiceImpl();
+        imageService.save(MessageFormat.format("{0}-image{1}.jpg", productId, index), productId);
+
+    }
+
+    private int createProduct(String name, String category, String parameters, String weight, String volume, String price, String count, String company) throws NumberFormatException {
+        double weightPars = Double.parseDouble(weight);
+        double volumePars = Double.parseDouble(volume);
+        BigDecimal pricePars = BigDecimal.valueOf(Double.parseDouble(price));
+        int countPars = Integer.parseInt(count);
+        int categoryId = Integer.parseInt(category);
+
+        ProductEntity productEntity = new ProductEntity();
+        productEntity.setName(name);
+        productEntity.setParameters(parameters);
+        productEntity.setWeight(weightPars);
+        productEntity.setVolume(volumePars);
+        productEntity.setPrice(pricePars);
+        productEntity.setCount(countPars);
+        productEntity.setCompany(company);
+        CategoryEntity categoryEntity = new CategoryServiceImpl().get(categoryId);
+        productEntity.setCategory(categoryEntity);
+
+        ProductService productService = new ProductServiceImpl();
+        int id = productService.save(productEntity);
+
+        return id;
     }
 }

@@ -25,8 +25,6 @@ import java.util.Set;
 public class UserProfileServlet extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
-
-
         HttpSession session = request.getSession(false);
 
         if (session.getAttribute(SessionAttributes.LOGIN).equals("true")) {
@@ -74,13 +72,6 @@ public class UserProfileServlet extends HttpServlet {
             boolean readyForSave = true;
 
             if (oldPassword != "") {
-                /*if (newPassword.length() < 6) {
-                    request.setAttribute("passwordErrorMessage", "The password should be 6 or more characters!");
-                    return;
-                }*/
-
-
-
                 if (!oldPassword.equals(userEntity.getPassword())) {
                     request.setAttribute("passwordErrorMessage", "The current password is wrong!");
                     readyForSave = false;
@@ -94,10 +85,7 @@ public class UserProfileServlet extends HttpServlet {
                         userEntity.setPassword(newPassword);
                     }
                 }
-                /*if (!newPassword.equals(newPasswordRepeat)) {
-                    request.setAttribute("passwordErrorMessage", "The new passwords are not identical");
-                    return;
-                }*/
+
             }
 
             if (readyForSave) {
@@ -116,9 +104,7 @@ public class UserProfileServlet extends HttpServlet {
 
             List<OrderEntity> ordersByUser = new OrderServiceImpl().getOrdersByUser(userEntity);
             request.setAttribute("userdata", userEntity);
-//            ordersByUser.get(0).getAddress().
             request.setAttribute("orders", ordersByUser);
-
 
             RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/views/user/userprofile.jsp");
             rd.forward(request, response);
@@ -129,7 +115,6 @@ public class UserProfileServlet extends HttpServlet {
 
     private UserEntity getUserEntityById(HttpSession session) {
         int userId = Integer.parseInt(session.getAttribute(SessionAttributes.USERID).toString());
-//        Integer userId = Integer.valueOf(id);
         return new UserServiceImpl().getUserById(userId);
     }
 }

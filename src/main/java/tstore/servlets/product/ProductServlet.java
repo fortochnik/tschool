@@ -1,6 +1,5 @@
 package tstore.servlets.product;
 
-import tstore.dao.ProductDao;
 import tstore.exceptions.PageNotFountException;
 import tstore.model.ProductEntity;
 import tstore.service.ProductService;
@@ -13,7 +12,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.io.PrintWriter;
 
 /**
  * Created by mipan on 25.09.2016.

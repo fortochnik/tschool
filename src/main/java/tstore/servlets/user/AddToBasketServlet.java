@@ -34,10 +34,6 @@ public class AddToBasketServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession(false);
         try {
-//
-//            userId = Integer.valueOf(id);
-
-            //if user login - create or update basket
             if (session.getAttribute(SessionAttributes.LOGIN).equals("true")) {
                 userId = Integer.parseInt(session.getAttribute(SessionAttributes.USERID).toString());
                 addProductToBasket(request);
@@ -72,27 +68,6 @@ public class AddToBasketServlet extends HttpServlet {
         session.setAttribute(SessionAttributes.BASKET, basketCount);
 
     }
-
-  /*  private HttpServletResponse addProductToCookies(HttpServletRequest request, HttpServletResponse response) {
-        Cookie[] cookies = request.getCookies();
-
-        boolean newProductInBasket = true;
-        for (Cookie cookie : cookies) {
-            if (cookie.getName().equals(request.getParameter("product"))) {
-                int number = Integer.parseInt(cookie.getValue()) + Integer.parseInt(request.getParameter("number"));
-                cookie.setValue(String.valueOf(number));
-                newProductInBasket = false;
-                break;
-            }
-        }
-        if (newProductInBasket) {
-            Cookie cookie = new Cookie(request.getParameter("product"), request.getParameter("number"));
-            response.addCookie(cookie);
-        }
-
-        return response;
-    }*/
-
 
     private void addProductToBasket(HttpServletRequest request) {
         int productId = getProductId(request);

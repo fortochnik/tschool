@@ -35,7 +35,4 @@
     <p class="help-block"></p>
   </div>
 </div>
-<%--
-<div>
-  <button class="btn btn-primary">Update</button>
-</div>--%>
+

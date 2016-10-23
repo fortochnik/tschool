@@ -35,8 +35,6 @@ public class UpdateBasket extends HttpServlet {
                 Integer userId = Integer.parseInt(request.getSession(false).getAttribute(SessionAttributes.USERID).toString());
 
                 OrderEntity basketByUserId = updateBasket(new OrderServiceImpl().getBasketByUserId(userId), basketJson);
-
-
             }
             else {
                 Cookie[] cookies = request.getCookies();
@@ -62,7 +60,7 @@ public class UpdateBasket extends HttpServlet {
 
                 }
             }
-//todo update bascet count label
+//todo update basket count label
             request.getSession(false).setAttribute(SessionAttributes.BASKET, totalBasket);
             RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/views/user/payment.jsp");
             rd.forward(request, response);

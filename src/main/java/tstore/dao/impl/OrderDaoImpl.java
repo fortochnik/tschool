@@ -45,30 +45,22 @@ public class OrderDaoImpl extends GenericDaoImpl<OrderEntity, Integer> implement
         List list = query.list();
         return list;
 
-//        Hibernate.initialize(userEntity.getOrders());
-//        Set<OrderEntity> orders = userEntity.getOrders();
-//        for (OrderEntity order : orders) {
-//            Hibernate.initialize(order.getProductList());
-//        }
-//
-//        return orders;
-
     }
 
     public List<OrderEntity> find(String orderNumber, String userEmail) {
 
 
         Query query = null;
-        if (orderNumber != "" && userEmail != "") {
+        if (!orderNumber.equals("") && !userEmail.equals("")) {
             int orderId = Integer.parseInt(orderNumber);
             String hql = "from OrderEntity where client.email = :email and id = :orderNumber order by id desc";
             query = getCurrentSession().createQuery(hql).setParameter("email", userEmail).setParameter("orderNumber", orderId);
         }
-        if (orderNumber == "" && userEmail != "") {
+        if (orderNumber.equals("") && !userEmail.equals("")) {
             String hql = "from OrderEntity where client.email = :email order by id desc";
             query = getCurrentSession().createQuery(hql).setParameter("email", userEmail);
         }
-        if (orderNumber != "" && userEmail == "") {
+        if (!orderNumber.equals("") && userEmail.equals("")) {
             int orderId = Integer.parseInt(orderNumber);
             String hql = "from OrderEntity where id = :orderNumber order by id desc";
             query = getCurrentSession().createQuery(hql).setParameter("orderNumber", orderId);

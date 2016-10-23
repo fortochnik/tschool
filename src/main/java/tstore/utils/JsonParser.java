@@ -40,7 +40,6 @@ public class JsonParser {
                 mapJson.put(product, count);
             }
 
-
         return mapJson;
     }
 }

@@ -31,12 +31,6 @@ public class UserIdentificationFilter implements Filter {
         if (session == null) {
             session = request.getSession(true);
             session.setAttribute(SessionAttributes.LOGIN, "false");
-
-//        todo delete temporary part
-        /*temporary*/
-//            session.setAttribute(SessionAttributes.LOGIN, "true");
-//            session.setAttribute(SessionAttributes.USERID, "1");
-        /*temporary*/
         }
 
         if (session.getAttribute(SessionAttributes.LOGIN).equals("false")) {
@@ -71,8 +65,6 @@ public class UserIdentificationFilter implements Filter {
                 }
             }
             session.setAttribute(SessionAttributes.BASKET, totalCount);
-
-
         }
 
         chain.doFilter(request, response);

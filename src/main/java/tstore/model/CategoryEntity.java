@@ -20,7 +20,7 @@ public class CategoryEntity {
     @Column(name = "category")
     private String name;
 
-    @OneToMany(mappedBy = "category")
+    @OneToMany(mappedBy = "category", cascade = CascadeType.REFRESH)
     private Set<ProductEntity> products;
 
     public int getId() {

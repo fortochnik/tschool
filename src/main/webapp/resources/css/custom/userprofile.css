@@ -24,3 +24,11 @@ form .input-error {
 input.count {
     width:70px;!important;
 }
+
+input.min {
+    width:80px;!important;
+}
+input.medium {
+    width:150px;!important;
+}
+

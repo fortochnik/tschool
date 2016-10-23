@@ -44,13 +44,7 @@ public class OrderServiceImpl implements OrderService {
         for (OrderEntity orderEntity : orderEntities) {
             Hibernate.initialize(orderEntity.getProductList());
         }
-/*
-//        Hibernate.initialize(userEntity.getOrders());
 
-//        Set<OrderEntity> orderEntities = orderDao.findOrdersByUser(userEntity);
-        for (OrderEntity orderEntity : orderEntities) {
-            Hibernate.initialize(orderEntity.getProductList());
-        }*/
 
         orderDao.closeTransaction();
 
@@ -65,7 +59,7 @@ public class OrderServiceImpl implements OrderService {
 
     public void updateBasketToOrder(OrderEntity basket) {
         orderDao.beginTransaction();
-        ProductService productService = new ProductServiceImpl();
+//        ProductService productService = new ProductServiceImpl();
         ProductInBasketService productInBasketService = new ProductInBasketServiceImpl();
         Set<ProductListEntity> productList = basket.getProductList();
         for (ProductListEntity productListEntity : productList) {
@@ -73,8 +67,8 @@ public class OrderServiceImpl implements OrderService {
             productListEntity.setPrice(product.getPrice());
             int count = product.getCount() - productListEntity.getCount();
             product.setCount(count);
-            productService.update(product);
-            productInBasketService.update(productListEntity);
+//            productService.update(product);
+//            productInBasketService.update(productListEntity);
         }
         orderDao.update(basket);
 

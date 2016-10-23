@@ -68,21 +68,15 @@ public class UpdateBasket {
                         orderUpdated.put(productInCookie, orderInCookies.get(productInCookie));
                     }
                 }
-
-
                 if (orderUpdated.size() == 0) {
                     orderUpdated = orderInCookies;
                 }
-
                 updateBasketAfterLoginInDB(basketInBD, orderUpdated);
             }
         }
     }
 
     private static void updateBasketAfterLoginInDB(OrderEntity basketInDB, Map<Integer, Integer> basketInfoUpdated) {
-
-
-
         Set<ProductListEntity> productListInDB = basketInDB.getProductList();
         if (productListInDB == null){
             productListInDB = new HashSet<ProductListEntity>();
@@ -99,6 +93,5 @@ public class UpdateBasket {
             productListInDB.add(newProductInBasket);
             new ProductInBasketServiceImpl().save(newProductInBasket);
         }
-//        new OrderServiceImpl().updateBasketToOrder(basketInDB);
     }
 }

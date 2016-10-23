@@ -52,3 +52,12 @@ body {
 footer {
     margin: 50px 0;
 }
+
+img.catalog-image.resize{
+    width:320px;
+    height:150px;
+}
+
+div.img-height {
+    min-height: 150px;
+}

@@ -15,8 +15,7 @@ public class AddressEntity {
     private int id;
 
     @ManyToOne(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
-//    @JoinColumn(name ="country_id")
-    @JoinColumn(/*name = "country",*/ referencedColumnName = "id")
+    @JoinColumn( referencedColumnName = "id")
     private CountryEntity country;
 
     @Column(name = "city")
