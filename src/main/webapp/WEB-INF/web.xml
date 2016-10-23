@@ -103,14 +103,7 @@
     </servlet-mapping>
 
     <!--Admin's servlets-->
-    <servlet>
-        <servlet-name>OrderList</servlet-name>
-        <servlet-class>tstore.servlets.admin.AdminOrderListServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>OrderList</servlet-name>
-        <url-pattern>/orders</url-pattern>
-    </servlet-mapping>
+
 
     <servlet>
         <servlet-name>AddProduct</servlet-name>
@@ -140,6 +133,24 @@
     </servlet-mapping>
 
     <!--used servlet-->
+
+    <servlet>
+        <servlet-name>Modifyorder</servlet-name>
+        <servlet-class>tstore.servlets.admin.ModifyOrders</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Modifyorder</servlet-name>
+        <url-pattern>/modifyorder</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>OrderList</servlet-name>
+        <servlet-class>tstore.servlets.admin.AdminOrderListServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>OrderList</servlet-name>
+        <url-pattern>/orders</url-pattern>
+    </servlet-mapping>
 
     <servlet>
         <servlet-name>Category</servlet-name>

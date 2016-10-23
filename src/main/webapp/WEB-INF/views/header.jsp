@@ -45,12 +45,15 @@
                     </a>
 
                 </li>
-                <c:if test="${LOGIN eq 'true'}">
+                <c:if test="${(LOGIN eq 'true') and ((ROLE eq 'EMPLOYEE') or (ROLE eq 'ADMIN'))}">
                     <li>
                         <a href="/statistic">Statistic</a>
                     </li>
                     <li>
-                        <a href="/category">Statistic</a>
+                        <a href="/category">Categories</a>
+                    </li>
+                    <li>
+                        <a href="/orders">Orders</a>
                     </li>
                 </c:if>
 

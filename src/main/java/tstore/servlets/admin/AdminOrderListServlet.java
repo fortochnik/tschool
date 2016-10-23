@@ -1,6 +1,9 @@
 package tstore.servlets.admin;
 
+import tstore.model.OrderEntity;
 import tstore.model.enums.Role;
+import tstore.service.OrderService;
+import tstore.service.impl.OrderServiceImpl;
 import tstore.utils.SessionAttributes;
 
 import javax.servlet.RequestDispatcher;
@@ -10,32 +13,66 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.List;
 
 /**
  * Created by mipan on 05.10.2016.
  */
 public class AdminOrderListServlet extends HttpServlet {
+    private OrderService orderService = new OrderServiceImpl();
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession(false);
 
+        List<OrderEntity> orderEntityList = null;
+        if (request.getParameter("is-custom-search")!=null){
+            String orderNumber = request.getParameter("order-number");
+            String userEmail = request.getParameter("email");
+            orderEntityList = getCustomSearchResult(orderNumber, userEmail);
+        }
+
+        if (request.getParameter("all-not-delivered")!=null){
+            orderEntityList = orderService.getNotDelivered();
+        }
+
+        if (request.getParameter("all-not-paid")!=null){
+            orderEntityList = orderService.getNotPaid();
+        }
+
+        if (request.getParameter("orders-all")!=null){
+            orderEntityList = orderService.getAllOrders();
+        }
+
+
+        request.setAttribute("orders", orderEntityList);
+        RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/admin/orderslist.jsp");
+        rd.forward(request, response);
+    }
+
+    private List<OrderEntity> getCustomSearchResult(String orderNumber, String userEmail) {
+
+        List<OrderEntity> orderEntities = orderService.getOrders(orderNumber, userEmail);
+        return orderEntities;
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession(false);
-        if (session.getAttribute(SessionAttributes.LOGIN).equals("false")) {
-            response.sendRedirect("/login");
 
-        }
+        //todo delete temporary
+        session.setAttribute(SessionAttributes.LOGIN, "true");
+        session.setAttribute(SessionAttributes.ROLE, Role.ADMIN);
+        session.setAttribute(SessionAttributes.USERID, 16);
+        /*delete*/
 
-//        String roleAttribute = (String) session.getAttribute(SessionAttributes.ROLE);
-        if (session.getAttribute(SessionAttributes.LOGIN).equals("true") && (SessionAttributes.ROLE.equals(Role.ADMIN)
-                || SessionAttributes.ROLE.equals(Role.EMPLOYEE)))
+
+        if (session.getAttribute(SessionAttributes.LOGIN).equals("true") && (session.getAttribute(SessionAttributes.ROLE).equals(Role.ADMIN)
+                || session.getAttribute(SessionAttributes.ROLE).equals(Role.EMPLOYEE)))
         {
-            RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/admin/listOrder.jsp");
+            RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/admin/orderslist.jsp");
             rd.forward(request, response);
         }
         else
         {
-            response.sendRedirect("/");
+            response.sendRedirect("/login");
         }
 
     }

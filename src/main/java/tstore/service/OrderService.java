@@ -18,4 +18,12 @@ public interface OrderService {
     void update(OrderEntity basketByUserId);
 
     void updateBasketToOrder(OrderEntity basket);
+
+    List<OrderEntity> getOrders(String orderNumber, String userEmail);
+
+    List<OrderEntity> getNotDelivered();
+
+    List<OrderEntity> getNotPaid();
+
+    List<OrderEntity> getAllOrders();
 }

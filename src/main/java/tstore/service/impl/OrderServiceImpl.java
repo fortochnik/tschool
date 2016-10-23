@@ -83,4 +83,38 @@ public class OrderServiceImpl implements OrderService {
 
     }
 
+    public List<OrderEntity> getOrders(String orderNumber, String userEmail) {
+        orderDao.beginTransaction();
+
+        List<OrderEntity> orderEntities= orderDao.find(orderNumber, userEmail);
+
+        orderDao.closeTransaction();
+        return orderEntities;
+    }
+
+    public List<OrderEntity> getNotDelivered() {
+        orderDao.beginTransaction();
+
+        List<OrderEntity> orderEntities= orderDao.findNotDelivered();
+
+        orderDao.closeTransaction();
+        return orderEntities;
+    }
+
+    public List<OrderEntity> getNotPaid() {
+        orderDao.beginTransaction();
+
+        List<OrderEntity> orderEntities= orderDao.findPaid();
+
+        orderDao.closeTransaction();
+        return orderEntities;
+    }
+
+    public List<OrderEntity> getAllOrders() {
+        orderDao.beginTransaction();
+        List<OrderEntity> orderEntities= orderDao.findAllOrders();
+        orderDao.closeTransaction();
+        return orderEntities;
+    }
+
 }

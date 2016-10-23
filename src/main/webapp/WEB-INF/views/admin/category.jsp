@@ -30,6 +30,45 @@
 <div class="inner-bg">
 
     <div class="container">
+
+        <div class="container">
+            <%----%>
+            <form name="form-category-new" method="post" action="/category" id="tab2">
+                <div class="form-bottom">
+                    <p class="help-block"></p>
+
+
+                    <ul class="list-group">
+                        <li class="list-group-item"><b>Create category: </b></li>
+                        <div class="container">
+
+                            <table class="table table-nonfluid">
+
+                                <tbody>
+
+                                <%--<button id="add-new" class="btn btn-primary btn-xs">Add Field:</button>--%>
+                                <i id="add-new" class="fa fa-plus-circle " aria-hidden="true"></i>
+                                <p class="help-block"></p>
+                                <p class="help-block"></p>
+                                <div id="items">
+                                    <div><input type="text" name="category-new"></div>
+                                </div>
+
+                                </tbody>
+                            </table>
+
+
+                        </div>
+                    </ul>
+                </div>
+                <div>
+                    <button class="btn btn-primary" type="submit" <%--onclick="submitForms()"--%>>
+                        Add category
+                    </button>
+                </div>
+            </form>
+        </div>
+        <p class="help-block"></p>
         <form name="form-category-exist" method="post" action="/category" id="tab" class="userinfo-form">
             <div class="row">
                 <div class="col-sm-5">
@@ -103,40 +142,8 @@
             </button>
 
         </div>
-
-        <%----%>
-        <%--<form name="form-category-new" method="post" action="/category" id="tab2" class="userinfo-form">--%>
-            <%--<div class="form-bottom">--%>
-                <%--<p class="help-block"></p>--%>
-
-
-                <%--<ul class="list-group">--%>
-                    <%--<li class="list-group-item"><b>Create category: </b></li>--%>
-                    <%--<div class="container">--%>
-
-                        <%--<table class="table table-nonfluid">--%>
-
-                            <%--<tbody>--%>
-
-                            <%--<button id="add" class="btn btn-primary">Add Field</button>--%>
-                            <%--<div id="items">--%>
-                                <%--<div><input type="text" name="category-new"></div>--%>
-                            <%--</div>--%>
-
-                            <%--</tbody>--%>
-                        <%--</table>--%>
-
-
-                    <%--</div>--%>
-                <%--</ul>--%>
-            <%--</div>--%>
-            <%--<div>--%>
-                <%--<button class="btn btn-primary update" type="submit" &lt;%&ndash;onclick="submitForms()"&ndash;%&gt;>--%>
-                    <%--Add category--%>
-                <%--</button>--%>
-            <%--</div>--%>
-        <%--</form>--%>
     </div>
+
 </div>
 <!-- jQuery -->
 <script src="${pageContext.request.contextPath}/resources/js/jquery.js"></script>
@@ -150,9 +157,9 @@
 <script>
     $(document).ready(function () {
 
-        $("#add").click(function (e) {
+        $("#add-new").click(function (e) {
             //Append a new row of code to the "#items" div
-            $("#items").append('<div><input name="category-new" type="text" /><button class="delete">Delete</button></div>');
+            $("#items").append('<div><input name="category-new" type="text" /><button class="delete btn btn-primary btn-xs">Delete</button></div>');
         })
 
 

@@ -29,7 +29,7 @@ public class UserProfileServlet extends HttpServlet {
 
         HttpSession session = request.getSession(false);
 
-        if (session != null) {
+        if (session.getAttribute(SessionAttributes.LOGIN).equals("true")) {
 
                 UserEntity userEntity = getUserEntityById(session);
                 List<OrderEntity> ordersByUser = new OrderServiceImpl().getOrdersByUser(userEntity);

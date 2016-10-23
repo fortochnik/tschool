@@ -13,4 +13,12 @@ public interface OrderDao extends GenericDao<OrderEntity, Integer> {
     OrderEntity findBasketByUserId(Integer userId);
 
     List findOrdersByUser(UserEntity userEntity);
+
+    List<OrderEntity> find(String orderNumber, String userEmail);
+
+    List<OrderEntity> findNotDelivered();
+
+    List<OrderEntity> findPaid();
+
+    List<OrderEntity> findAllOrders();
 }

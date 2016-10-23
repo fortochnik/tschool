@@ -40,19 +40,23 @@ public class CategoryManagerServlet extends HttpServlet {
             updateNameCategory(parameterMap);
         }
 
-
-        String[] categoryForCreate = request.getParameterValues("category-new");
-        if (categoryForCreate != null) {
-            createCategory(categoryForCreate);
-        }
-/*    -----------*/
-
         String[] categoryForDelete = request.getParameterValues("category-del-chbx");
         if (categoryForDelete!=null) {
 //            todo change fixed value
             deleteCategory(categoryForDelete);
         }
 
+        String[] categoryForCreate = request.getParameterValues("category-new");
+        if (categoryForCreate != null) {
+
+            createCategory(categoryForCreate);
+        }
+/*    -----------*/
+
+
+        CategoryService categoryService = new CategoryServiceImpl();
+        List<CategoryEntity> categories = categoryService.getCategories();
+        request.setAttribute("categoryexist", categories);
 
         RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/admin/category.jsp");
         rd.forward(request, response);
@@ -60,7 +64,9 @@ public class CategoryManagerServlet extends HttpServlet {
 
     private void createCategory(String[] categoryForCreate) {
         for (String categoryName : categoryForCreate) {
-            categoryService.create(categoryName);
+            if (categoryName!="") {
+                categoryService.create(categoryName);
+            }
         }
 
     }
