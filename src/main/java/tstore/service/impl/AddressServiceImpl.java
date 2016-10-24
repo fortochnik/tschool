@@ -12,10 +12,10 @@ import tstore.service.AddressService;
  */
 public class AddressServiceImpl implements AddressService {
 
-    private AddressDao addressDao = new AddressDaoImpl();
+    protected AddressDao addressDao = new AddressDaoImpl();
 
     /**
-     * create address
+     * create addressT
      * @param address Entity address for create
      * */
     public void addAddress(AddressEntity address) {

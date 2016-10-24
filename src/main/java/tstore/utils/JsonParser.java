@@ -23,12 +23,13 @@ public class JsonParser {
     /**
      * Pars json basket from anonymous user basket's cookies and rewrite it to map
      *
-     * @param json    json string from client side that look like {basket: [{product: productId, count: countOfProduct}, {product: productId, count: countOfProduct}]}
+     * @param json    json string from client side that look like {"basket":[{"product":"4","count":"2"},{"product":"3","count":"2"}]}
      * @param request request of servlet
      * @return map were key is productId and value is quantity of Product
      * @throws ParseException
+     * @throws NumberFormatException
      */
-    public static Map<Integer, Integer> getBasket(String json, HttpServletRequest request) throws ParseException {
+    public static Map<Integer, Integer> getBasket(String json, HttpServletRequest request) throws ParseException, NumberFormatException {
         Map<Integer, Integer> mapJson = null;
 
         JSONParser parser = new JSONParser();
