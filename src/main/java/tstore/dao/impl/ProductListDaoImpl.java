@@ -42,9 +42,8 @@ public class ProductListDaoImpl extends GenericDaoImpl<ProductListEntity, Intege
         return productInBasket;
     }
 
-    public List getTopTen() {
+    public List<ProductListEntity> getTopTen() {
         String hql = "select product, count(product.count) as quantity from ProductListEntity as pr_list left join pr_list.product as product where pr_list.price is not null group by product.name order by quantity desc ";
-//        Query query = getCurrentSession().createQuery(hql).setMaxResults(10);
         Query query = getCurrentSession().createQuery(hql).setMaxResults(10);
         List list = query.getResultList();
         return list;

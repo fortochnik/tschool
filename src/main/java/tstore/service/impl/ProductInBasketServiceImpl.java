@@ -17,6 +17,12 @@ import java.util.List;
 public class ProductInBasketServiceImpl implements ProductInBasketService {
     private ProductListDao productListDao = new ProductListDaoImpl();
 
+    /**
+     * Get products in target basket by {@link ProductEntity}
+     * @param ProductEntity {@link ProductEntity} that look up in basket
+     * @param orderEntity target basket
+     * @return {@link ProductListEntity} for target {@param orderEntity} with {@param ProductEntity } or null
+     */
     public ProductListEntity getProductInBasketById(ProductEntity ProductEntity, OrderEntity orderEntity) {
         productListDao.beginTransaction();
         ProductListEntity productInBasketById = productListDao.findProductInBasketById(ProductEntity, orderEntity);
@@ -24,25 +30,42 @@ public class ProductInBasketServiceImpl implements ProductInBasketService {
         return productInBasketById;
     }
 
+    /**
+     * Save {@param ProductListEntity}
+     * @param productInBasketById {@param ProductListEntity} for save
+     */
     public void save(ProductListEntity productInBasketById) {
         productListDao.beginTransaction();
         productListDao.persist(productInBasketById);
         productListDao.closeTransaction();
     }
 
+    /**
+     * Upate {@param ProductListEntity}
+     * @param productInBasketById {@param ProductListEntity} for update
+     */
     public void update(ProductListEntity productInBasketById) {
         productListDao.beginTransaction();
         productListDao.update(productInBasketById);
         productListDao.closeTransaction();
     }
 
+
+    /**
+     * delete {@param ProductListEntity}
+     * @param productListEntity {@param ProductListEntity} for delete
+     */
     public void delete(ProductListEntity productListEntity) {
         productListDao.beginTransaction();
         productListDao.delete(productListEntity);
         productListDao.closeTransaction();
     }
 
-    public List getTopTenProduct() {
+    /**
+     * get top 10 buyable products
+     * @return list of {@link ProductListEntity} list
+     */
+    public List<ProductListEntity> getTopTenProduct() {
         productListDao.beginTransaction();
 
         List topTen = productListDao.getTopTen();
@@ -51,6 +74,11 @@ public class ProductInBasketServiceImpl implements ProductInBasketService {
         return topTen;
     }
 
+    /**
+     * Get Proceeds by last X days
+     * @param numberOfDaysToLookBack number of days for get proceeds
+     * @return Proceeds by last {@param numberOfDaysToLookBack} days
+     */
     public BigDecimal getProceedsBy(int numberOfDaysToLookBack) {
         productListDao.beginTransaction();
         BigDecimal proceeds = productListDao.getProceedsBy(numberOfDaysToLookBack);

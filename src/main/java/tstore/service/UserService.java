@@ -17,7 +17,7 @@ public interface UserService {
 
     void update(UserEntity userEntity);
 
-
+    @Deprecated
     UserEntity getFullUserById(Integer id);
 
     List getTopTenUser();

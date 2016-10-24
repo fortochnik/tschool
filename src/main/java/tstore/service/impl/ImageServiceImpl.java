@@ -14,6 +14,12 @@ import java.util.List;
  */
 public class ImageServiceImpl implements ImageService {
     ImageDao imageDao = new ImageDaoImpl();
+
+    /**
+     * Save url image for target product
+     * @param url image's url
+     * @param productId target product's id
+     */
     public void save(String url, Integer productId) {
         imageDao.beginTransaction();
         ProductEntity productEntity = new ProductDaoImpl().findById(ProductEntity.class, productId);
@@ -24,6 +30,11 @@ public class ImageServiceImpl implements ImageService {
         imageDao.closeTransaction();
     }
 
+    /**
+     * Get url of main image for product
+     * @param productId target product id
+     * @return url of image
+     */
     public ImageEntity getMain(int productId) {
         imageDao.beginTransaction();
         ImageEntity imageEntity =imageDao.getImage(productId, 1);
@@ -31,6 +42,11 @@ public class ImageServiceImpl implements ImageService {
         return imageEntity;
     }
 
+    /**
+     * Get all url for target product
+     * @param productId target product id
+     * @return all image for product
+     */
     public List<ImageEntity> getAll(int productId) {
         imageDao.beginTransaction();
         List<ImageEntity> imageEntity =imageDao.getImage(productId);

@@ -10,7 +10,7 @@ import java.util.List;
 public interface CategoryService {
     List<CategoryEntity> getCategories();
 
-    String deleteAll(String[] categoriesId);
+    void deleteAll(String[] categoriesId);
 
     String deleteById(int id);
 

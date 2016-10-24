@@ -11,7 +11,6 @@ import java.util.Map;
 public interface ProductService {
     ProductEntity getProductById(Integer id);
     List<ProductEntity> getAllProducts();
-    List<ProductEntity> getProductsByCategory();
 
     void update(ProductEntity product);
 

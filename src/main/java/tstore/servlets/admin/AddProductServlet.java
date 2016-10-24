@@ -100,7 +100,6 @@ public class AddProductServlet extends HttpServlet {
             RequestDispatcher rd = request.getRequestDispatcher("/");
             rd.forward(request, response);
         }
-
     }
 
     private void saveImage(int productId, Part filePart, int index) throws IOException {

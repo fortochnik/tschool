@@ -9,6 +9,7 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 
 /**
+ * Util class for management  session Factory
  * Created by mipan on 24.09.2016.
  */
 public class HibernateSessionFactory {
@@ -36,6 +37,10 @@ public class HibernateSessionFactory {
     }
 
 
+    /**
+     * get Session Factory
+     * @return instance of the Session Factory
+     */
     public static SessionFactory getSessionFactory() {
         return sessionFactory;
     }

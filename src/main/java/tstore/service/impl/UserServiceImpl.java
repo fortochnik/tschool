@@ -18,12 +18,24 @@ public class UserServiceImpl implements UserService {
 
     private UserDao userDao = new UserDaoImpl();
 
+    /**
+     * Get user by credentials
+     * @param login user login
+     * @param password user's password
+     * @return {@link UserEntity}
+     */
     public UserEntity getUser(String login, String password) {
         userDao.beginTransaction();
         UserEntity userEntity = userDao.findByCredential(login, password);
         userDao.closeTransaction();
         return userEntity;
     }
+
+    /**
+     * Get {@link UserEntity} by login
+     * @param login user login
+     * @return {@link UserEntity}
+     */
     public UserEntity getUser(String login) {
         userDao.beginTransaction();
         UserEntity userEntity = userDao.findByLogin(login);
@@ -31,6 +43,11 @@ public class UserServiceImpl implements UserService {
         return userEntity;
     }
 
+    /**
+     * Get {@link UserEntity} by id
+     * @param id user id
+     * @return {@link UserEntity}
+     */
     public UserEntity getUserById(Integer id) {
         userDao.beginTransaction();
         UserEntity userEntity = userDao.findById(UserEntity.class, id);
@@ -39,18 +56,33 @@ public class UserServiceImpl implements UserService {
         return userEntity;
     }
 
+    /**
+     * Create user
+     * @param userEntity {@link UserEntity} for create
+     */
     public void createUser(UserEntity userEntity) {
         userDao.beginTransaction();
         userDao.persist(userEntity);
         userDao.closeTransaction();
     }
 
+    /**
+     * Update user
+     * @param userEntity {@link UserEntity} for update
+     */
     public void update(UserEntity userEntity) {
         userDao.beginTransaction();
         userDao.update(userEntity);
         userDao.closeTransaction();
     }
 
+
+    /**
+     * Create user by id
+     * @param  id user id
+     * @return user
+     */
+    @Deprecated
     public UserEntity getFullUserById(Integer id) {
         userDao.beginTransaction();
         UserEntity userEntity = userDao.findById(UserEntity.class, id);
@@ -63,6 +95,10 @@ public class UserServiceImpl implements UserService {
         return userEntity;
     }
 
+    /**
+     * Get top ten buying user
+     * @return {@list UserEntity} list
+     */
     public List getTopTenUser() {
         userDao.beginTransaction();
         List topTenUser = userDao.getTopTenUser();

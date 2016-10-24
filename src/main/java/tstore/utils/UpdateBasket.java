@@ -22,7 +22,13 @@ import java.util.*;
 public class UpdateBasket {
     final static Logger logger = Logger.getLogger(UpdateBasket.class);
 
-
+    /**
+     * Update basket for user after login
+     * add product from cookies to exists basket or create new basket
+     * @param basketInBD draft user's Basket in db
+     * @param request servlet request
+     * @throws ParseException
+     */
     public static void updateBasketAfterLogin(OrderEntity basketInBD, HttpServletRequest request) throws ParseException {
         Map<Integer, Integer> orderInCookies = new HashMap<Integer, Integer>();
         Map<Integer, Integer> orderUpdated = new HashMap<Integer, Integer>();
@@ -78,6 +84,7 @@ public class UpdateBasket {
             }
         }
     }
+
 
     private static void updateBasketAfterLoginInDB(OrderEntity basketInDB, Map<Integer, Integer> basketInfoUpdated) {
         Set<ProductListEntity> productListInDB = basketInDB.getProductList();

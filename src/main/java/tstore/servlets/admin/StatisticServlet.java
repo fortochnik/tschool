@@ -1,5 +1,6 @@
 package tstore.servlets.admin;
 
+import tstore.model.ProductEntity;
 import tstore.model.ProductListEntity;
 import tstore.model.UserEntity;
 import tstore.model.enums.Role;
@@ -32,7 +33,7 @@ public class StatisticServlet extends HttpServlet {
                         session.getAttribute(SessionAttributes.ROLE).equals(Role.ADMIN))) {
             ProductInBasketService productInBasketService = new ProductInBasketServiceImpl();
             UserService orderService = new UserServiceImpl();
-            List topTenProduct = productInBasketService.getTopTenProduct();
+            List<ProductListEntity> topTenProduct = productInBasketService.getTopTenProduct();
             List topTenUser = orderService.getTopTenUser();
             BigDecimal proceedsByWeek = productInBasketService.getProceedsBy(7);
             BigDecimal proceedsByMonth = productInBasketService.getProceedsBy(30);

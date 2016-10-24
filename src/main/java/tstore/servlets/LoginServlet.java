@@ -49,11 +49,18 @@ public class LoginServlet extends HttpServlet {
             //registration
             if (request.getParameter("form-registration-submit") != null) {
                 String email = request.getParameter("form-email");
+                String password = request.getParameter("form-password");
+                boolean possibleForRegistration = true;
+                if (password.length()<6){
+                    possibleForRegistration = false;
 
-                if (!isRegistered(email)) {
+                    throw new InvalidParameterException("The password less than 6 characters");
+                }
+
+                if (possibleForRegistration && !isRegistered(email)) {
                     String name = request.getParameter("form-first-name");
                     String sername = request.getParameter("form-last-name");
-                    String password = request.getParameter("form-password");
+
                     UserEntity userEntity = new UserEntity(name, sername, null, email, password, Role.CLIENT);
 
                     UserService userService = new UserServiceImpl();
@@ -72,8 +79,18 @@ public class LoginServlet extends HttpServlet {
             }
         } catch (ParseException e) {
             request.getSession(false).setAttribute(SessionAttributes.LOGIN, "false");
-            logger.info("Invalid parameters on Login/Signin page");
-            throw new InvalidParameterException("Invalid parameters on Login/Signin page");
+            logger.error("Invalid parameters on Login/Signin page");
+            request.setAttribute("errorSignUpMessage", "Invalid parameters on Login/Signin page");
+            RequestDispatcher rd = request.getRequestDispatcher("login.jsp");
+            rd.forward(request, response);
+
+        }
+        catch (InvalidParameterException e)
+        {
+            logger.error("Password must contain at least 6 characters");
+            request.setAttribute("errorSignUpMessage", "Password must contain at least 6 characters");
+            RequestDispatcher rd = request.getRequestDispatcher("login.jsp");
+            rd.forward(request, response);
         }
     }
     private String getRequestURI(HttpServletRequest request) {

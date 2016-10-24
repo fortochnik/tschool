@@ -20,25 +20,33 @@ import java.util.Set;
  */
 public class JsonParser {
 
+    /**
+     * Pars json basket from anonymous user basket's cookies and rewrite it to map
+     *
+     * @param json    json string from client side that look like {basket: [{product: productId, count: countOfProduct}, {product: productId, count: countOfProduct}]}
+     * @param request request of servlet
+     * @return map were key is productId and value is quantity of Product
+     * @throws ParseException
+     */
     public static Map<Integer, Integer> getBasket(String json, HttpServletRequest request) throws ParseException {
-        Map<Integer, Integer> mapJson =null;
+        Map<Integer, Integer> mapJson = null;
 
-            JSONParser parser = new JSONParser();
-            JSONArray list = new JSONArray();
+        JSONParser parser = new JSONParser();
+        JSONArray list = new JSONArray();
 
-            Object obj = parser.parse(json);
+        Object obj = parser.parse(json);
 
-            JSONObject jsonObject = (JSONObject) obj;
-            JSONArray basket = (JSONArray) jsonObject.get("basket");
-            Iterator i = basket.iterator();
+        JSONObject jsonObject = (JSONObject) obj;
+        JSONArray basket = (JSONArray) jsonObject.get("basket");
+        Iterator i = basket.iterator();
 
-            mapJson= new HashMap<Integer, Integer>();
-            while (i.hasNext()) {
-                JSONObject slide = (JSONObject) i.next();
-                Integer product = Integer.valueOf((String)slide.get("product"));
-                Integer count = Integer.valueOf((String)slide.get("count"));
-                mapJson.put(product, count);
-            }
+        mapJson = new HashMap<Integer, Integer>();
+        while (i.hasNext()) {
+            JSONObject slide = (JSONObject) i.next();
+            Integer product = Integer.valueOf((String) slide.get("product"));
+            Integer count = Integer.valueOf((String) slide.get("count"));
+            mapJson.put(product, count);
+        }
 
         return mapJson;
     }
