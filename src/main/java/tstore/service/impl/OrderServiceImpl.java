@@ -122,7 +122,7 @@ public class OrderServiceImpl implements OrderService {
      */
     public List<OrderEntity> getNotPaid() {
         orderDao.beginTransaction();
-        List<OrderEntity> orderEntities= orderDao.findPaid();
+        List<OrderEntity> orderEntities= orderDao.findNotPaid();
         orderDao.closeTransaction();
         return orderEntities;
     }

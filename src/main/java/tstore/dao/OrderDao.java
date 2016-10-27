@@ -19,6 +19,7 @@ public interface OrderDao extends GenericDao<OrderEntity, Integer> {
     List<OrderEntity> findNotDelivered();
 
     List<OrderEntity> findPaid();
+    List<OrderEntity> findNotPaid();
 
     List<OrderEntity> findAllOrders();
 }

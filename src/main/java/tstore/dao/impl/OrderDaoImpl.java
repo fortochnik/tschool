@@ -56,17 +56,17 @@ public class OrderDaoImpl extends GenericDaoImpl<OrderEntity, Integer> implement
         Query query = null;
         if (!orderNumber.equals("") && !userEmail.equals("")) {
             int orderId = Integer.parseInt(orderNumber);
-            String hql = "from OrderEntity where client.email = :email and id = :orderNumber order by id desc";
-            query = getCurrentSession().createQuery(hql).setParameter("email", userEmail).setParameter("orderNumber", orderId);
+            String hql = "from OrderEntity where client.email = :email and id = :orderNumber  and orderStatus != :draft order by id desc";
+            query = getCurrentSession().createQuery(hql).setParameter("email", userEmail).setParameter("orderNumber", orderId).setParameter("draft", OrderStatus.DRAFT);
         }
         if (orderNumber.equals("") && !userEmail.equals("")) {
-            String hql = "from OrderEntity where client.email = :email order by id desc";
-            query = getCurrentSession().createQuery(hql).setParameter("email", userEmail);
+            String hql = "from OrderEntity where client.email = :email and orderStatus != :draft  order by id desc";
+            query = getCurrentSession().createQuery(hql).setParameter("email", userEmail).setParameter("draft", OrderStatus.DRAFT);
         }
         if (!orderNumber.equals("") && userEmail.equals("")) {
             int orderId = Integer.parseInt(orderNumber);
-            String hql = "from OrderEntity where id = :orderNumber order by id desc";
-            query = getCurrentSession().createQuery(hql).setParameter("orderNumber", orderId);
+            String hql = "from OrderEntity where id = :orderNumber  and orderStatus != :draft  order by id desc";
+            query = getCurrentSession().createQuery(hql).setParameter("orderNumber", orderId).setParameter("draft", OrderStatus.DRAFT);
         }
 
         if (query!=null) {
@@ -89,6 +89,12 @@ public class OrderDaoImpl extends GenericDaoImpl<OrderEntity, Integer> implement
     public List<OrderEntity> findPaid() {
         String hql = "from OrderEntity where paymentStatus != :paymentStatus order by id desc";
         Query query = getCurrentSession().createQuery(hql).setParameter("paymentStatus", PaymentStatus.NOT_PAID);
+
+        return query.list();
+    }
+    public List<OrderEntity> findNotPaid() {
+        String hql = "from OrderEntity where paymentStatus != :paymentStatus order by id desc";
+        Query query = getCurrentSession().createQuery(hql).setParameter("paymentStatus", PaymentStatus.PAID);
 
         return query.list();
     }

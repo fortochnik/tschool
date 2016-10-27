@@ -44,7 +44,7 @@
     <div class="row">
 
         <div class="col-md-3">
-            <p class="lead">Shop Name</p>
+            <p class="lead">EShop</p>
 
             <div class="list-group">
                     <form class="form left" method="post" action="search" id="tab">
@@ -71,13 +71,13 @@
                         </ol>
                         <div class="carousel-inner">
                             <div class="item active">
-                                <img class="slide-image" src="http://placehold.it/800x300" alt="">
+                                <img class="slide-image" src="/image?image=main1.jpg" alt="">
                             </div>
                             <div class="item">
-                                <img class="slide-image" src="http://placehold.it/800x300" alt="">
+                                <img class="slide-image" src="/image?image=main2.jpg" alt="">
                             </div>
                             <div class="item">
-                                <img class="slide-image" src="http://placehold.it/800x300" alt="">
+                                <img class="slide-image" src="/image?image=main3.jpg" alt="">
                             </div>
                         </div>
                         <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">

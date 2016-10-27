@@ -106,7 +106,7 @@ public class AddProductServlet extends HttpServlet {
 
         String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString(); // MSIE fix.
         InputStream fileContent = filePart.getInputStream();
-        File uploads = new File("d:\\img\\");
+        File uploads = new File("c:\\img\\");
         File file = new File(uploads, MessageFormat.format("{0}-image{1}.jpg", productId, index));
         Files.copy(fileContent, file.toPath());
 

@@ -21,7 +21,7 @@ public class getImageServlet extends HttpServlet {
         try{
 
             String fileName = request.getParameter("image");
-            FileInputStream fis = new FileInputStream(new File("d:\\img\\"+fileName));
+            FileInputStream fis = new FileInputStream(new File("c:\\img\\"+fileName));
             bufferedInputStream = new BufferedInputStream(fis);
 
             response.setContentType("image/jpeg");
