@@ -1,6 +1,7 @@
 package tstore.servlets.admin;
 
 import org.apache.log4j.Logger;
+import org.springframework.stereotype.Controller;
 import tstore.model.CategoryEntity;
 import tstore.model.enums.Role;
 import tstore.service.CategoryService;
@@ -20,6 +21,7 @@ import java.util.*;
 /**
  * Created by mipan on 22.10.2016.
  */
+@Controller
 public class CategoryManagerServlet extends HttpServlet {
     final static Logger logger = Logger.getLogger(CategoryManagerServlet.class);
 

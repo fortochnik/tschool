@@ -1,6 +1,9 @@
 package tstore.service.impl;
 
 import org.hibernate.Hibernate;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import tstore.dao.UserDao;
 import tstore.dao.impl.UserDaoImpl;
 import tstore.model.OrderEntity;
@@ -14,9 +17,12 @@ import java.util.Set;
 /**
  * Created by mipan on 08.10.2016.
  */
+@Service
+@Transactional
 public class UserServiceImpl implements UserService {
 
-    private UserDao userDao = new UserDaoImpl();
+    @Autowired
+    private UserDao userDao;
 
     /**
      * Get user by credentials
@@ -25,9 +31,9 @@ public class UserServiceImpl implements UserService {
      * @return {@link UserEntity}
      */
     public UserEntity getUser(String login, String password) {
-        userDao.beginTransaction();
+//        userDao.beginTransaction();
         UserEntity userEntity = userDao.findByCredential(login, password);
-        userDao.closeTransaction();
+//        userDao.closeTransaction();
         return userEntity;
     }
 
@@ -37,9 +43,9 @@ public class UserServiceImpl implements UserService {
      * @return {@link UserEntity}
      */
     public UserEntity getUser(String login) {
-        userDao.beginTransaction();
+//        userDao.beginTransaction();
         UserEntity userEntity = userDao.findByLogin(login);
-        userDao.closeTransaction();
+//        userDao.closeTransaction();
         return userEntity;
     }
 
@@ -49,9 +55,9 @@ public class UserServiceImpl implements UserService {
      * @return {@link UserEntity}
      */
     public UserEntity getUserById(Integer id) {
-        userDao.beginTransaction();
+//        userDao.beginTransaction();
         UserEntity userEntity = userDao.findById(UserEntity.class, id);
-        userDao.closeTransaction();
+//        userDao.closeTransaction();
         Hibernate.initialize(userEntity);
         return userEntity;
     }
@@ -61,9 +67,9 @@ public class UserServiceImpl implements UserService {
      * @param userEntity {@link UserEntity} for create
      */
     public void createUser(UserEntity userEntity) {
-        userDao.beginTransaction();
+//        userDao.beginTransaction();
         userDao.persist(userEntity);
-        userDao.closeTransaction();
+//        userDao.closeTransaction();
     }
 
     /**
@@ -71,9 +77,9 @@ public class UserServiceImpl implements UserService {
      * @param userEntity {@link UserEntity} for update
      */
     public void update(UserEntity userEntity) {
-        userDao.beginTransaction();
+//        userDao.beginTransaction();
         userDao.update(userEntity);
-        userDao.closeTransaction();
+//        userDao.closeTransaction();
     }
 
 
@@ -84,14 +90,14 @@ public class UserServiceImpl implements UserService {
      */
     @Deprecated
     public UserEntity getFullUserById(Integer id) {
-        userDao.beginTransaction();
+//        userDao.beginTransaction();
         UserEntity userEntity = userDao.findById(UserEntity.class, id);
         OrderEntity basketByUserId = new OrderServiceImpl().getBasketByUserId(id);
         Set setS = new HashSet();
         setS.add(basketByUserId);
         userEntity.setOrders(setS);
         userEntity.getOrders();
-        userDao.closeTransaction();
+//        userDao.closeTransaction();
         return userEntity;
     }
 
@@ -100,9 +106,9 @@ public class UserServiceImpl implements UserService {
      * @return {@list UserEntity} list
      */
     public List getTopTenUser() {
-        userDao.beginTransaction();
+//        userDao.beginTransaction();
         List topTenUser = userDao.getTopTenUser();
-        userDao.closeTransaction();
+//        userDao.closeTransaction();
         return topTenUser;
     }
 }

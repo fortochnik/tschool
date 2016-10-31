@@ -17,8 +17,8 @@
     <link href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom CSS -->
-    <link href="${pageContext.request.contextPath}/resources/css/shop-homepage.css" rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/resources/css/custom/spaces.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/resources//css/shop-homepage.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/resources//css/custom/spaces.css" rel="stylesheet">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->

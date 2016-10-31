@@ -1,7 +1,9 @@
 package tstore.service.impl;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import tstore.dao.ProductDao;
-import tstore.dao.impl.ProductDaoImpl;
 import tstore.model.ProductEntity;
 import tstore.service.ProductService;
 
@@ -11,9 +13,11 @@ import java.util.Map;
 /**
  * Created by mipan on 09.10.2016.
  */
+@Service
+@Transactional
 public class ProductServiceImpl implements ProductService{
-
-    private ProductDao productDao = new ProductDaoImpl();
+    @Autowired
+    private ProductDao productDaoImpl;
 
     /**
      * Get {@link ProductEntity} by id
@@ -21,9 +25,9 @@ public class ProductServiceImpl implements ProductService{
      * @return target {@link ProductEntity}
      */
     public ProductEntity getProductById(Integer id) {
-        productDao.beginTransaction();
-        ProductEntity productEntity = productDao.findById(ProductEntity.class, id);
-        productDao.closeTransaction();
+//        productDaoImpl.beginTransaction();
+        ProductEntity productEntity = productDaoImpl.findById(ProductEntity.class, id);
+//        productDaoImpl.closeTransaction();
         return productEntity;
     }
 
@@ -32,9 +36,9 @@ public class ProductServiceImpl implements ProductService{
      * @return {@link ProductEntity} list
      */
     public List<ProductEntity> getAllProducts() {
-        productDao.beginTransaction();
-        List<ProductEntity> productEntityList = productDao.findAll(ProductEntity.class);
-        productDao.closeTransaction();
+//        productDaoImpl.beginTransaction();
+        List<ProductEntity> productEntityList = productDaoImpl.findAll(ProductEntity.class);
+//        productDaoImpl.closeTransaction();
         return productEntityList;
     }
 
@@ -43,9 +47,9 @@ public class ProductServiceImpl implements ProductService{
      * @param product {@link ProductEntity} for update
      */
     public void update(ProductEntity product) {
-        productDao.beginTransaction();
-        productDao.update(product);
-        productDao.closeTransaction();
+//        productDaoImpl.beginTransaction();
+        productDaoImpl.update(product);
+//        productDaoImpl.closeTransaction();
     }
 
     /**
@@ -54,9 +58,9 @@ public class ProductServiceImpl implements ProductService{
      * @return id of saved {@link ProductEntity}
      */
     public int save(ProductEntity productEntity) {
-        productDao.beginTransaction();
-        productDao.persist(productEntity);
-        productDao.closeTransaction();
+//        productDaoImpl.beginTransaction();
+        productDaoImpl.persist(productEntity);
+//        productDaoImpl.closeTransaction();
         return productEntity.getId();
     }
 
@@ -68,9 +72,9 @@ public class ProductServiceImpl implements ProductService{
      * @return {@link ProductEntity} list by search parameters
      */
     public List<ProductEntity> getBySearch(Map<String, String> searchParameters) {
-        productDao.beginTransaction();
-        List<ProductEntity> productEntities = productDao.findByCriteria(searchParameters);
-        productDao.closeTransaction();
+//        productDaoImpl.beginTransaction();
+        List<ProductEntity> productEntities = productDaoImpl.findByCriteria(searchParameters);
+//        productDaoImpl.closeTransaction();
         return productEntities;
     }
 }

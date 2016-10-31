@@ -1,5 +1,6 @@
 package tstore.servlets.user;
 
+import org.springframework.stereotype.Controller;
 import tstore.model.CountryEntity;
 import tstore.model.OrderEntity;
 import tstore.model.ProductEntity;
@@ -23,6 +24,7 @@ import java.util.Set;
 /**
  * Created by mipan on 18.10.2016.
  */
+@Controller
 public class BuyServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 

@@ -1,6 +1,7 @@
 package tstore.servlets.user;
 
 import org.apache.log4j.Logger;
+import org.springframework.stereotype.Controller;
 import tstore.model.*;
 import tstore.model.enums.*;
 import tstore.service.impl.CountryServiceImpl;
@@ -21,6 +22,7 @@ import java.util.Date;
 /**
  * Created by mipan on 18.10.2016.
  */
+@Controller
 public class BuyFinishServlet extends HttpServlet {
     final static Logger logger = Logger.getLogger(BuyFinishServlet.class);
 

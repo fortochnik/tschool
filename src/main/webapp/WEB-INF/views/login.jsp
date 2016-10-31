@@ -18,11 +18,11 @@
 
   <!-- CSS -->
   <%--<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:400,100,300,500">--%>
-  <link rel="stylesheet" href="resources/css/bootstrap.min.css">
-  <link rel="stylesheet" href="resources/css/custom/spaces.css">
+  <link rel="stylesheet" href="../../resources/css/bootstrap.min.css">
+  <link rel="stylesheet" href="../../resources/css/custom/spaces.css">
   <%--<link rel="stylesheet" href="assets/font-awesome/css/font-awesome.min.css">--%>
-  <link rel="stylesheet" href="resources/css/login/form-elements.css">
-  <link rel="stylesheet" href="resources/css/login/style.css">
+  <link rel="stylesheet" href="../../resources/css/login/form-elements.css">
+  <link rel="stylesheet" href="../../resources/css/login/style.css">
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -165,9 +165,9 @@
 </footer>
 
 <!-- Javascript -->
-<script src="resources/js/login/jquery-1.11.1.min.js"></script>
-<script src="resources/js/bootstrap.min.js"></script>
-<script src="resources/js/login/scripts.js"></script>
+<script src="../../resources/js/login/jquery-1.11.1.min.js"></script>
+<script src="../../resources/js/bootstrap.min.js"></script>
+<script src="../../resources/js/login/scripts.js"></script>
 
 <!--[if lt IE 10]>
 <script src="resources/js/login/placeholder.js"></script>

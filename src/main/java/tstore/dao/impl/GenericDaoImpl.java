@@ -3,9 +3,10 @@ package tstore.dao.impl;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.hibernate.query.Query;
+import org.hibernate.Query;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 import tstore.dao.GenericDao;
-import tstore.utils.HibernateSessionFactory;
 
 import javax.transaction.Transactional;
 import java.io.Serializable;
@@ -14,21 +15,26 @@ import java.util.List;
 /**
  * Created by mipan on 02.10.2016.
  */
+@Repository
 public class GenericDaoImpl<T, Id extends Serializable> implements GenericDao<T, Id> {
 
+    @Autowired
+    private SessionFactory sessionFactory;
+
+
     private Session session;
-    private Transaction currentTransaction;
+//    private Transaction currentTransaction;
 
     public void persist(T entity) {
-        session.save(entity);
+        getCurrentSession().save(entity);
     }
 
     public void update(T entity) {
-        session.update(entity);
+        getCurrentSession().update(entity);
     }
 
     public void delete(T entity) {
-        session.delete(entity);
+        getCurrentSession().delete(entity);
     }
 
     public void deleteAll(Class<T> clazz) {
@@ -44,10 +50,11 @@ public class GenericDaoImpl<T, Id extends Serializable> implements GenericDao<T,
 
     public List<T> findAll(Class<T> clazz) {
         Query query = getCurrentSession().createQuery("from " + clazz.getName());
-        List result = query.getResultList();
+        List result = query.list();
         return result;
     }
 
+/*
     public void beginTransaction() {
         session = getCurrentSession();
         currentTransaction = session.beginTransaction();
@@ -57,18 +64,19 @@ public class GenericDaoImpl<T, Id extends Serializable> implements GenericDao<T,
         currentTransaction.commit();
         session.close();
     }
+*/
 
 
-    public void rollbackTransaction() {
-        currentTransaction.rollback();
-    }
+//    public void rollbackTransaction() {
+//        currentTransaction.rollback();
+//    }
 
     public void sessionFlush() {
         session.flush();
     }
 
     protected Session getCurrentSession(){
-        session = HibernateSessionFactory.getSessionFactory().getCurrentSession();
+        session = sessionFactory.getCurrentSession();
         return session;
     }
 }

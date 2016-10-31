@@ -1,5 +1,6 @@
 package tstore.servlets.admin;
 
+import org.springframework.stereotype.Controller;
 import tstore.model.OrderEntity;
 import tstore.model.enums.OrderStatus;
 import tstore.model.enums.PaymentStatus;
@@ -20,6 +21,7 @@ import java.util.List;
 /**
  * Created by mipan on 23.10.2016.
  */
+@Controller
 public class ModifyOrders extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

@@ -1,6 +1,9 @@
 package tstore.service.impl;
 
 import org.hibernate.Hibernate;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import tstore.dao.OrderDao;
 import tstore.dao.impl.OrderDaoImpl;
 import tstore.model.OrderEntity;
@@ -18,9 +21,12 @@ import java.util.Set;
 /**
  * Created by mipan on 11.10.2016.
  */
+@Service
+@Transactional
 public class OrderServiceImpl implements OrderService {
 
-    private OrderDao orderDao = new OrderDaoImpl();
+    @Autowired
+    private OrderDao orderDao;
 
     /**
      * get {@link OrderEntity} with BASKET {@link BasketOrderState} state by User Id
@@ -28,12 +34,12 @@ public class OrderServiceImpl implements OrderService {
      * @return {@link OrderEntity} with BASKET {@link BasketOrderState} state
      */
     public OrderEntity getBasketByUserId(Integer userId) {
-        orderDao.beginTransaction();
+//        orderDao.beginTransaction();
         OrderEntity basket = orderDao.findBasketByUserId(userId);
         if (basket!=null) {
             Hibernate.initialize(basket.getProductList());
         }
-        orderDao.closeTransaction();
+//        orderDao.closeTransaction();
         return basket;
     }
 
@@ -42,9 +48,9 @@ public class OrderServiceImpl implements OrderService {
      * @param orderEntity {@link OrderEntity} for create
      */
     public void createOrder(OrderEntity orderEntity) {
-        orderDao.beginTransaction();
+//        orderDao.beginTransaction();
         orderDao.persist(orderEntity);
-        orderDao.closeTransaction();
+//        orderDao.closeTransaction();
     }
 
     /**
@@ -53,13 +59,13 @@ public class OrderServiceImpl implements OrderService {
      * @return {@link OrderEntity} list
      */
     public List<OrderEntity> getOrdersByUser(UserEntity userEntity) {
-        orderDao.beginTransaction();
+//        orderDao.beginTransaction();
 
         List<OrderEntity> orderEntities = orderDao.findOrdersByUser(userEntity);
         for (OrderEntity orderEntity : orderEntities) {
             Hibernate.initialize(orderEntity.getProductList());
         }
-        orderDao.closeTransaction();
+//        orderDao.closeTransaction();
         return orderEntities;
     }
 
@@ -68,9 +74,9 @@ public class OrderServiceImpl implements OrderService {
      * @param orderEntity {@link OrderEntity} for update
      */
     public void update(OrderEntity orderEntity) {
-        orderDao.beginTransaction();
+//        orderDao.beginTransaction();
         orderDao.update(orderEntity);
-        orderDao.closeTransaction();
+//        orderDao.closeTransaction();
     }
 
     /**
@@ -78,7 +84,7 @@ public class OrderServiceImpl implements OrderService {
      * @param basket {@link OrderEntity} for change status
      */
     public void updateBasketToOrder(OrderEntity basket) {
-        orderDao.beginTransaction();
+//        orderDao.beginTransaction();
         ProductInBasketService productInBasketService = new ProductInBasketServiceImpl();
         Set<ProductListEntity> productList = basket.getProductList();
         for (ProductListEntity productListEntity : productList) {
@@ -88,7 +94,7 @@ public class OrderServiceImpl implements OrderService {
             product.setCount(count);
         }
         orderDao.update(basket);
-        orderDao.closeTransaction();
+//        orderDao.closeTransaction();
     }
 
     /**
@@ -99,9 +105,9 @@ public class OrderServiceImpl implements OrderService {
      * @return list of {@link OrderEntity}
      */
     public List<OrderEntity> getOrders(String orderNumber, String userEmail) {
-        orderDao.beginTransaction();
+//        orderDao.beginTransaction();
         List<OrderEntity> orderEntities= orderDao.find(orderNumber, userEmail);
-        orderDao.closeTransaction();
+//        orderDao.closeTransaction();
         return orderEntities;
     }
 
@@ -110,9 +116,9 @@ public class OrderServiceImpl implements OrderService {
      * @return {@link OrderEntity} list
      */
     public List<OrderEntity> getNotDelivered() {
-        orderDao.beginTransaction();
+//        orderDao.beginTransaction();
         List<OrderEntity> orderEntities= orderDao.findNotDelivered();
-        orderDao.closeTransaction();
+//        orderDao.closeTransaction();
         return orderEntities;
     }
 
@@ -121,9 +127,9 @@ public class OrderServiceImpl implements OrderService {
      * @return {@link OrderEntity} list
      */
     public List<OrderEntity> getNotPaid() {
-        orderDao.beginTransaction();
+//        orderDao.beginTransaction();
         List<OrderEntity> orderEntities= orderDao.findNotPaid();
-        orderDao.closeTransaction();
+//        orderDao.closeTransaction();
         return orderEntities;
     }
 
@@ -132,9 +138,9 @@ public class OrderServiceImpl implements OrderService {
      * @return {@link OrderEntity} list
      */
     public List<OrderEntity> getAllOrders() {
-        orderDao.beginTransaction();
+//        orderDao.beginTransaction();
         List<OrderEntity> orderEntities= orderDao.findAllOrders();
-        orderDao.closeTransaction();
+//        orderDao.closeTransaction();
         return orderEntities;
     }
 

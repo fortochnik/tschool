@@ -2,7 +2,7 @@ package tstore.utils;
 
 import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;
-import org.hibernate.boot.MetadataSources;
+//import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
@@ -14,12 +14,12 @@ import org.hibernate.service.ServiceRegistry;
  */
 public class HibernateSessionFactory {
 
-    private static SessionFactory sessionFactory = buildSessionFactory();
+//    private static SessionFactory sessionFactory = buildSessionFactory();
 
     private HibernateSessionFactory() {
     }
 
-    protected static SessionFactory buildSessionFactory() {
+    /*protected static SessionFactory buildSessionFactory() {
         final StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
                 .configure()
                 .build();
@@ -35,17 +35,17 @@ public class HibernateSessionFactory {
         }
         return sessionFactory;
     }
-
+*/
 
     /**
      * get Session Factory
      * @return instance of the Session Factory
      */
-    public static SessionFactory getSessionFactory() {
+    /*public static SessionFactory getSessionFactory() {
         return sessionFactory;
-    }
+    }*/
 
-    public static void shutdown() {
-        getSessionFactory().close();
-    }
+//    public static void shutdown() {
+//        getSessionFactory().close();
+//    }
 }

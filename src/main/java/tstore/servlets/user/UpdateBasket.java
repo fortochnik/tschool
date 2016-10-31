@@ -2,6 +2,7 @@ package tstore.servlets.user;
 
 import org.apache.log4j.Logger;
 import org.json.simple.parser.ParseException;
+import org.springframework.stereotype.Controller;
 import tstore.model.OrderEntity;
 import tstore.model.ProductListEntity;
 import tstore.service.impl.OrderServiceImpl;
@@ -24,6 +25,7 @@ import java.util.Map;
 /**
  * Created by mipan on 17.10.2016.
  */
+@Controller
 public class UpdateBasket extends HttpServlet {
     final static Logger logger = Logger.getLogger(UpdateBasket.class);
 

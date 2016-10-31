@@ -1,5 +1,6 @@
 package tstore.servlets;
 
+import org.springframework.stereotype.Controller;
 import tstore.model.CategoryEntity;
 import tstore.model.ProductEntity;
 import tstore.service.CategoryService;
@@ -20,6 +21,7 @@ import java.util.Map;
 /**
  * Created by mipan on 23.10.2016.
  */
+@Controller
 public class SearchServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 

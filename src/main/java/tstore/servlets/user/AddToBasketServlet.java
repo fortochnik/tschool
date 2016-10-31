@@ -1,6 +1,7 @@
 package tstore.servlets.user;
 
 import org.apache.log4j.Logger;
+import org.springframework.stereotype.Controller;
 import tstore.model.OrderEntity;
 import tstore.model.ProductEntity;
 import tstore.model.ProductListEntity;
@@ -23,6 +24,7 @@ import java.text.MessageFormat;
 /**
  * Created by mipan on 11.10.2016.
  */
+@Controller
 public class AddToBasketServlet extends HttpServlet {
 
     final static Logger logger = Logger.getLogger(AddToBasketServlet.class);

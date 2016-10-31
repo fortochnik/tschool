@@ -2,11 +2,11 @@ package tstore.dao.impl;
 
 import org.apache.log4j.Logger;
 import org.hibernate.NonUniqueResultException;
-import org.hibernate.query.Query;
+import org.hibernate.Query;
+import org.springframework.stereotype.Repository;
 import tstore.dao.UserDao;
 import tstore.model.UserEntity;
 import tstore.model.enums.BasketOrderState;
-import tstore.utils.HibernateSessionFactory;
 import tstore.utils.SessionAttributes;
 
 import javax.persistence.NoResultException;
@@ -16,6 +16,7 @@ import java.util.List;
 /**
  * Created by mipan on 02.10.2016.
  */
+@Repository
 public class UserDaoImpl extends GenericDaoImpl<UserEntity, Integer> implements UserDao {
     private UserEntity user;
     final static Logger logger = Logger.getLogger(UserDaoImpl.class);
@@ -26,8 +27,12 @@ public class UserDaoImpl extends GenericDaoImpl<UserEntity, Integer> implements 
         Query query = getCurrentSession().createQuery(hql).setParameter("login", login).setParameter("password", password);
 
         try {
-            user = (UserEntity) query.getSingleResult();
-        } catch (NoResultException e) {
+            List list = query.list();
+            user = (UserEntity) list.get(0);
+            if (list.size()>1){
+                throw new NonUniqueResultException(list.size());
+            }
+        } catch (IndexOutOfBoundsException e) {
             logger.info(MessageFormat.format("No result UserDaoImpl by : {0} - {1} UserEntity ", login, password), e);
 
             return null;
@@ -44,8 +49,12 @@ public class UserDaoImpl extends GenericDaoImpl<UserEntity, Integer> implements 
         Query query = getCurrentSession().createQuery(hql).setParameter("login", login);
 
         try {
-            user = (UserEntity) query.getSingleResult();
-        } catch (NoResultException e) {
+            List list = query.list();
+            user = (UserEntity) list.get(0);
+            if (list.size()>1){
+                throw new NonUniqueResultException(list.size());
+            }
+        } catch (IndexOutOfBoundsException e) {
             logger.info(MessageFormat.format("No result UserDaoImpl by : {0} UserEntity ", login), e);
             return null;
         } catch (NonUniqueResultException e) {

@@ -4,7 +4,8 @@ import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Restrictions;
-import org.hibernate.query.Query;
+import org.hibernate.Query;
+import org.springframework.stereotype.Repository;
 import tstore.dao.ProductDao;
 import tstore.model.CategoryEntity;
 import tstore.model.ProductEntity;
@@ -20,13 +21,14 @@ import java.util.Map;
 /**
  * Created by mipan on 28.09.2016.
  */
+@Repository
 public class ProductDaoImpl extends GenericDaoImpl<ProductEntity, Integer> implements ProductDao {
     final static Logger logger = Logger.getLogger(ProductDaoImpl.class);
 
     public List<ProductEntity> getByCategoryId(int categoryId) {
         String hql = "from ProductEntity where category.id = :categoryId";
-        TypedQuery<ProductEntity> query = getCurrentSession().createQuery(hql, ProductEntity.class).setParameter("categoryId", categoryId);
-        return query.getResultList();
+        Query query = getCurrentSession().createQuery(hql).setParameter("categoryId", categoryId);
+        return (List<ProductEntity>)query.list();
     }
 
     public List<ProductEntity> findByCriteria(Map<String, String> searchParameters) {

@@ -1,6 +1,7 @@
 package tstore.servlets.product;
 
 import org.apache.log4j.Logger;
+import org.springframework.stereotype.Controller;
 import tstore.exceptions.PageNotFoundException;
 import tstore.model.ProductEntity;
 import tstore.service.ProductService;
@@ -18,6 +19,7 @@ import java.text.MessageFormat;
 /**
  * Created by mipan on 25.09.2016.
  */
+@Controller
 public class ProductServlet extends HttpServlet {
     final static Logger logger = Logger.getLogger(ProductServlet.class);
     public void doGet(HttpServletRequest request, HttpServletResponse response)

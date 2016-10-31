@@ -1,5 +1,6 @@
 package tstore.servlets.admin;
 
+import org.springframework.stereotype.Controller;
 import tstore.model.ProductEntity;
 import tstore.model.ProductListEntity;
 import tstore.model.UserEntity;
@@ -23,6 +24,7 @@ import java.util.List;
 /**
  * Created by mipan on 21.10.2016.
  */
+@Controller
 public class StatisticServlet extends HttpServlet {
 
     @Override

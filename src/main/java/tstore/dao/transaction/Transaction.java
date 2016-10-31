@@ -5,9 +5,9 @@ package tstore.dao.transaction;
  */
 public interface Transaction {
 
-    void beginTransaction();
+    /*void beginTransaction();
 
     void closeTransaction();
 
-    void rollbackTransaction();
+    void rollbackTransaction();*/
 }

@@ -1,6 +1,7 @@
 package tstore.servlets.user;
 
 import org.apache.log4j.Logger;
+import org.springframework.stereotype.Controller;
 import tstore.model.OrderEntity;
 import tstore.model.UserEntity;
 import tstore.service.impl.OrderServiceImpl;
@@ -23,6 +24,7 @@ import java.util.Set;
 /**
  * Created by mipan on 13.10.2016.
  */
+@Controller
 public class UserProfileServlet extends HttpServlet {
     final static Logger logger = Logger.getLogger(UserProfileServlet.class);
 

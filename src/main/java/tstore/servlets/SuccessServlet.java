@@ -1,5 +1,7 @@
 package tstore.servlets;
 
+import org.springframework.stereotype.Controller;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -10,6 +12,7 @@ import java.io.IOException;
 /**
  * Created by mipan on 19.10.2016.
  */
+@Controller
 public class SuccessServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

@@ -1,6 +1,11 @@
 package tstore.servlets.admin;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 import tstore.model.CategoryEntity;
 import tstore.model.ProductEntity;
 import tstore.model.enums.Role;
@@ -27,36 +32,46 @@ import java.util.List;
 /**
  * Created by mipan on 23.10.2016.
  */
+@Controller
 public class AddProductServlet extends HttpServlet {
     final static Logger logger = Logger.getLogger(AddProductServlet.class);
+    @Autowired
+    CategoryService categoryService;
 
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        HttpSession session = request.getSession(false);
+    @RequestMapping(value = "add", method = RequestMethod.GET)
+    protected ModelAndView doGet(HttpSession session) throws ServletException, IOException {
+
+
+        ModelAndView addProductPage = new ModelAndView("admin/addProduct");
+//        HttpSession session = request.getSession(false);
         if (session.getAttribute(SessionAttributes.LOGIN).equals("true") &&
                 (session.getAttribute(SessionAttributes.ROLE).equals(Role.EMPLOYEE) ||
                         session.getAttribute(SessionAttributes.ROLE).equals(Role.ADMIN))) {
 
-            CategoryService categoryService = new CategoryServiceImpl();
+//            CategoryService categoryService = new CategoryServiceImpl();
             List<CategoryEntity> categories = categoryService.getCategories();
-            request.setAttribute("categories", categories);
+            addProductPage.addObject("categories", categories);
 
-            RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/admin/addProduct.jsp");
-            rd.forward(request, response);
+            return addProductPage;
+            /*RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/admin/addProduct.jsp");
+            rd.forward(request, response);*/
         } else {
-            RequestDispatcher rd = request.getRequestDispatcher("/");
-            rd.forward(request, response);
+//            return new ModelAndView("forward:/");
+            return new ModelAndView("redirect:/");
+            /*RequestDispatcher rd = request.getRequestDispatcher("/");
+            rd.forward(request, response);*/
         }
     }
 
     @Override
+    @RequestMapping(value = "add", method = RequestMethod.POST)
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession(false);
         if (session.getAttribute(SessionAttributes.LOGIN).equals("true") &&
                 (session.getAttribute(SessionAttributes.ROLE).equals(Role.EMPLOYEE) ||
                         session.getAttribute(SessionAttributes.ROLE).equals(Role.ADMIN))) {
 
-            CategoryService categoryService = new CategoryServiceImpl();
+//            CategoryService categoryService = new CategoryServiceImpl();
             List<CategoryEntity> categories = categoryService.getCategories();
             request.setAttribute("categories", categories);
 

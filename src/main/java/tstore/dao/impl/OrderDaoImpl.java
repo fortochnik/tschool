@@ -3,7 +3,8 @@ package tstore.dao.impl;
 import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.NonUniqueResultException;
-import org.hibernate.query.Query;
+import org.hibernate.Query;
+import org.springframework.stereotype.Repository;
 import tstore.dao.OrderDao;
 import tstore.model.OrderEntity;
 import tstore.model.UserEntity;
@@ -21,6 +22,7 @@ import java.util.List;
 /**
  * Created by mipan on 28.09.2016.
  */
+@Repository
 public class OrderDaoImpl extends GenericDaoImpl<OrderEntity, Integer> implements OrderDao {
     final static Logger logger = Logger.getLogger(OrderDaoImpl.class);
     public OrderEntity findBasketByUserId(Integer userId) {
@@ -29,8 +31,12 @@ public class OrderDaoImpl extends GenericDaoImpl<OrderEntity, Integer> implement
         String hql = "from OrderEntity where client.id = :userId and state = :basketState";
         Query query = getCurrentSession().createQuery(hql).setParameter("userId", userId).setParameter("basketState", BasketOrderState.BASKET);
         try {
-            basket = (OrderEntity) query.getSingleResult();
-        } catch (NoResultException e) {
+            List list = query.list();
+            basket = (OrderEntity) list.get(0);
+            if (list.size()>1){
+                throw new NonUniqueResultException(list.size());
+            }
+        } catch (IndexOutOfBoundsException e) {
             logger.info(MessageFormat.format("No result OrderEntity by : {0}  userId ", userId), e);
             return null;
         } catch (NonUniqueResultException e) {

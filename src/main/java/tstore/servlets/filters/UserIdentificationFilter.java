@@ -1,8 +1,16 @@
 package tstore.servlets.filters;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
+import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
 import tstore.model.OrderEntity;
 import tstore.model.ProductListEntity;
+import tstore.service.OrderService;
 import tstore.service.impl.OrderServiceImpl;
 import tstore.utils.SessionAttributes;
 
@@ -18,10 +26,24 @@ import java.util.Set;
 /**
  * Created by mipan on 03.10.2016.
  */
+
+@Component(value = "userIdentification")
 public class UserIdentificationFilter implements Filter {
     final static Logger logger = Logger.getLogger(UserIdentificationFilter.class);
-    public void init(FilterConfig filterConfig) throws ServletException {
+    @Autowired
+    private OrderService orderService;
 
+    /*public UserIdentificationFilter(OrderService orderService) {
+        this.orderService = orderService;
+    }*/
+
+    public void init(FilterConfig filterConfig) throws ServletException {
+        /*ServletContext servletContext = filterConfig.getServletContext();
+        WebApplicationContext webApplicationContext = WebApplicationContextUtils.getWebApplicationContext(servletContext);
+
+        AutowireCapableBeanFactory autowireCapableBeanFactory = webApplicationContext.getAutowireCapableBeanFactory();
+
+        orderService = (OrderService) autowireCapableBeanFactory.configureBean(this, "OrderService");*/
     }
 
     public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws IOException, ServletException {
@@ -56,9 +78,10 @@ public class UserIdentificationFilter implements Filter {
                 }
                 session.setAttribute(SessionAttributes.BASKET, countInBasket);
             }
-        } else {
+        }
+        /*else {
             int userId = Integer.parseInt(session.getAttribute(SessionAttributes.USERID).toString());
-            OrderEntity basketByUserId = new OrderServiceImpl().getBasketByUserId(userId);
+            OrderEntity basketByUserId = orderService.getBasketByUserId(userId);
             int totalCount = 0;
             if (basketByUserId!=null) {
 
@@ -68,7 +91,7 @@ public class UserIdentificationFilter implements Filter {
                 }
             }
             session.setAttribute(SessionAttributes.BASKET, totalCount);
-        }
+        }*/
 
         chain.doFilter(request, response);
     }

@@ -1,5 +1,6 @@
 package tstore.servlets.admin;
 
+import org.springframework.stereotype.Controller;
 import tstore.model.OrderEntity;
 import tstore.model.enums.Role;
 import tstore.service.OrderService;
@@ -18,6 +19,7 @@ import java.util.List;
 /**
  * Created by mipan on 05.10.2016.
  */
+@Controller
 public class AdminOrderListServlet extends HttpServlet {
 
     private OrderService orderService = new OrderServiceImpl();
