@@ -1,6 +1,8 @@
 package tstore.servlets;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,9 +13,9 @@ import java.io.IOException;
  * Created by mipan on 08.10.2016.
  */
 @Controller
-public class LogoutServlet extends HttpServlet {
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+public class LogoutServlet{
+    @RequestMapping(value = "logout", method = RequestMethod.GET)
+    protected String logout(HttpServletRequest request, HttpServletResponse response) throws IOException {
         HttpSession session = request.getSession(false);
         Cookie[] cookies = request.getCookies();
         for (Cookie cookie : cookies) {
@@ -23,7 +25,6 @@ public class LogoutServlet extends HttpServlet {
         if (session != null) {
             session.invalidate();
         }
-        response.sendRedirect("/");
-
+        return "redirect:/";
     }
 }

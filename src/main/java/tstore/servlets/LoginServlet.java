@@ -33,7 +33,7 @@ import java.security.InvalidParameterException;
  * Created by mipan on 04.10.2016.
  */
 @Controller
-public class LoginServlet extends HttpServlet {
+public class LoginServlet{
     final static Logger logger = Logger.getLogger(LoginServlet.class);
 
     @Autowired
@@ -68,7 +68,7 @@ public class LoginServlet extends HttpServlet {
                 if (userEntity != null) {
                     setUserDataToSession(request, userEntity);
                     OrderEntity basket = orderService.getBasketByUserId(userEntity.getId());
-                    new UpdateBasket().updateBasketAfterLogin(basket, request);
+                    updateBasket.updateBasketAfterLogin(basket, request);
                     return "redirect:/";
                 }
                 else

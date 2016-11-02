@@ -1,13 +1,20 @@
 package tstore.servlets.user;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 import tstore.model.OrderEntity;
 import tstore.model.ProductEntity;
 import tstore.model.ProductListEntity;
 import tstore.model.UserEntity;
 import tstore.model.enums.BasketOrderState;
 import tstore.model.enums.OrderStatus;
+import tstore.service.OrderService;
+import tstore.service.ProductService;
+import tstore.service.UserService;
 import tstore.service.impl.OrderServiceImpl;
 import tstore.service.impl.ProductServiceImpl;
 import tstore.service.impl.UserServiceImpl;
@@ -25,21 +32,29 @@ import java.util.Set;
  * Created by mipan on 04.10.2016.
  */
 @Controller
-public class BasketServlet extends HttpServlet {
+public class BasketServlet{
     final static Logger logger = Logger.getLogger(BasketServlet.class);
 
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        OrderEntity basket = null;
+    @Autowired
+    private UserService userService;
+    @Autowired
+    private OrderService orderService;
+    @Autowired
+    private ProductService productService;
+
+    @RequestMapping(value = "basket", method = RequestMethod.GET)
+    protected ModelAndView displayBasket(HttpServletRequest request) throws IOException {
+        OrderEntity basket;
         HttpSession session = request.getSession(false);
+        ModelAndView model = new ModelAndView("/user/basket");
         try {
             if (session.getAttribute(SessionAttributes.LOGIN).equals("true")){
                 int userId = Integer.parseInt(session.getAttribute(SessionAttributes.USERID).toString());
-                basket = new OrderServiceImpl().getBasketByUserId(userId);
+                basket = orderService.getBasketByUserId(userId);
                 if (basket == null){
-                    UserEntity userById = new UserServiceImpl().getUserById(Integer.valueOf(userId));
+                    UserEntity userById = userService.getUserById(userId);
                     basket = new OrderEntity(userById);
-                    new OrderServiceImpl().createOrder(basket);
+                    orderService.createOrder(basket);
                 }
             }
             else
@@ -54,7 +69,7 @@ public class BasketServlet extends HttpServlet {
                     try {
                         int productId = Integer.parseInt(cookie.getName());
                         int count = Integer.parseInt(cookie.getValue());
-                        ProductEntity product = new ProductServiceImpl().getProductById(productId);
+                        ProductEntity product = productService.getProductById(productId);
                         ProductListEntity productListEntity = new ProductListEntity();
                         productListEntity.setCount(count);
                         productListEntity.setProduct(product);
@@ -67,15 +82,17 @@ public class BasketServlet extends HttpServlet {
 
                     }
                 }
-
             }
-            request.setAttribute("basket", basket);
+            model.addObject("basket", basket);
+
+            /*request.setAttribute("basket", basket);
             RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/user/basket.jsp");
-            rd.forward(request, response);
+            rd.forward(request, response);*/
         }
         catch (NullPointerException e)
         {
             logger.error("Problem with basket display", e);
         }
+        return model;
     }
 }
