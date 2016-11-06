@@ -2,6 +2,7 @@ package tstore.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import tstore.dao.CountryDao;
 import tstore.dao.impl.CountryDaoImpl;
 import tstore.model.CountryEntity;
@@ -13,6 +14,7 @@ import java.util.List;
  * Created by mipan on 18.10.2016.
  */
 @Service
+@Transactional
 public class CountryServiceImpl implements CountryService {
     @Autowired
     protected CountryDao countryDao;

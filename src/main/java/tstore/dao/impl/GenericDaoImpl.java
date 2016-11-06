@@ -16,6 +16,7 @@ import java.util.List;
  * Created by mipan on 02.10.2016.
  */
 @Repository
+
 public class GenericDaoImpl<T, Id extends Serializable> implements GenericDao<T, Id> {
 
     @Autowired

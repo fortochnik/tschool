@@ -8,6 +8,8 @@ import tstore.model.CountryEntity;
 import tstore.model.enums.BasketOrderState;
 
 import javax.persistence.NoResultException;
+import javax.transaction.Transactional;
+
 import org.apache.log4j.Logger;
 
 import java.util.List;
@@ -16,6 +18,7 @@ import java.util.List;
  * Created by mipan on 02.10.2016.
  */
 @Repository
+@Transactional
 public class CountryDaoImpl extends GenericDaoImpl<CountryEntity, Integer> implements CountryDao {
     final static Logger logger = Logger.getLogger(CountryDaoImpl.class);
     public CountryEntity findByName(String country) {

@@ -5,7 +5,9 @@ import org.hibernate.Criteria;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.Query;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import tstore.dao.CategoryDao;
 import tstore.dao.ProductDao;
 import tstore.model.CategoryEntity;
 import tstore.model.ProductEntity;
@@ -25,6 +27,9 @@ import java.util.Map;
 public class ProductDaoImpl extends GenericDaoImpl<ProductEntity, Integer> implements ProductDao {
     final static Logger logger = Logger.getLogger(ProductDaoImpl.class);
 
+    @Autowired
+    private CategoryDao categoryDao;
+
     public List<ProductEntity> getByCategoryId(int categoryId) {
         String hql = "from ProductEntity where category.id = :categoryId";
         Query query = getCurrentSession().createQuery(hql).setParameter("categoryId", categoryId);
@@ -37,7 +42,7 @@ public class ProductDaoImpl extends GenericDaoImpl<ProductEntity, Integer> imple
         if(!searchParameters.get("category").equals("0"))
         {
             int categoryId = Integer.parseInt(searchParameters.get("category"));
-            CategoryEntity categoryEntity = new CategoryDaoImpl().findById(CategoryEntity.class, categoryId);
+            CategoryEntity categoryEntity = categoryDao.findById(CategoryEntity.class, categoryId);
             criteria.add(Restrictions.eq("category",categoryEntity));
         }
 

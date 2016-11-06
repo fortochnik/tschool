@@ -6,7 +6,7 @@
         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
         version="3.0">
 
-    <display-name>Archetype Created Web Application</display-name>
+    <display-name>tstore</display-name>
 
 
     <servlet>
@@ -130,7 +130,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>PayFinish</servlet-name>
-        <url-pattern>/payfinish</url-pattern>
+        <url-pattern>/payfinishpayfinish</url-pattern>
     </servlet-mapping>
 
     <servlet>

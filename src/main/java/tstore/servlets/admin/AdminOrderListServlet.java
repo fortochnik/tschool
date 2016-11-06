@@ -1,6 +1,11 @@
 package tstore.servlets.admin;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import tstore.model.OrderEntity;
 import tstore.model.enums.Role;
 import tstore.service.OrderService;
@@ -20,45 +25,55 @@ import java.util.List;
  * Created by mipan on 05.10.2016.
  */
 @Controller
-public class AdminOrderListServlet extends HttpServlet {
+public class AdminOrderListServlet {
 
-    private OrderService orderService = new OrderServiceImpl();
+    @Autowired
+    private OrderService orderService;
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        HttpSession session = request.getSession(false);
+    @RequestMapping(value = "orders", method = RequestMethod.POST)
+    protected String doPost(Model model, HttpSession session,
+                            @RequestParam(value = "is-custom-search", required = false) String customSearch,
+                            @RequestParam(value = "order-number", required = false) String orderNumber,
+                            @RequestParam(value = "email", required = false) String userEmail,
+                            @RequestParam(value = "all-not-delivered", required = false) String allNotDelivered,
+                            @RequestParam(value = "all-not-paid", required = false) String allNotPaid,
+                            @RequestParam(value = "orders-all", required = false) String allOrders,
+                            HttpServletRequest request, HttpServletResponse response) {
+//        HttpSession session = request.getSession(false);
 
-        List<OrderEntity> orderEntityList = null;
-        if (request.getParameter("is-custom-search") != null) {
-            String orderNumber = request.getParameter("order-number");
-            String userEmail = request.getParameter("email");
-            orderEntityList = getCustomSearchResult(orderNumber, userEmail);
-        }
-
-        if (request.getParameter("all-not-delivered") != null) {
-            orderEntityList = orderService.getNotDelivered();
-        }
-
-        if (request.getParameter("all-not-paid") != null) {
-            orderEntityList = orderService.getNotPaid();
-        }
-
-        if (request.getParameter("orders-all") != null) {
-            orderEntityList = orderService.getAllOrders();
-        }
-
-
-        request.setAttribute("orders", orderEntityList);
-        RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/admin/orderslist.jsp");
-        rd.forward(request, response);
         if (session.getAttribute(SessionAttributes.LOGIN).equals("true") &&
                 (session.getAttribute(SessionAttributes.ROLE).equals(Role.EMPLOYEE) ||
                         session.getAttribute(SessionAttributes.ROLE).equals(Role.ADMIN))) {
 
+            List<OrderEntity> orderEntityList = null;
+            if (customSearch != null) {
+//            String orderNumber = request.getParameter("order-number");
+//            String userEmail = request.getParameter("email");
+                orderEntityList = getCustomSearchResult(orderNumber, userEmail);
+            }
+
+            if (allNotDelivered != null) {
+                orderEntityList = orderService.getNotDelivered();
+            }
+
+            if (allNotPaid != null) {
+                orderEntityList = orderService.getNotPaid();
+            }
+
+            if (allOrders != null) {
+                orderEntityList = orderService.getAllOrders();
+            }
+
+
+            model.addAttribute("orders", orderEntityList);
+            return "admin/orderslist";
+        /*RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/admin/orderslist.jsp");
+        rd.forward(request, response);*/
+
 
         } else {
 
-            rd = request.getRequestDispatcher("/");
-            rd.forward(request, response);
+            return "redirect:/";
         }
     }
 
@@ -68,26 +83,17 @@ public class AdminOrderListServlet extends HttpServlet {
         return orderEntities;
     }
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        HttpSession session = request.getSession(false);
-        if (session.getAttribute(SessionAttributes.LOGIN).equals("true") &&
-                (session.getAttribute(SessionAttributes.ROLE).equals(Role.EMPLOYEE) ||
-                        session.getAttribute(SessionAttributes.ROLE).equals(Role.ADMIN))) {
+    @RequestMapping(value = "orders", method = RequestMethod.GET)
+    protected String doGet(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+//        HttpSession session = request.getSession(false);
 
         if (session.getAttribute(SessionAttributes.LOGIN).equals("true") && (session.getAttribute(SessionAttributes.ROLE).equals(Role.ADMIN)
                 || session.getAttribute(SessionAttributes.ROLE).equals(Role.EMPLOYEE))) {
-            RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/admin/orderslist.jsp");
-            rd.forward(request, response);
+            return "admin/orderslist";
         } else {
-            response.sendRedirect("/login");
+            return "redirect:login";
         }
 
-    }
-    else
-    {
-        RequestDispatcher rd = request.getRequestDispatcher("/");
-        rd.forward(request, response);
-    }
 
-}
+    }
 }

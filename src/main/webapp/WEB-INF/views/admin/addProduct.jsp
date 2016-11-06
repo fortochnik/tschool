@@ -38,13 +38,26 @@
                         <div>
                             <p class="help-block"></p>
 
+
+                            <%--<form role="form" class="form-horizontal left userinfo-form" method="post" action="/add">
+                                <div class="form-group">
+                                    <label class="sr-only" for="form-last-name">Last name</label>
+                                    <input type="text" name="test" placeholder="Last name..." class="form-last-name form-control" id="form-last-name">
+                                </div>
+                                <div>
+                                    <button type="submit" name="form-registration-submit" class="btn">up!</button>
+                                </div>
+                            </form>--%>
                             <div>
                                 <button class="btn .btn-xs btn-primary update" name="order-update-admin" value="add">
                                     Create
                                 </button>
                             </div>
-                            <form class="form-horizontal left userinfo-form" method="post" action="add" id="tab"
-                                  enctype="multipart/form-data">
+                            <form role="form" class="form-horizontal left userinfo-form" method="post" action="/add"
+                                  id="tab"
+                                  enctype="multipart/form-data"
+                                    >
+
                                 <p class="help-block"></p>
 
                                 <!-- Product name -->
@@ -71,7 +84,8 @@
                                         <select class="selectpicker show-tick" name="form-category"
                                                 id="form-country" title="Choose country...">
                                             <c:forEach items="${categories}" var="category">
-                                                <option value="<c:out value="${category.id}"/>"><c:out value="${category.name}"/></option>
+                                                <option value="<c:out value="${category.id}"/>"><c:out
+                                                        value="${category.name}"/></option>
                                             </c:forEach>
                                         </select>
                                     </div>
@@ -155,7 +169,7 @@
 
                                     <div class="controls inline">
                                         <input id="company" name="company" type="text" placeholder="company"
-                                               class="input-xlarge" />
+                                               class="input-xlarge"/>
 
                                         <p class="help-block"></p>
                                     </div>

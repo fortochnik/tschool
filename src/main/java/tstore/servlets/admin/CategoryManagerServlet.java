@@ -1,7 +1,12 @@
 package tstore.servlets.admin;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import tstore.model.CategoryEntity;
 import tstore.model.enums.Role;
 import tstore.service.CategoryService;
@@ -22,41 +27,48 @@ import java.util.*;
  * Created by mipan on 22.10.2016.
  */
 @Controller
-public class CategoryManagerServlet extends HttpServlet {
+public class CategoryManagerServlet{
     final static Logger logger = Logger.getLogger(CategoryManagerServlet.class);
 
-    private CategoryService categoryService = new CategoryServiceImpl();
+    @Autowired
+    private CategoryService categoryService;
 
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        HttpSession session = request.getSession(false);
+    @RequestMapping(value = "category", method = RequestMethod.GET)
+    protected String doGet(Model model, HttpSession session){
+//        HttpSession session = request.getSession(false);
         if (session.getAttribute(SessionAttributes.LOGIN).equals("true") &&
                 (session.getAttribute(SessionAttributes.ROLE).equals(Role.EMPLOYEE) ||
                         session.getAttribute(SessionAttributes.ROLE).equals(Role.ADMIN))) {
 
 
-            CategoryService categoryService = new CategoryServiceImpl();
+//            CategoryService categoryService = new CategoryServiceImpl();
             List<CategoryEntity> categories = categoryService.getCategories();
-            request.setAttribute("categoryexist", categories);
+            model.addAttribute("categoryexist", categories);
 
-            RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/admin/category.jsp");
-            rd.forward(request, response);
-        } else {
+            return "admin/category";
+            /*RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/admin/category.jsp");
+            rd.forward(request, response);*/
+        }
+        else
+        {
+            return "redirect:/";
 
-            RequestDispatcher rd = request.getRequestDispatcher("/");
-            rd.forward(request, response);
+            /*RequestDispatcher rd = request.getRequestDispatcher("/");
+            rd.forward(request, response);*/
         }
     }
 
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        HttpSession session = request.getSession(false);
+    @RequestMapping(value = "category", method = RequestMethod.POST)
+    protected String doPost(Model model,
+                            @RequestParam(value = "update-form", required = false) String updateForm,
+                            HttpSession session,HttpServletRequest request){
+//        HttpSession session = request.getSession(false);
         if (session.getAttribute(SessionAttributes.LOGIN).equals("true") &&
                 (session.getAttribute(SessionAttributes.ROLE).equals(Role.EMPLOYEE) ||
                         session.getAttribute(SessionAttributes.ROLE).equals(Role.ADMIN))) {
             Map<String, String[]> parameterMap = request.getParameterMap();
             List<String> NameNotDeleted = null;
-            if (request.getParameter("update-form") != null) {
+            if (updateForm != null) {
                 updateNameCategory(parameterMap);
             }
 
@@ -74,16 +86,15 @@ public class CategoryManagerServlet extends HttpServlet {
                 request.setAttribute("notdeleted", NameNotDeleted);
             }
 
-            CategoryService categoryService = new CategoryServiceImpl();
+//            CategoryService categoryService = new CategoryServiceImpl();
             List<CategoryEntity> categories = categoryService.getCategories();
             request.setAttribute("categoryexist", categories);
 
-            RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/admin/category.jsp");
-            rd.forward(request, response);
-        } else {
-
-            RequestDispatcher rd = request.getRequestDispatcher("/");
-            rd.forward(request, response);
+            return "admin/category";
+        }
+        else
+        {
+            return "redirect:/";
         }
     }
 
@@ -98,7 +109,8 @@ public class CategoryManagerServlet extends HttpServlet {
 
     private void updateNameCategory(Map<String, String[]> parameterMap) {
 
-        for (Map.Entry<String, String[]> stringEntry : parameterMap.entrySet()) {
+        Set<Map.Entry<String, String[]>> entries = parameterMap.entrySet();
+        for (Map.Entry<String, String[]> stringEntry : entries) {
             if (stringEntry.getKey().contains("category-name-update")) {
                 int id = Integer.parseInt(stringEntry.getKey().split("-")[3]);
                 CategoryEntity categoryEntity = categoryService.get(id);
@@ -110,7 +122,7 @@ public class CategoryManagerServlet extends HttpServlet {
 
     private List<String> deleteCategory(String[] categoriesId) {
         List<String> notDeleted = new ArrayList<String>();
-        CategoryService categoryService = new CategoryServiceImpl();
+//        CategoryService categoryService = new CategoryServiceImpl();
         for (String forDelete : categoriesId) {
             try {
                 int categoryId = Integer.parseInt(forDelete);

@@ -1,6 +1,11 @@
 package tstore.servlets;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import tstore.model.CategoryEntity;
 import tstore.model.ProductEntity;
 import tstore.service.CategoryService;
@@ -22,44 +27,60 @@ import java.util.Map;
  * Created by mipan on 23.10.2016.
  */
 @Controller
-public class SearchServlet extends HttpServlet {
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+public class SearchServlet{
+
+    @Autowired
+    private ProductService productService;
+    @Autowired
+    private CategoryService categoryService;
+
+    @RequestMapping(method = RequestMethod.POST, value = "search")
+    protected String doPost(Model model,
+            @RequestParam(value = "form-category", required = false) String category,
+            @RequestParam(value = "name", required = false) String name,
+            @RequestParam(value = "price-min", required = false) String priceMin,
+            @RequestParam(value = "price-max", required = false) String priceMax,
+            @RequestParam(value = "company", required = false) String company,
+            @RequestParam(value = "parameters", required = false) String parameters){
 
         Map<String, String> searchParameters = new HashMap<String, String>();
-        searchParameters.put("category", request.getParameter("form-category"));
-        searchParameters.put("name", request.getParameter("name"));
-        searchParameters.put("priceMin", request.getParameter("price-min"));
-        searchParameters.put("priceMax", request.getParameter("price-max"));
-        searchParameters.put("company", request.getParameter("company"));
-        searchParameters.put("parameters",  request.getParameter("parameters"));
+        searchParameters.put("category", category);
+        searchParameters.put("name", name);
+        searchParameters.put("priceMin", priceMin);
+        searchParameters.put("priceMax", priceMax);
+        searchParameters.put("company", company);
+        searchParameters.put("parameters",  parameters);
 
-        ProductService productService = new ProductServiceImpl();
+//        ProductService productService = new ProductServiceImpl();
         List<ProductEntity> productList = productService.getBySearch(searchParameters);
 
 
-        request.setAttribute("categoryId", request.getParameter("form-category"));
-        request.setAttribute("name", request.getParameter("name"));
-        request.setAttribute("min", request.getParameter("price-min"));
-        request.setAttribute("max", request.getParameter("price-max"));
-        request.setAttribute("company", request.getParameter("company"));
-        request.setAttribute("parameters", request.getParameter("parameters"));
+        model.addAttribute("categoryId", category);
+        model.addAttribute("name", name);
+        model.addAttribute("min", priceMin);
+        model.addAttribute("max", priceMax);
+        model.addAttribute("company", company);
+        model.addAttribute("parameters", parameters);
 
 
 
-        CategoryService categoryService = new CategoryServiceImpl();
+//        CategoryService categoryService = new CategoryServiceImpl();
         List<CategoryEntity> categories = categoryService.getCategories();
-        request.setAttribute("categories", categories);
+        model.addAttribute("categories", categories);
 
-        request.setAttribute("products", productList);
-        RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
-        rd.forward(request, response);
+        model.addAttribute("products", productList);
+        return "index";
+        /*RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
+        rd.forward(request, response);*/
     }
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        CategoryService categoryService = new CategoryServiceImpl();
+    @RequestMapping(method = RequestMethod.GET, value = "search")
+    protected String doGet(Model model){
+
+
         List<CategoryEntity> categories = categoryService.getCategories();
-        request.setAttribute("categories", categories);
-        RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
-        rd.forward(request, response);
+
+        model.addAttribute("categories", categories);
+        return "index";
     }
 }

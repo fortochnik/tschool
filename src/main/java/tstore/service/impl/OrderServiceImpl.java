@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tstore.dao.OrderDao;
+import tstore.dao.ProductDao;
 import tstore.dao.impl.OrderDaoImpl;
 import tstore.model.OrderEntity;
 import tstore.model.ProductEntity;
@@ -25,6 +26,8 @@ import java.util.Set;
 @Transactional
 public class OrderServiceImpl implements OrderService {
 
+    @Autowired
+    private ProductDao productDao;
     @Autowired
     private OrderDao orderDao;
 
@@ -85,13 +88,14 @@ public class OrderServiceImpl implements OrderService {
      */
     public void updateBasketToOrder(OrderEntity basket) {
 //        orderDao.beginTransaction();
-        ProductInBasketService productInBasketService = new ProductInBasketServiceImpl();
+//        ProductInBasketService productInBasketService = new ProductInBasketServiceImpl();
         Set<ProductListEntity> productList = basket.getProductList();
         for (ProductListEntity productListEntity : productList) {
             ProductEntity product = productListEntity.getProduct();
             productListEntity.setPrice(product.getPrice());
             int count = product.getCount() - productListEntity.getCount();
             product.setCount(count);
+            productDao.update(product);
         }
         orderDao.update(basket);
 //        orderDao.closeTransaction();

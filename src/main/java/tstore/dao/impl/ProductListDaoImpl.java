@@ -61,7 +61,7 @@ public class ProductListDaoImpl extends GenericDaoImpl<ProductListEntity, Intege
         calendar.add(Calendar.DATE, -numberOfDaysToLookBack);//substract the number of days to look back
         Date dateToLookBackAfter = calendar.getTime();
 
-        String hql = "select sum(pr.price) as total from ProductListEntity as pr inner join pr.consignment as ord where ord.paymentStatus = :status and ord.orderDate >= :date";
+        String hql = "select sum(pr.price * pr.count) as total from ProductListEntity as pr inner join pr.consignment as ord where ord.paymentStatus = :status and ord.orderDate >= :date";
 //        Query query = getCurrentSession().createQuery(hql).setParameter("status", PaymentStatus.PAID).setParameter("date", dateToLookBackAfter, TemporalType.DATE);
         Query query = getCurrentSession().createQuery(hql).setParameter("status", PaymentStatus.PAID).setParameter("date", dateToLookBackAfter);
         try {
@@ -77,7 +77,9 @@ public class ProductListDaoImpl extends GenericDaoImpl<ProductListEntity, Intege
             logger.error(MessageFormat.format("No Unique proceed Query by : {0}  userId ", numberOfDaysToLookBack), e);
 
         }
-
+        if (total==null){
+            total = BigDecimal.ZERO;
+        }
         return total;
     }
 }

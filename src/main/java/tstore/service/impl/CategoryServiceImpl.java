@@ -16,6 +16,7 @@ import java.util.List;
  * Created by mipan on 22.10.2016.
  */
 @Service
+@Transactional
 public class CategoryServiceImpl implements CategoryService {
 
 
@@ -27,7 +28,6 @@ public class CategoryServiceImpl implements CategoryService {
      * get all categories in db
      * @return all {@link CategoryEntity}
      */
-    @Transactional
     public List<CategoryEntity> getCategories() {
 //        categoryDaoImpl.beginTransaction();
         List<CategoryEntity> categoryEntities = categoryDaoImpl.findAll(CategoryEntity.class);
@@ -40,7 +40,6 @@ public class CategoryServiceImpl implements CategoryService {
      * @param categoriesId String categories id array
      *
      */
-    @Transactional
     public void deleteAll(String[] categoriesId) {
 //        categoryDaoImpl.beginTransaction();
         int categoryId = Integer.parseInt(categoriesId[0]);

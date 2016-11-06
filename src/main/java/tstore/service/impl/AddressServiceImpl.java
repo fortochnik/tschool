@@ -2,6 +2,7 @@ package tstore.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import tstore.dao.AddressDao;
 import tstore.dao.impl.AddressDaoImpl;
 import tstore.model.AddressEntity;
@@ -13,6 +14,7 @@ import tstore.service.AddressService;
  * Created by mipan on 02.10.2016.
  */
 @Service
+@Transactional
 public class AddressServiceImpl implements AddressService {
 
     @Autowired

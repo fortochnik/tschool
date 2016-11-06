@@ -3,9 +3,13 @@ package tstore.servlets.admin;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import tstore.model.CategoryEntity;
 import tstore.model.ProductEntity;
 import tstore.model.enums.Role;
@@ -33,13 +37,17 @@ import java.util.List;
  * Created by mipan on 23.10.2016.
  */
 @Controller
-public class AddProductServlet extends HttpServlet {
+public class AddProductServlet {
     final static Logger logger = Logger.getLogger(AddProductServlet.class);
+    @Autowired
+    private ImageService imageService;
+    @Autowired
+    private ProductService productService;
     @Autowired
     CategoryService categoryService;
 
     @RequestMapping(value = "add", method = RequestMethod.GET)
-    protected ModelAndView doGet(HttpSession session) throws ServletException, IOException {
+    protected ModelAndView doGet(HttpSession session) {
 
 
         ModelAndView addProductPage = new ModelAndView("admin/addProduct");
@@ -63,10 +71,25 @@ public class AddProductServlet extends HttpServlet {
         }
     }
 
-    @Override
     @RequestMapping(value = "add", method = RequestMethod.POST)
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        HttpSession session = request.getSession(false);
+    protected String doPost(Model model,
+                            HttpSession session,
+                            @RequestParam(value = "name", required = false) String name,
+                            @RequestParam(value = "form-category", required = false) String category,
+                            @RequestParam(value = "parameters", required = false) String parameters,
+                            @RequestParam(value = "weight", required = false) String weight,
+                            @RequestParam(value = "volume", required = false) String volume,
+                            @RequestParam(value = "price", required = false) String price,
+                            @RequestParam(value = "count", required = false) String count,
+                            @RequestParam(value = "company", required = false) String company,
+                            @RequestParam("img1") MultipartFile img1,
+                            @RequestParam("img2") MultipartFile img2,
+                            @RequestParam("img3") MultipartFile img3,
+
+                            @RequestParam(value = "test", required = false) String test,
+                            RedirectAttributes redirectAttributes,
+                            HttpServletRequest request, HttpServletResponse response) throws ServletException {
+//        HttpSession session = request.getSession(false);
         if (session.getAttribute(SessionAttributes.LOGIN).equals("true") &&
                 (session.getAttribute(SessionAttributes.ROLE).equals(Role.EMPLOYEE) ||
                         session.getAttribute(SessionAttributes.ROLE).equals(Role.ADMIN))) {
@@ -77,60 +100,65 @@ public class AddProductServlet extends HttpServlet {
 
             int productId;
 
-            String name = request.getParameter("name");
-            String category = request.getParameter("form-category");
-            String parameters = request.getParameter("parameters");
-            String weight = request.getParameter("weight");
-            String volume = request.getParameter("volume");
-            String price = request.getParameter("price");
-            String count = request.getParameter("count");
-            String company = request.getParameter("company");
+//            String name = request.getParameter("name");
+//            String category = request.getParameter("form-category");
+//            String parameters = request.getParameter("parameters");
+//            String weight = request.getParameter("weight");
+//            String volume = request.getParameter("volume");
+//            String price = request.getParameter("price");
+//            String count = request.getParameter("count");
+//            String company = request.getParameter("company");
 
             try {
                 productId = createProduct(name, category, parameters, weight, volume, price, count, company);
 
-                Part mainImg = request.getPart("img1");
-                Part secodImg = request.getPart("img2");
-                Part thirdImg = request.getPart("img3");
+                /*Part mainImg = request.getPart("img1");
+                Part secondImg = request.getPart("img2");
+                Part thirdImg = request.getPart("img3");*/
 
-                saveImage(productId, mainImg, 1);
-                saveImage(productId, secodImg, 2);
-                saveImage(productId, thirdImg, 3);
+                saveImage(productId, img1.getInputStream(), 1);
+                saveImage(productId, img2.getInputStream(), 2);
+                saveImage(productId, img3.getInputStream(), 3);
             } catch (NumberFormatException e) {
                 logger.error(MessageFormat.format("Invalid value fore ne product : {0}, {1}, {2}, {3}, {4}, {5}, {6}, {7}, {8}", name, category, parameters, weight, volume, price, count, company), e);
-                request.setAttribute("parsErrorMessage", "Some data is invalid");
+                redirectAttributes.addFlashAttribute("parsErrorMessage", "Some data is invalid");
+                return "redirect:add";
 
             } catch (IOException e) {
                 logger.error("Problem with uplouded imeges", e);
-                request.setAttribute("parsErrorMessage", "Some problem with image save process. Please try again.");
-
+                redirectAttributes.addFlashAttribute("parsErrorMessage", "Some problem with image save process. Please try again.");
+                return "redirect:add";
             }
 
-            request.setAttribute("parsSuccessMessage", "Created");
-            RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/admin/addProduct.jsp");
-            rd.forward(request, response);
+            model.addAttribute("parsSuccessMessage", "Created");
+
+            return "admin/addProduct";
+            /*RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/admin/addProduct.jsp");
+            rd.forward(request, response);*/
 
         } else {
 
-            RequestDispatcher rd = request.getRequestDispatcher("/");
-            rd.forward(request, response);
+            return "redirect:/";
+            /*RequestDispatcher rd = request.getRequestDispatcher("/");
+            rd.forward(request, response);*/
         }
     }
 
-    private void saveImage(int productId, Part filePart, int index) throws IOException {
+    private void saveImage(int productId, InputStream fileContent, int index) throws IOException {
 
-        String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString(); // MSIE fix.
-        InputStream fileContent = filePart.getInputStream();
+//        String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString(); // MSIE fix.
+//        InputStream fileContent = filePart.getInputStream();
         File uploads = new File("c:\\img\\");
         File file = new File(uploads, MessageFormat.format("{0}-image{1}.jpg", productId, index));
         Files.copy(fileContent, file.toPath());
 
-        ImageService imageService = new ImageServiceImpl();
+//        ImageService imageService = new ImageServiceImpl();
         imageService.save(MessageFormat.format("{0}-image{1}.jpg", productId, index), productId);
 
     }
 
-    private int createProduct(String name, String category, String parameters, String weight, String volume, String price, String count, String company) throws NumberFormatException {
+    private int createProduct(String name, String category, String parameters,
+                              String weight, String volume, String price, String count, String company) throws NumberFormatException {
         double weightPars = Double.parseDouble(weight);
         double volumePars = Double.parseDouble(volume);
         BigDecimal pricePars = BigDecimal.valueOf(Double.parseDouble(price));
@@ -145,10 +173,10 @@ public class AddProductServlet extends HttpServlet {
         productEntity.setPrice(pricePars);
         productEntity.setCount(countPars);
         productEntity.setCompany(company);
-        CategoryEntity categoryEntity = new CategoryServiceImpl().get(categoryId);
+        CategoryEntity categoryEntity = categoryService.get(categoryId);
         productEntity.setCategory(categoryEntity);
 
-        ProductService productService = new ProductServiceImpl();
+//        ProductService productService = new ProductServiceImpl();
         int id = productService.save(productEntity);
 
         return id;

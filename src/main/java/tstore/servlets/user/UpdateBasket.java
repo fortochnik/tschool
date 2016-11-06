@@ -2,11 +2,14 @@ package tstore.servlets.user;
 
 import org.apache.log4j.Logger;
 import org.json.simple.parser.ParseException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import tstore.model.OrderEntity;
 import tstore.model.ProductListEntity;
-import tstore.service.impl.OrderServiceImpl;
-import tstore.service.impl.ProductInBasketServiceImpl;
+import tstore.service.OrderService;
+import tstore.service.ProductInBasketService;
 import tstore.utils.JsonParser;
 import tstore.utils.SessionAttributes;
 
@@ -26,9 +29,15 @@ import java.util.Map;
  * Created by mipan on 17.10.2016.
  */
 @Controller
-public class UpdateBasket extends HttpServlet {
+public class UpdateBasket{
     final static Logger logger = Logger.getLogger(UpdateBasket.class);
 
+    @Autowired
+    private OrderService orderService;
+    @Autowired
+    private ProductInBasketService productInBasketService;
+
+    @RequestMapping(value = "updatebasket", method = RequestMethod.POST)
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String jsonOrder = request.getParameter("order");
         int totalBasket;
@@ -41,7 +50,7 @@ public class UpdateBasket extends HttpServlet {
             if (isLogin) {
                 Integer userId = Integer.parseInt(request.getSession(false).getAttribute(SessionAttributes.USERID).toString());
 
-                OrderEntity basketByUserId = updateBasket(new OrderServiceImpl().getBasketByUserId(userId), basketJson);
+                OrderEntity basketByUserId = updateBasket(orderService.getBasketByUserId(userId), basketJson);
             }
             else {
                 Cookie[] cookies = request.getCookies();
@@ -101,19 +110,20 @@ public class UpdateBasket extends HttpServlet {
                 Integer count = basketJson.get(productIdInOldBasket);
                 productListEntity.setCount(count);
 
-                    new ProductInBasketServiceImpl().update(productListEntity);
+                productInBasketService.update(productListEntity);
 
             } else {
                 iter.remove();
 
-                    new ProductInBasketServiceImpl().delete(productListEntity);
+                productInBasketService.delete(productListEntity);
 
             }
         }
         return basketByUserId;
     }
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+    @RequestMapping(value = "updatebasket", method = RequestMethod.GET)
+    protected String doGet(){
+        return "redirect:/";
     }
 }

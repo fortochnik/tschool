@@ -2,7 +2,9 @@ package tstore.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import tstore.dao.ImageDao;
+import tstore.dao.ProductDao;
 import tstore.dao.impl.ImageDaoImpl;
 import tstore.dao.impl.ProductDaoImpl;
 import tstore.model.ImageEntity;
@@ -15,9 +17,12 @@ import java.util.List;
  * Created by mipan on 23.10.2016.
  */
 @Service
+@Transactional
 public class ImageServiceImpl implements ImageService {
     @Autowired
-    ImageDao imageDao;
+    protected ImageDao imageDao;
+    @Autowired
+    private ProductDao productDao;
 
     /**
      * Save url image for target product
@@ -26,7 +31,7 @@ public class ImageServiceImpl implements ImageService {
      */
     public void save(String url, Integer productId) {
 //        imageDao.beginTransaction();
-        ProductEntity productEntity = new ProductDaoImpl().findById(ProductEntity.class, productId);
+        ProductEntity productEntity = productDao.findById(ProductEntity.class, productId);
         ImageEntity imageEntity = new ImageEntity();
         imageEntity.setImage(url);
         imageEntity.setProduct(productEntity);

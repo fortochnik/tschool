@@ -1,7 +1,10 @@
 package tstore.servlets.user;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import tstore.model.OrderEntity;
 import tstore.model.ProductEntity;
 import tstore.model.ProductListEntity;
@@ -25,18 +28,22 @@ import java.text.MessageFormat;
  * Created by mipan on 11.10.2016.
  */
 @Controller
-public class AddToBasketServlet extends HttpServlet {
+public class AddToBasketServlet {
 
     final static Logger logger = Logger.getLogger(AddToBasketServlet.class);
     public static final int NUMBER_OF_JUST_ADDED = 1;
-    private OrderService orderService = new OrderServiceImpl();
-    private ProductService productService = new ProductServiceImpl();
-    private UserService userService = new UserServiceImpl();
-    private ProductInBasketService productInBasketService = new ProductInBasketServiceImpl();
+    @Autowired
+    private OrderService orderService;
+    @Autowired
+    private ProductService productService;
+    @Autowired
+    private UserService userService;
+    @Autowired
+    private ProductInBasketService productInBasketService;
     private int userId;
 
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    @RequestMapping(value = "addtobasket", method = RequestMethod.POST)
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         HttpSession session = request.getSession(false);
         try {
             if (session.getAttribute(SessionAttributes.LOGIN).equals("true")) {
