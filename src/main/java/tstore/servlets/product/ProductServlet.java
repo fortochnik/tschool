@@ -35,7 +35,7 @@ public class ProductServlet {
     public ModelAndView doGet(HttpServletRequest request, @PathVariable(value = "id") String id)
             throws IOException {
         String requestURI = request.getRequestURI();
-        ModelAndView modelAndView = new ModelAndView("/product/product");
+        ModelAndView modelAndView = new ModelAndView("/product/");
 
 
         int productId = getProductIdFromUri(id);
