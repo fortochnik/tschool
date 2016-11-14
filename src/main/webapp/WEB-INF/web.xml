@@ -8,13 +8,62 @@
 
     <display-name>tstore</display-name>
 
+<!--\\\\\-->
+ <!--   <servlet>
+        <servlet-name>dispatcher</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <init-param>
+            <param-name>contextConfigLocation</param-name>
+            <param-value>/WEB-INF/mvc-dispatcher-servlet.xml</param-value>
+        </init-param>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>dispatcher</servlet-name>
+        <url-pattern>/</url-pattern>
+    </servlet-mapping>-->
+<!--\\\\\-->
+
+    <!-- <filter>
+         <filter-name>userIdentification</filter-name>
+         <filter-class>tstore.servlets.filters.UserIdentificationFilter</filter-class>
+
+     </filter>
+     <filter-mapping>
+         <filter-name>userIdentification</filter-name>
+         <url-pattern>/*</url-pattern>
+         &lt;!&ndash;<servlet-name>Product</servlet-name>&ndash;&gt;
+     </filter-mapping>-->
+
+    <!--<filter>
+        <filter-name>springSecurityFilterChain</filter-name>
+        <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>springSecurityFilterChain</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>-->
+    <!--<filter>
+        <filter-name>filterChainProxy</filter-name>
+        <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+    </filter>-->
+
+    <!--<filter-mapping>
+        <filter-name>filterChainProxy</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>-->
+
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>/WEB-INF/applicationContext.xml</param-value>
+    </context-param>
 
     <servlet>
         <servlet-name>dispatcher</servlet-name>
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
         <init-param>
             <param-name>contextConfigLocation</param-name>
-            <param-value>/WEB-INF/mvc-dispatcher-servlet.xml</param-value>
+            <param-value></param-value>
         </init-param>
         <load-on-startup>1</load-on-startup>
     </servlet>
@@ -24,257 +73,258 @@
         <url-pattern>/</url-pattern>
     </servlet-mapping>
 
-
     <filter>
-        <filter-name>userIdentification</filter-name>
-        <filter-class>tstore.servlets.filters.UserIdentificationFilter</filter-class>
-
+        <filter-name>springSecurityFilterChain</filter-name>
+        <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
     </filter>
     <filter-mapping>
-        <filter-name>userIdentification</filter-name>
+        <filter-name>springSecurityFilterChain</filter-name>
         <url-pattern>/*</url-pattern>
-        <!--<servlet-name>Product</servlet-name>-->
     </filter-mapping>
 
-<!--
-    <context-param>
-        <param-name>contextConfigLocation</param-name>
-        <param-value>/WEB-INF/applicationContext.xml</param-value>
-    </context-param>
--->
-
-  <!--  <context-param>
-        <param-name>contextClass</param-name>
-        <param-value>
-            org.springframework.web.context.support.AnnotationConfigWebApplicationContext
-        </param-value>
-    </context-param>-->
-
-
-   <!-- <listener>
+    <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-    </listener>-->
+    </listener>
+
+    <!--
+        <context-param>
+            <param-name>contextConfigLocation</param-name>
+            <param-value>/WEB-INF/applicationContext.xml</param-value>
+        </context-param>
+    -->
+
+    <!--  <context-param>
+          <param-name>contextClass</param-name>
+          <param-value>
+              org.springframework.web.context.support.AnnotationConfigWebApplicationContext
+          </param-value>
+      </context-param>-->
+
+
+    <!-- <listener>
+         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+     </listener>-->
     <!--<welcome-file-list>
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>-->
 
-   <!-- <servlet>
-        <servlet-name>Main</servlet-name>
-        <servlet-class>tstore.servlets.MainServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>Main</servlet-name>
-        <url-pattern></url-pattern>
-    </servlet-mapping>
+    <!-- <servlet>
+         <servlet-name>Main</servlet-name>
+         <servlet-class>tstore.servlets.MainServlet</servlet-class>
+     </servlet>
+     <servlet-mapping>
+         <servlet-name>Main</servlet-name>
+         <url-pattern></url-pattern>
+     </servlet-mapping>
 
-    <servlet>
-        <servlet-name>Search</servlet-name>
-        <servlet-class>tstore.servlets.SearchServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>Search</servlet-name>
-        <url-pattern>/search</url-pattern>
-    </servlet-mapping>
-
-
-    <servlet>
-        <servlet-name>Product</servlet-name>
-        <servlet-class>tstore.servlets.product.ProductServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>Product</servlet-name>
-        <url-pattern>/product/*</url-pattern>
-    </servlet-mapping>
-
-    &lt;!&ndash;Client's servlets&ndash;&gt;
-
-    <servlet>
-        <servlet-name>Basket</servlet-name>
-        <servlet-class>tstore.servlets.user.BasketServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>Basket</servlet-name>
-        <url-pattern>/basket</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>UserProfile</servlet-name>
-        <servlet-class>tstore.servlets.user.UserProfileServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>UserProfile</servlet-name>
-        <url-pattern>/profile</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>OrderHistory</servlet-name>
-        <servlet-class>tstore.servlets.product.ProductServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>OrderHistory</servlet-name>
-        <url-pattern>/orderhistory</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>Payment</servlet-name>
-        <servlet-class>tstore.servlets.user.BuyServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>Payment</servlet-name>
-        <url-pattern>/pay</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>PayFinish</servlet-name>
-        <servlet-class>tstore.servlets.user.BuyFinishServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>PayFinish</servlet-name>
-        <url-pattern>/payfinishpayfinish</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>Success</servlet-name>
-        <servlet-class>tstore.servlets.SuccessServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>Success</servlet-name>
-        <url-pattern>/success</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>AddProductToBasket</servlet-name>
-        <servlet-class>tstore.servlets.user.AddToBasketServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>AddProductToBasket</servlet-name>
-        <url-pattern>/addtobasket</url-pattern>
-    </servlet-mapping>
-
-    &lt;!&ndash;Admin's servlets&ndash;&gt;
-    <servlet>
-        <servlet-name>UpdateBasket</servlet-name>
-        <servlet-class>tstore.servlets.user.UpdateBasket</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>UpdateBasket</servlet-name>
-        <url-pattern>/updatebasket</url-pattern>
-    </servlet-mapping>
+     <servlet>
+         <servlet-name>Search</servlet-name>
+         <servlet-class>tstore.servlets.SearchServlet</servlet-class>
+     </servlet>
+     <servlet-mapping>
+         <servlet-name>Search</servlet-name>
+         <url-pattern>/search</url-pattern>
+     </servlet-mapping>
 
 
-    <servlet>
-        <servlet-name>AddProduct</servlet-name>
-        <servlet-class>tstore.servlets.admin.AddProductServlet</servlet-class>
-        <multipart-config>
-            <max-file-size>10485760</max-file-size>
-            <max-request-size>20971520</max-request-size>
-            <file-size-threshold>5242880</file-size-threshold>
-        </multipart-config>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>AddProduct</servlet-name>
-        <url-pattern>/add</url-pattern>
-    </servlet-mapping>
+     <servlet>
+         <servlet-name>Product</servlet-name>
+         <servlet-class>tstore.servlets.product.ProductServlet</servlet-class>
+     </servlet>
+     <servlet-mapping>
+         <servlet-name>Product</servlet-name>
+         <url-pattern>/product/*</url-pattern>
+     </servlet-mapping>
 
-    <servlet>
-        <servlet-name>Modifyorder</servlet-name>
-        <servlet-class>tstore.servlets.admin.ModifyOrders</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>Modifyorder</servlet-name>
-        <url-pattern>/modifyorder</url-pattern>
-    </servlet-mapping>
+     &lt;!&ndash;Client's servlets&ndash;&gt;
 
-    <servlet>
-        <servlet-name>OrderList</servlet-name>
-        <servlet-class>tstore.servlets.admin.AdminOrderListServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>OrderList</servlet-name>
-        <url-pattern>/orders</url-pattern>
-    </servlet-mapping>
+     <servlet>
+         <servlet-name>Basket</servlet-name>
+         <servlet-class>tstore.servlets.user.BasketServlet</servlet-class>
+     </servlet>
+     <servlet-mapping>
+         <servlet-name>Basket</servlet-name>
+         <url-pattern>/basket</url-pattern>
+     </servlet-mapping>
 
-    <servlet>
-        <servlet-name>Category</servlet-name>
-        <servlet-class>tstore.servlets.admin.CategoryManagerServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>Category</servlet-name>
-        <url-pattern>/category</url-pattern>
-    </servlet-mapping>
+     <servlet>
+         <servlet-name>UserProfile</servlet-name>
+         <servlet-class>tstore.servlets.user.UserProfileServlet</servlet-class>
+     </servlet>
+     <servlet-mapping>
+         <servlet-name>UserProfile</servlet-name>
+         <url-pattern>/profile</url-pattern>
+     </servlet-mapping>
 
-    <servlet>
-        <servlet-name>Statistic</servlet-name>
-        <servlet-class>tstore.servlets.admin.StatisticServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>Statistic</servlet-name>
-        <url-pattern>/statistic</url-pattern>
-    </servlet-mapping>
+     <servlet>
+         <servlet-name>OrderHistory</servlet-name>
+         <servlet-class>tstore.servlets.product.ProductServlet</servlet-class>
+     </servlet>
+     <servlet-mapping>
+         <servlet-name>OrderHistory</servlet-name>
+         <url-pattern>/orderhistory</url-pattern>
+     </servlet-mapping>
 
+     <servlet>
+         <servlet-name>Payment</servlet-name>
+         <servlet-class>tstore.servlets.user.BuyServlet</servlet-class>
+     </servlet>
+     <servlet-mapping>
+         <servlet-name>Payment</servlet-name>
+         <url-pattern>/pay</url-pattern>
+     </servlet-mapping>
 
-    &lt;!&ndash;image servlet&ndash;&gt;
-    <servlet>
-        <servlet-name>Images</servlet-name>
-        <servlet-class>tstore.servlets.getImageServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>Images</servlet-name>
-        <url-pattern>/image</url-pattern>
-    </servlet-mapping>
+     <servlet>
+         <servlet-name>PayFinish</servlet-name>
+         <servlet-class>tstore.servlets.user.BuyFinishServlet</servlet-class>
+     </servlet>
+     <servlet-mapping>
+         <servlet-name>PayFinish</servlet-name>
+         <url-pattern>/payfinishpayfinish</url-pattern>
+     </servlet-mapping>
 
+     <servlet>
+         <servlet-name>Success</servlet-name>
+         <servlet-class>tstore.servlets.SuccessServlet</servlet-class>
+     </servlet>
+     <servlet-mapping>
+         <servlet-name>Success</servlet-name>
+         <url-pattern>/success</url-pattern>
+     </servlet-mapping>
 
-    &lt;!&ndash;login page&ndash;&gt;
+     <servlet>
+         <servlet-name>AddProductToBasket</servlet-name>
+         <servlet-class>tstore.servlets.user.AddToBasketServlet</servlet-class>
+     </servlet>
+     <servlet-mapping>
+         <servlet-name>AddProductToBasket</servlet-name>
+         <url-pattern>/addtobasket</url-pattern>
+     </servlet-mapping>
 
-    <servlet>
-        <servlet-name>Login</servlet-name>
-        <servlet-class>tstore.servlets.LoginServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>Login</servlet-name>
-        <url-pattern>/login</url-pattern>
-    </servlet-mapping>
-
-    &lt;!&ndash;logout&ndash;&gt;
-
-    <servlet>
-        <servlet-name>Logout</servlet-name>
-        <servlet-class>tstore.servlets.LogoutServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>Logout</servlet-name>
-        <url-pattern>/logout</url-pattern>
-    </servlet-mapping>
-
-    &lt;!&ndash;Errors&ndash;&gt;
-    <error-page>
-        <error-code>404</error-code>
-        <location>/404.jsp</location>
-    </error-page>
+     &lt;!&ndash;Admin's servlets&ndash;&gt;
+     <servlet>
+         <servlet-name>UpdateBasket</servlet-name>
+         <servlet-class>tstore.servlets.user.UpdateBasket</servlet-class>
+     </servlet>
+     <servlet-mapping>
+         <servlet-name>UpdateBasket</servlet-name>
+         <url-pattern>/updatebasket</url-pattern>
+     </servlet-mapping>
 
 
+     <servlet>
+         <servlet-name>AddProduct</servlet-name>
+         <servlet-class>tstore.servlets.admin.AddProductServlet</servlet-class>
+         <multipart-config>
+             <max-file-size>10485760</max-file-size>
+             <max-request-size>20971520</max-request-size>
+             <file-size-threshold>5242880</file-size-threshold>
+         </multipart-config>
+     </servlet>
+     <servlet-mapping>
+         <servlet-name>AddProduct</servlet-name>
+         <url-pattern>/add</url-pattern>
+     </servlet-mapping>
 
-    <error-page>
-        <exception-type>tstore.exceptions.PageNotFoundException</exception-type>
-        <location>/404.jsp</location>
-    </error-page>
+     <servlet>
+         <servlet-name>Modifyorder</servlet-name>
+         <servlet-class>tstore.servlets.admin.ModifyOrders</servlet-class>
+     </servlet>
+     <servlet-mapping>
+         <servlet-name>Modifyorder</servlet-name>
+         <url-pattern>/modifyorder</url-pattern>
+     </servlet-mapping>
 
-    <error-page>
-        <exception-type>java.lang.Exception</exception-type>
-        <location>/Error.jsp</location>
-    </error-page>
+     <servlet>
+         <servlet-name>OrderList</servlet-name>
+         <servlet-class>tstore.servlets.admin.AdminOrderListServlet</servlet-class>
+     </servlet>
+     <servlet-mapping>
+         <servlet-name>OrderList</servlet-name>
+         <url-pattern>/orders</url-pattern>
+     </servlet-mapping>
 
-    <error-page>
-        <location>/Error.jsp</location>
-    </error-page>-->
+     <servlet>
+         <servlet-name>Category</servlet-name>
+         <servlet-class>tstore.servlets.admin.CategoryManagerServlet</servlet-class>
+     </servlet>
+     <servlet-mapping>
+         <servlet-name>Category</servlet-name>
+         <url-pattern>/category</url-pattern>
+     </servlet-mapping>
+
+     <servlet>
+         <servlet-name>Statistic</servlet-name>
+         <servlet-class>tstore.servlets.admin.StatisticServlet</servlet-class>
+     </servlet>
+     <servlet-mapping>
+         <servlet-name>Statistic</servlet-name>
+         <url-pattern>/statistic</url-pattern>
+     </servlet-mapping>
+
+
+     &lt;!&ndash;image servlet&ndash;&gt;
+     <servlet>
+         <servlet-name>Images</servlet-name>
+         <servlet-class>tstore.servlets.getImageServlet</servlet-class>
+     </servlet>
+     <servlet-mapping>
+         <servlet-name>Images</servlet-name>
+         <url-pattern>/image</url-pattern>
+     </servlet-mapping>
+
+
+     &lt;!&ndash;login page&ndash;&gt;
+
+     <servlet>
+         <servlet-name>Login</servlet-name>
+         <servlet-class>tstore.servlets.LoginServlet</servlet-class>
+     </servlet>
+     <servlet-mapping>
+         <servlet-name>Login</servlet-name>
+         <url-pattern>/login</url-pattern>
+     </servlet-mapping>
+
+     &lt;!&ndash;logout&ndash;&gt;
+
+     <servlet>
+         <servlet-name>Logout</servlet-name>
+         <servlet-class>tstore.servlets.LogoutServlet</servlet-class>
+     </servlet>
+     <servlet-mapping>
+         <servlet-name>Logout</servlet-name>
+         <url-pattern>/logout</url-pattern>
+     </servlet-mapping>
+
+     &lt;!&ndash;Errors&ndash;&gt;
+     <error-page>
+         <error-code>404</error-code>
+         <location>/404.jsp</location>
+     </error-page>
+
+
+
+     <error-page>
+         <exception-type>tstore.exceptions.PageNotFoundException</exception-type>
+         <location>/404.jsp</location>
+     </error-page>
+
+     <error-page>
+         <exception-type>java.lang.Exception</exception-type>
+         <location>/Error.jsp</location>
+     </error-page>
+
+     <error-page>
+         <location>/Error.jsp</location>
+     </error-page>-->
 
     <!--Filter-->
 
 
-<!--    <jsp-config>
-        <jsp-property-group>
-            <url-pattern>*.jsp</url-pattern>
-            <page-encoding>UTF-8</page-encoding>
-        </jsp-property-group>
-    </jsp-config>-->
+    <!--    <jsp-config>
+            <jsp-property-group>
+                <url-pattern>*.jsp</url-pattern>
+                <page-encoding>UTF-8</page-encoding>
+            </jsp-property-group>
+        </jsp-config>-->
 </web-app>

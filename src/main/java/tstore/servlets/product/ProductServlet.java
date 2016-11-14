@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.security.Principal;
 import java.text.MessageFormat;
 
 /**
@@ -34,8 +35,9 @@ public class ProductServlet {
     @RequestMapping(value = "product/{id}", method = RequestMethod.GET)
     public ModelAndView doGet(HttpServletRequest request, @PathVariable(value = "id") String id)
             throws IOException {
+
         String requestURI = request.getRequestURI();
-        ModelAndView modelAndView = new ModelAndView("/product/");
+        ModelAndView modelAndView = new ModelAndView("product/product");
 
 
         int productId = getProductIdFromUri(id);

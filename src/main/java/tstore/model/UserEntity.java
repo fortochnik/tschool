@@ -40,6 +40,16 @@ public class UserEntity {
     @OneToMany(mappedBy = "client"/*, fetch = FetchType.LAZY*/)
     private Set<OrderEntity> orders;
 
+    @Transient
+    private String passwordConfirm;
+
+    public String getPasswordConfirm() {
+        return passwordConfirm;
+    }
+    public void setPasswordConfirm(String passwordConfirm) {
+        this.passwordConfirm = passwordConfirm;
+    }
+
     public UserEntity() {
     }
 

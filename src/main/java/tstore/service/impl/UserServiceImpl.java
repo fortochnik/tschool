@@ -2,12 +2,14 @@ package tstore.service.impl;
 
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tstore.dao.UserDao;
 import tstore.dao.impl.UserDaoImpl;
 import tstore.model.OrderEntity;
 import tstore.model.UserEntity;
+import tstore.model.enums.Role;
 import tstore.service.UserService;
 
 import java.util.HashSet;
@@ -110,5 +112,17 @@ public class UserServiceImpl implements UserService {
         List topTenUser = userDao.getTopTenUser();
 //        userDao.closeTransaction();
         return topTenUser;
+    }
+
+
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
+    @Override
+    public void createUserSecurity(UserEntity user) {
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        user.setRole(Role.ROLE_ADMIN);
+        user.setName("testSec");
+        user.setSername("testSecSer");
+        userDao.persist(user);
     }
 }

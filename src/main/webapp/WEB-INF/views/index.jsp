@@ -47,14 +47,9 @@
             <p class="lead">EShop</p>
 
             <div class="list-group">
-                    <form class="form left" method="post" action="search" id="tab">
+                    <form class="form left" method="post" action="/search" id="tab">
                         <jsp:include page="/WEB-INF/views/search/search.jsp"/>
-                        <div>
-                            <button class="btn .btn-xs btn-primary" name="order-update-admin"
-                                    value="add" type="submit">
-                                Search
-                            </button>
-                        </div>
+
                     </form>
             </div>
         </div>

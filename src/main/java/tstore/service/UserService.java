@@ -21,4 +21,6 @@ public interface UserService {
     UserEntity getFullUserById(Integer id);
 
     List getTopTenUser();
+
+    void createUserSecurity(UserEntity userForm);
 }

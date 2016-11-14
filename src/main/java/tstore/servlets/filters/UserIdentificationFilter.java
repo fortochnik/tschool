@@ -27,10 +27,10 @@ import java.util.Set;
  * Created by mipan on 03.10.2016.
  */
 
-@Component(value = "userIdentification")
+//@Component(value = "userIdentification")
 public class UserIdentificationFilter implements Filter {
     final static Logger logger = Logger.getLogger(UserIdentificationFilter.class);
-    @Autowired
+//    @Autowired
     private OrderService orderService;
 
     /*public UserIdentificationFilter(OrderService orderService) {

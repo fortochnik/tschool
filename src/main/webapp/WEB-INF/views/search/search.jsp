@@ -127,7 +127,11 @@
         </fieldset>
     </div>
 </div>
-
+<div>
+    <button class="btn .btn-xs" type="submit">
+        Search
+    </button>
+</div>
 <%--</div>--%>
 
 

@@ -40,9 +40,9 @@ public class StatisticServlet{
     protected ModelAndView doGet( HttpSession session) {
 //        HttpSession session = request.getSession(false);
         ModelAndView model = new ModelAndView();
-        if (session.getAttribute(SessionAttributes.LOGIN).equals("true") &&
+        /*if (session.getAttribute(SessionAttributes.LOGIN).equals("true") &&
                 (session.getAttribute(SessionAttributes.ROLE).equals(Role.EMPLOYEE) ||
-                        session.getAttribute(SessionAttributes.ROLE).equals(Role.ADMIN))) {
+                        session.getAttribute(SessionAttributes.ROLE).equals(Role.ADMIN))) {*/
 //            ProductInBasketService productInBasketService = new ProductInBasketServiceImpl();
 //            UserService orderService = new UserServiceImpl();
             List<ProductListEntity> topTenProduct = productInBasketService.getTopTenProduct();
@@ -60,13 +60,13 @@ public class StatisticServlet{
             return model;
             /*RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/admin/statistics.jsp");
             rd.forward(request, response);*/
-        }
+       /* }
         else
         {
             model.setViewName("redirect:/");
             return model;
-            /*RequestDispatcher rd = request.getRequestDispatcher("/");
-            rd.forward(request, response);*/
-        }
+            *//*RequestDispatcher rd = request.getRequestDispatcher("/");
+            rd.forward(request, response);*//*
+        }*/
     }
 }

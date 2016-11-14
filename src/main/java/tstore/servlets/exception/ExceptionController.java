@@ -20,12 +20,13 @@ public class ExceptionController {
 
     }
 
-    @ExceptionHandler(Exception.class)
+//    todo uncomment
+   /* @ExceptionHandler(Exception.class)
     public ModelAndView handleAllException(Exception ex) {
 
         ModelAndView model = new ModelAndView("error/Error");
         return model;
 
-    }
+    }*/
 
 }

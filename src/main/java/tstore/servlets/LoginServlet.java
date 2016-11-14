@@ -44,7 +44,7 @@ public class LoginServlet{
     private OrderService orderService;
 
 
-    @RequestMapping(value = "login", method = RequestMethod.POST)
+    @RequestMapping(value = "login2", method = RequestMethod.POST)
     protected String doPost(HttpServletRequest request,
                           @RequestParam(value = "form-login-submit", required = false) String loginSubmit,
                           @RequestParam(value = "form-username", required = false) String login,
@@ -137,7 +137,7 @@ public class LoginServlet{
         return"redirect:/login";
     }
 
-    @RequestMapping(value = "login", method = RequestMethod.GET)
+    @RequestMapping(value = "login2", method = RequestMethod.GET)
     protected ModelAndView doGet(HttpServletRequest request) throws ServletException, IOException {
         ModelAndView login = new ModelAndView("login");
 

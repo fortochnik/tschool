@@ -6,5 +6,6 @@ package tstore.model.enums;
 public enum Role {
     ADMIN,
     EMPLOYEE,
-    CLIENT;
+    CLIENT,
+    ROLE_ADMIN;
 }

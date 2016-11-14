@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%--
   Created by IntelliJ IDEA.
   User: mipan
@@ -7,6 +8,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
 <html>
 <head>
     <title></title>
@@ -45,9 +47,10 @@
                     </a>
 
                 </li>
-                <c:if test="${(LOGIN eq 'true') and ((ROLE eq 'EMPLOYEE') or (ROLE eq 'ADMIN'))}">
+                <%--<c:if test="${(LOGIN eq 'true') and ((ROLE eq 'EMPLOYEE') or (ROLE eq 'ADMIN'))}">--%>
+                <sec:authorize access="hasRole('ROLE_ADMIN')">
                     <li>
-                         <a href="/statistic"> Statistic</a>
+                        <a href="/statistic"> Statistic</a>
                     </li>
                     <li>
                         <a href="/category">Categories</a>
@@ -58,20 +61,30 @@
                     <li>
                         <a href="/add">Add new product</a>
                     </li>
-                </c:if>
+                </sec:authorize>
+                <%--</c:if>--%>
 
             </ul>
-            <c:if test="${LOGIN eq 'false'}">
+            <sec:authorize access="isAnonymous()">
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="/login">Login/Sign in</a></li>
                 </ul>
-            </c:if>
+            </sec:authorize>
 
-            <c:if test="${LOGIN eq 'true'}">
+            <%--<c:if test="${LOGIN eq 'true'}">
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="/logout">Logout</a></li>
                 </ul>
-            </c:if>
+            </c:if>--%>
+
+            <sec:authorize access="isAuthenticated()">
+                <form id="logoutForm" method="POST" action="${contextPath}/logout">
+                    <%--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>--%>
+                </form>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a onclick="document.forms['logoutForm'].submit()">Logout_sec</a></li>
+                </ul>
+            </sec:authorize>
         </div>
         <!-- /.navbar-collapse -->
     </div>
