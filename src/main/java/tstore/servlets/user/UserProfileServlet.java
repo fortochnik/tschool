@@ -2,6 +2,7 @@ package tstore.servlets.user;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -43,7 +44,7 @@ public class UserProfileServlet {
             throws IOException {
         HttpSession session = request.getSession(false);
         ModelAndView model = new ModelAndView();
-        if (session.getAttribute(SessionAttributes.LOGIN).equals("true")) {
+
 
                 UserEntity userEntity = getUserEntityById(session);
                 List<OrderEntity> ordersByUser = orderService.getOrdersByUser(userEntity);
@@ -52,12 +53,7 @@ public class UserProfileServlet {
                 model.addObject("orders", ordersByUser);
 
                 return model;
-        }
-        else
-        {
-            model.setViewName("redirect:/");
-            return model;
-        }
+
     }
 
     @RequestMapping(value = "profile", method = RequestMethod.POST)
@@ -95,7 +91,7 @@ public class UserProfileServlet {
             boolean readyForSave = true;
 
             if (!oldPassword.equals("")) {
-                if (!oldPassword.equals(userEntity.getPassword())) {
+                if (!BCrypt.checkpw(oldPassword, userEntity.getPassword())) {
                     model.addObject("passwordErrorMessage", "The current password is wrong!");
                     readyForSave = false;
                 } else {
@@ -105,7 +101,7 @@ public class UserProfileServlet {
                         readyForSave = false;
                     }
                     else {
-                        userEntity.setPassword(newPassword);
+                        userEntity.setPassword(BCrypt.hashpw(newPassword, BCrypt.gensalt()));
                     }
                 }
 

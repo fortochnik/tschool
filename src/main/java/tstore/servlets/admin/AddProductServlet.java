@@ -52,9 +52,6 @@ public class AddProductServlet {
 
         ModelAndView addProductPage = new ModelAndView("admin/addProduct");
 //        HttpSession session = request.getSession(false);
-        if (session.getAttribute(SessionAttributes.LOGIN).equals("true") &&
-                (session.getAttribute(SessionAttributes.ROLE).equals(Role.EMPLOYEE) ||
-                        session.getAttribute(SessionAttributes.ROLE).equals(Role.ADMIN))) {
 
 //            CategoryService categoryService = new CategoryServiceImpl();
             List<CategoryEntity> categories = categoryService.getCategories();
@@ -63,12 +60,7 @@ public class AddProductServlet {
             return addProductPage;
             /*RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/admin/addProduct.jsp");
             rd.forward(request, response);*/
-        } else {
-//            return new ModelAndView("forward:/");
-            return new ModelAndView("redirect:/");
-            /*RequestDispatcher rd = request.getRequestDispatcher("/");
-            rd.forward(request, response);*/
-        }
+
     }
 
     @RequestMapping(value = "add", method = RequestMethod.POST)
@@ -90,9 +82,6 @@ public class AddProductServlet {
                             RedirectAttributes redirectAttributes,
                             HttpServletRequest request, HttpServletResponse response) throws ServletException {
 //        HttpSession session = request.getSession(false);
-        if (session.getAttribute(SessionAttributes.LOGIN).equals("true") &&
-                (session.getAttribute(SessionAttributes.ROLE).equals(Role.EMPLOYEE) ||
-                        session.getAttribute(SessionAttributes.ROLE).equals(Role.ADMIN))) {
 
 //            CategoryService categoryService = new CategoryServiceImpl();
             List<CategoryEntity> categories = categoryService.getCategories();
@@ -136,12 +125,7 @@ public class AddProductServlet {
             /*RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/admin/addProduct.jsp");
             rd.forward(request, response);*/
 
-        } else {
 
-            return "redirect:/";
-            /*RequestDispatcher rd = request.getRequestDispatcher("/");
-            rd.forward(request, response);*/
-        }
     }
 
     private void saveImage(int productId, InputStream fileContent, int index) throws IOException {

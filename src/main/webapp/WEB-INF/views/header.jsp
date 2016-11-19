@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%--
   Created by IntelliJ IDEA.
   User: mipan
@@ -11,6 +12,8 @@
 
 <html>
 <head>
+    <c:set var="url">${pageContext.request.requestURL}</c:set>
+    <base href="${fn:substring(url, 0, fn:length(url) - fn:length(pageContext.request.requestURI))}${pageContext.request.contextPath}/" />
     <title></title>
 </head>
 <body>
@@ -26,40 +29,44 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/">Eshop</a>
+            <a class="navbar-brand" href="">Eshop</a>
         </div>
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
                 <li>
-                    <a href="/">Catalog</a>
+                    <a href="">Catalog</a>
                 </li>
-                <c:if test="${LOGIN eq 'true'}">
+                <sec:authorize access="hasRole('ROLE_CLIENT')">
+                    <%--<c:if test="${LOGIN eq 'true'}">--%>
                     <li>
-                        <a href="/profile">Profile</a>
+                        <a href="profile">Profile</a>
                     </li>
-                </c:if>
-                <li>
-                    <a href="/basket">Basket
-                        <c:if test="${BASKET ne '0'}">
-                            (<c:out value="${BASKET}"/>)
-                        </c:if>
-                    </a>
+                    <%--</c:if>--%>
+                </sec:authorize>
+                <sec:authorize access="hasAnyRole('ROLE_CLIENT', 'ROLE_ANONYMOUS')">
+                    <li>
+                        <a href="basket">Basket
+                            <c:if test="${BASKET ne '0'}">
+                                (<c:out value="${BASKET}"/>)
+                            </c:if>
+                        </a>
 
-                </li>
+                    </li>
+                </sec:authorize>
                 <%--<c:if test="${(LOGIN eq 'true') and ((ROLE eq 'EMPLOYEE') or (ROLE eq 'ADMIN'))}">--%>
-                <sec:authorize access="hasRole('ROLE_ADMIN')">
+                <sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_EMPLOYEE')">
                     <li>
-                        <a href="/statistic"> Statistic</a>
+                        <a href="statistic"> Statistic</a>
                     </li>
                     <li>
-                        <a href="/category">Categories</a>
+                        <a href="category">Categories</a>
                     </li>
                     <li>
-                        <a href="/orders">Orders</a>
+                        <a href="orders">Orders</a>
                     </li>
                     <li>
-                        <a href="/add">Add new product</a>
+                        <a href="add">Add new product</a>
                     </li>
                 </sec:authorize>
                 <%--</c:if>--%>
@@ -67,7 +74,7 @@
             </ul>
             <sec:authorize access="isAnonymous()">
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="/login">Login/Sign in</a></li>
+                    <li><a href="login">Login/Sign in</a></li>
                 </ul>
             </sec:authorize>
 
@@ -78,8 +85,9 @@
             </c:if>--%>
 
             <sec:authorize access="isAuthenticated()">
-                <form id="logoutForm" method="POST" action="${contextPath}/logout">
-                    <%--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>--%>
+                <%--<form id="logoutForm" method="POST" action="${contextPath}/logout">--%>
+                <form id="logoutForm" method="POST" action="logout">
+                        <%--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>--%>
                 </form>
                 <ul class="nav navbar-nav navbar-right">
                     <li><a onclick="document.forms['logoutForm'].submit()">Logout_sec</a></li>

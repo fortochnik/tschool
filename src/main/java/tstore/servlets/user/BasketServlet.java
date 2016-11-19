@@ -2,6 +2,9 @@ package tstore.servlets.user;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -48,7 +51,8 @@ public class BasketServlet{
         HttpSession session = request.getSession(false);
         ModelAndView model = new ModelAndView("/user/basket");
         try {
-            if (session.getAttribute(SessionAttributes.LOGIN).equals("true")){
+            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+            if (!(auth instanceof AnonymousAuthenticationToken)) {
                 int userId = Integer.parseInt(session.getAttribute(SessionAttributes.USERID).toString());
                 basket = orderService.getBasketByUserId(userId);
                 if (basket == null){

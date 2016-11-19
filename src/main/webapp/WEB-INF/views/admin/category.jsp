@@ -33,7 +33,7 @@
 
         <div class="container">
             <%----%>
-            <form name="form-category-new" method="post" action="/category" id="tab2">
+            <form name="form-category-new" method="post" action="category" id="tab2">
                 <div class="form-bottom">
                     <p class="help-block"></p>
 
@@ -73,7 +73,7 @@
         </div>
         <p class="help-block"></p>
 
-        <form name="form-category-exist" method="post" action="/category" id="tab" class="userinfo-form">
+        <form name="form-category-exist" method="post" action="category" id="tab" class="userinfo-form">
             <div class="row">
                 <div class="col-sm-5">
 

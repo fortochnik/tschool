@@ -8,6 +8,8 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<c:set var="url">${pageContext.request.requestURL}</c:set>
+<base href="${fn:substring(url, 0, fn:length(url) - fn:length(pageContext.request.requestURI))}${pageContext.request.contextPath}/"/>
 <div class="panel-group" id="accordion">
 
 
@@ -28,7 +30,7 @@
                            href="#collapse<c:out value="${order.id}"/>">Order
                             #
                             <c:out value="${order.id}"/></a>
-                        <a href="/basket" class="con-order pull-right btn btn-warning btn-sm active"
+                        <a href="basket" class="con-order pull-right btn btn-warning btn-sm active"
                            aria-pressed="true">Continue
                             to order</a>
                     </h4>
@@ -45,17 +47,16 @@
                                             <c:set var="totalProduct"
                                                    value="${productInList.product.price * productInList.count}"/>
                                             <c:set var="total" value="${total + totalProduct}"/>
-                                            <dt>
-                                                <img src="/image?image=${productInList.product.id}-image1.jpg"
+                                            <dt><img src="image?image=${productInList.product.id}-image1.jpg"
                                                      alt="Product image" width="93"
                                                      height="62"/>
                                                 <strong>$<c:out
-                                                    value="${productInList.product.price}"/> *
-                                                <c:out
-                                                        value="${productInList.count}"/> ($<c:out
-                                                        value="${totalProduct}"/>)</strong><a
-                                                    href="/product/<c:out value="${productInList.product.id}"/>"><c:out
-                                                    value="${productInList.product.name}"/></a></dt>
+                                                        value="${productInList.product.price}"/> *
+                                                    <c:out
+                                                            value="${productInList.count}"/> ($<c:out
+                                                            value="${totalProduct}"/>)</strong><a
+                                                        href="product/<c:out value="${productInList.product.id}"/>"><c:out
+                                                        value="${productInList.product.name}"/></a></dt>
                                             <dd>
                                                 <p><c:out value="${productInList.product.parameters}"/></p>
                                             </dd>
@@ -94,13 +95,16 @@
                                     <dl>
                                         <c:set var="totalProduct" value="${productInList.price * productInList.count}"/>
                                         <c:set var="total" value="${total + totalProduct}"/>
-                                        <dt><img src="/image?image=${productInList.product.id}-image1.jpg"
+                                        <dt><img src="image?image=${productInList.product.id}-image1.jpg"
                                                  alt="Product image" width="93"
-                                                 height="62"/> * <c:out
-                                                value="${productInList.count}"/> ($<c:out
-                                                value="${totalProduct}"/>)</strong><a
-                                                href="/product/<c:out value="${productInList.product.id}"/>"><c:out
-                                                value="${productInList.product.name}"/></a></dt>
+                                                 height="62"/>
+                                            <strong>$<c:out
+                                                    value="${productInList.price}"/> *
+                                                <c:out
+                                                        value="${productInList.count}"/> ($<c:out
+                                                        value="${totalProduct}"/>)</strong><a
+                                                    href="product/<c:out value="${productInList.product.id}"/>"><c:out
+                                                    value="${productInList.product.name}"/></a></dt>
                                         <dd>
                                             <p><c:out value="${productInList.product.parameters}"/></p>
                                         </dd>

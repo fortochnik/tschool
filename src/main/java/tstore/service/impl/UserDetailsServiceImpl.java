@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tstore.dao.UserDao;
@@ -16,7 +17,7 @@ import tstore.model.UserEntity;
 import java.util.HashSet;
 import java.util.Set;
 
-@Service
+
 public class UserDetailsServiceImpl implements UserDetailsService{
     @Autowired
     private UserDao userRepository;

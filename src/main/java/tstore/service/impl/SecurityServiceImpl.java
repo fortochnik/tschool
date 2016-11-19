@@ -4,14 +4,23 @@ package tstore.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 import tstore.service.SecurityService;
+import tstore.servlets.CustomAuthenticationSuccessHandler;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 @Service
 public class SecurityServiceImpl implements SecurityService {
+    @Autowired
+    private CustomAuthenticationSuccessHandler successHandler;
     @Autowired
     private AuthenticationManager authenticationManager;
 
@@ -31,7 +40,7 @@ public class SecurityServiceImpl implements SecurityService {
     }
 
     @Override
-    public void autologin(String username, String password) {
+    public void autologin(String username, String password, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         UserDetails userDetails = userDetailsService.loadUserByUsername(username);
         UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(userDetails, password, userDetails.getAuthorities());
 
@@ -39,6 +48,9 @@ public class SecurityServiceImpl implements SecurityService {
 
         if (usernamePasswordAuthenticationToken.isAuthenticated()) {
             SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+            successHandler.onAuthenticationSuccess(request, response, authentication);
 //            logger.debug(String.format("Auto login %s successfully!", username));
         }
     }

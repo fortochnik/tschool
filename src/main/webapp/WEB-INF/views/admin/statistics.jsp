@@ -58,8 +58,8 @@
                                     <tbody>
                                     <c:forEach var="product" items="${top_products}" varStatus="status">
                                         <tr>
-                                            <td><c:out value="${status.index}"/>.</td>
-                                            <td><a href="/product/<c:out value="${product[0].id}"/>"><c:out
+                                            <td><c:out value="${status.index+1}"/>.</td>
+                                            <td><a href="product/<c:out value="${product[0].id}"/>"><c:out
                                                 value="${product[0].id}"/></a></td>
                                             <td><c:out value="${product[0].name}"/></td>
                                             <td><c:out value="${product[1]}"/></td>
@@ -85,7 +85,7 @@
                                     <tbody>
                                     <c:forEach var="user" items="${top_user}" varStatus="status">
                                         <tr>
-                                            <td><c:out value="${status.index}"/>.</td>
+                                            <td><c:out value="${status.index+1}"/>.</td>
                                             <td><c:out value="${user[0].id}"/></td>
                                             <td><c:out value="${user[0].name}"/></td>
                                             <td><c:out value="${user[0].sername}"/></td>

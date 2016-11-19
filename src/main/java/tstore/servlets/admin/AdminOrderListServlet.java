@@ -41,9 +41,7 @@ public class AdminOrderListServlet {
                             HttpServletRequest request, HttpServletResponse response) {
 //        HttpSession session = request.getSession(false);
 
-        if (session.getAttribute(SessionAttributes.LOGIN).equals("true") &&
-                (session.getAttribute(SessionAttributes.ROLE).equals(Role.EMPLOYEE) ||
-                        session.getAttribute(SessionAttributes.ROLE).equals(Role.ADMIN))) {
+
 
             List<OrderEntity> orderEntityList = null;
             if (customSearch != null) {
@@ -71,10 +69,7 @@ public class AdminOrderListServlet {
         rd.forward(request, response);*/
 
 
-        } else {
 
-            return "redirect:/";
-        }
     }
 
     private List<OrderEntity> getCustomSearchResult(String orderNumber, String userEmail) {
@@ -86,14 +81,6 @@ public class AdminOrderListServlet {
     @RequestMapping(value = "orders", method = RequestMethod.GET)
     protected String doGet(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
 //        HttpSession session = request.getSession(false);
-
-        if (session.getAttribute(SessionAttributes.LOGIN).equals("true") && (session.getAttribute(SessionAttributes.ROLE).equals(Role.ADMIN)
-                || session.getAttribute(SessionAttributes.ROLE).equals(Role.EMPLOYEE))) {
             return "admin/orderslist";
-        } else {
-            return "redirect:login";
-        }
-
-
     }
 }

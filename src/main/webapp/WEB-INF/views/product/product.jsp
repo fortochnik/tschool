@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%--
   Created by IntelliJ IDEA.
   User: mipan
@@ -11,7 +12,8 @@
 <html lang="en">
 
 <head>
-
+    <c:set var="url">${pageContext.request.requestURL}</c:set>
+    <base href="${fn:substring(url, 0, fn:length(url) - fn:length(pageContext.request.requestURI))}${pageContext.request.contextPath}/" />
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -71,13 +73,13 @@
                             </ol>
                             <div class="carousel-inner ">
                                 <div class="item active img-height-max img-height-min">
-                                    <a href="/image?image=${product.id}-image1.jpg"> <img src="/image?image=${product.id}-image1.jpg" alt="Product image" width="800" height="300"/></a>
+                                    <a href="image?image=${product.id}-image1.jpg"> <img src="image?image=${product.id}-image1.jpg" alt="Product image" width="800" height="300"/></a>
                                 </div>
                                 <div class="item img-height-max">
-                                    <a href="/image?image=${product.id}-image2.jpg"> <img src="/image?image=${product.id}-image2.jpg" alt="Product image" width="800" height="300"/></a>
+                                    <a href="image?image=${product.id}-image2.jpg"> <img src="image?image=${product.id}-image2.jpg" alt="Product image" width="800" height="300"/></a>
                                 </div>
                                 <div class="item img-height-max">
-                                    <a href="/image?image=${product.id}-image3.jpg"><img src="/image?image=${product.id}-image3.jpg" alt="Product image" width="800" height="300"/></a>
+                                    <a href="image?image=${product.id}-image3.jpg"><img src="image?image=${product.id}-image3.jpg" alt="Product image" width="800" height="300"/></a>
                                 </div>
                             </div>
                             <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
@@ -170,7 +172,7 @@
         var productId = id;
         $.ajax({
             method: "POST",
-            url: "/addtobasket",
+            url: "addtobasket",
             data: {
                 product: id,
                 number: number

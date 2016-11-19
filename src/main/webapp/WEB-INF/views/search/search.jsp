@@ -22,11 +22,11 @@
 </head>
 
 <body>
-<div class="container">
+<%--<div class="container">
     <div class="page-header">
         <jsp:include page="/WEB-INF/views/header.jsp"/>
     </div>
-</div>
+</div>--%>
 
 
 <div class="container">

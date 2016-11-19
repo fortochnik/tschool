@@ -37,7 +37,7 @@ public class LoginServlet{
     final static Logger logger = Logger.getLogger(LoginServlet.class);
 
     @Autowired
-    UpdateBasket updateBasket;
+    private UpdateBasket updateBasket;
     @Autowired
     private UserService userService;
     @Autowired

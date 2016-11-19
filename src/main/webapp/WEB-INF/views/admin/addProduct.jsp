@@ -53,10 +53,9 @@
                                     Create
                                 </button>
                             </div>
-                            <form role="form" class="form-horizontal left userinfo-form" method="post" action="/add"
+                            <form role="form" class="form-horizontal left userinfo-form" method="post" action="add"
                                   id="tab"
-                                  enctype="multipart/form-data"
-                                    >
+                                  enctype="multipart/form-data">
 
                                 <p class="help-block"></p>
 

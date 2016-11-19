@@ -1,9 +1,13 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
+
+    <c:set var="url">${pageContext.request.requestURL}</c:set>
+    <base href="${fn:substring(url, 0, fn:length(url) - fn:length(pageContext.request.requestURI))}${pageContext.request.contextPath}/" />
 
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -47,7 +51,7 @@
             <p class="lead">EShop</p>
 
             <div class="list-group">
-                    <form class="form left" method="post" action="/search" id="tab">
+                    <form class="form left" method="post" action="search" id="tab"  accept-charset="UTF-8">
                         <jsp:include page="/WEB-INF/views/search/search.jsp"/>
 
                     </form>
@@ -66,13 +70,13 @@
                         </ol>
                         <div class="carousel-inner">
                             <div class="item active">
-                                <img class="slide-image" src="/image?image=main1.jpg" alt="">
+                                <img class="slide-image" src="image?image=main1.jpg" alt="">
                             </div>
                             <div class="item">
-                                <img class="slide-image" src="/image?image=main2.jpg" alt="">
+                                <img class="slide-image" src="image?image=main2.jpg" alt="">
                             </div>
                             <div class="item">
-                                <img class="slide-image" src="/image?image=main3.jpg" alt="">
+                                <img class="slide-image" src="image?image=main3.jpg" alt="">
                             </div>
                         </div>
                         <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
@@ -91,12 +95,12 @@
                     <div class="col-sm-4 col-lg-4 col-md-4">
                         <div class="thumbnail">
                             <div class="img-height">
-                                <img class="catalog-image " src="/image?image=${product.id}-image1.jpg" alt=""  width="320"
+                                <img class="catalog-image " src="image?image=${product.id}-image1.jpg" alt=""  width="320"
                                      height="150">
                             </div>
                             <div class="caption">
                                 <h4 class="pull-right">$<c:out value="${product.price}"/></h4>
-                                <h4><a href="/product/<c:out value="${product.id}"/>"><c:out
+                                <h4><a href="product/<c:out value="${product.id}"/>"><c:out
                                         value="${product.name}"/></a>
                                 </h4>
 
@@ -151,10 +155,10 @@
 <!-- /.container -->
 
 <!-- jQuery -->
-<script src="${pageContext.request.contextPath}/resources/js/jquery.js"></script>
+<script src="resources/js/jquery.js"></script>
 
 <!-- Bootstrap Core JavaScript -->
-<script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
+<script src="resources/js/bootstrap.min.js"></script>
 
 <script type="text/javascript">
     $(function () {
@@ -167,7 +171,7 @@
         var productId = id;
         $.ajax({
             method: "POST",
-            url: "/addtobasket",
+            url: "addtobasket",
             data: {
                 product: id,
                 number: number

@@ -3,6 +3,9 @@ package tstore.servlets.user;
 import org.apache.log4j.Logger;
 import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -26,6 +29,7 @@ import java.util.Iterator;
 import java.util.Map;
 
 /**
+ * Controller updated basket after save\buy
  * Created by mipan on 17.10.2016.
  */
 @Controller
@@ -42,7 +46,10 @@ public class UpdateBasket{
         String jsonOrder = request.getParameter("order");
         int totalBasket;
         try {
-            boolean isLogin = Boolean.valueOf((String) request.getSession(false).getAttribute(SessionAttributes.LOGIN));
+            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+            boolean isLogin  = !(auth instanceof AnonymousAuthenticationToken);
+
+//            boolean isLogin = Boolean.valueOf((String) request.getSession(false).getAttribute(SessionAttributes.LOGIN));
             Map<Integer, Integer> basketJson = null;
             basketJson = JsonParser.getBasket(jsonOrder, request);
             totalBasket = getTotalBasket(basketJson);
@@ -78,6 +85,7 @@ public class UpdateBasket{
                 }
             }
 //todo update basket count label
+//            todo add Spring redirect
             request.getSession(false).setAttribute(SessionAttributes.BASKET, totalBasket);
             RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/views/user/payment.jsp");
             rd.forward(request, response);

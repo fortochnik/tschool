@@ -120,9 +120,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public void createUserSecurity(UserEntity user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        user.setRole(Role.ROLE_ADMIN);
-        user.setName("testSec");
-        user.setSername("testSecSer");
+        user.setRole(Role.ROLE_CLIENT);
+        user.setName(user.getName());
+        user.setSername(user.getSername());
         userDao.persist(user);
     }
 }

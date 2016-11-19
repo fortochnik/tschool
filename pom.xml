@@ -13,6 +13,8 @@
         <spring.version>4.1.6.RELEASE</spring.version>
         <spring-security.version>4.0.2.RELEASE</spring-security.version>
         <hibernate-validator.version>5.2.1.Final</hibernate-validator.version>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
 
 

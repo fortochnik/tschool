@@ -56,14 +56,14 @@
                                         <c:set var="totalProduct"
                                                value="${productInList.price * productInList.count}"/>
                                         <c:set var="total" value="${total + totalProduct}"/>
-                                        <dt><img src="/image?image=${productInList.product.id}-image1.jpg"
+                                        <dt><img src="image?image=${productInList.product.id}-image1.jpg"
                                                  alt="Product image" width="93"
                                                  height="62"/>
                                             <strong>$<c:out value="${productInList.price}"/> *
                                             <c:out
                                                     value="${productInList.count}"/> ($<c:out
                                                     value="${totalProduct}"/>)</strong><a
-                                                href="/product/<c:out value="${productInList.product.id}"/>"><c:out
+                                                href="product/<c:out value="${productInList.product.id}"/>"><c:out
                                                 value="${productInList.product.name}"/></a></dt>
                                         <dd>
                                             <p><c:out value="${productInList.product.parameters}"/></p>

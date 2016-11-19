@@ -20,13 +20,14 @@ public class ExceptionController {
 
     }
 
-//    todo uncomment
-   /* @ExceptionHandler(Exception.class)
-    public ModelAndView handleAllException(Exception ex) {
+//    todo add 403 error access
 
+    @ExceptionHandler(Exception.class)
+    public ModelAndView handleAllException(Exception ex) {
+        //todo logging
         ModelAndView model = new ModelAndView("error/Error");
         return model;
 
-    }*/
+    }
 
 }

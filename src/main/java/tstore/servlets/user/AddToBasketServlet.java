@@ -2,6 +2,9 @@ package tstore.servlets.user;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -46,10 +49,13 @@ public class AddToBasketServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         HttpSession session = request.getSession(false);
         try {
-            if (session.getAttribute(SessionAttributes.LOGIN).equals("true")) {
+            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+            if (!(auth instanceof AnonymousAuthenticationToken)) {
+                // userDetails = auth.getPrincipal()
+
                 userId = Integer.parseInt(session.getAttribute(SessionAttributes.USERID).toString());
                 addProductToBasket(request);
-                response.setStatus(HttpServletResponse.SC_OK);
+//                response.setStatus(HttpServletResponse.SC_OK);
             }
             else
             {
@@ -76,8 +82,8 @@ public class AddToBasketServlet {
         } catch (NullPointerException e) {
             logger.error("fail add product to basket: {0}", e);
         }
-        int basketCount = Integer.parseInt(session.getAttribute(SessionAttributes.BASKET).toString()) + Integer.parseInt(request.getParameter("number"));
-        session.setAttribute(SessionAttributes.BASKET, basketCount);
+//        int basketCount = Integer.parseInt(session.getAttribute(SessionAttributes.BASKET).toString()) + Integer.parseInt(request.getParameter("number"));
+//        session.setAttribute(SessionAttributes.BASKET, basketCount);
 
     }
 

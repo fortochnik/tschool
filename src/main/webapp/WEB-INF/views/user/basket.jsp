@@ -1,4 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%--
   Created by IntelliJ IDEA.
   User: mipan
@@ -11,6 +13,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+    <c:set var="url">${pageContext.request.requestURL}</c:set>
+    <base href="${fn:substring(url, 0, fn:length(url) - fn:length(pageContext.request.requestURI))}${pageContext.request.contextPath}/" />
     <title></title>
     <!-- Bootstrap Core CSS -->
     <link href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css" rel="stylesheet">
@@ -78,7 +82,7 @@
                                        value="${productInList.product.price * productInList.count}"/>
                                 <c:set var="total" value="${total + totalProduct}"/>
                                 <dt id="product-<c:out value="${productInList.product.id}"/>">
-                                    <img src="/image?image=${productInList.product.id}-image1.jpg"
+                                    <img src="image?image=${productInList.product.id}-image1.jpg"
                                          alt="Product image" width="93"
                                          height="62"/>
                                     <strong>
@@ -92,7 +96,7 @@
                                         ($<span class="total-product-price"><c:out value="${totalProduct}"/></span>)
                                         <span class="glyphicon glyphicon-remove icn-space remove-product"/>
                                     </strong>
-                                    <a href="/product/<c:out value="${productInList.product.id}"/>">
+                                    <a href="product/<c:out value="${productInList.product.id}"/>">
                                         <c:out value="${productInList.product.name}"/>
                                     </a>
                                 </dt>
@@ -124,7 +128,7 @@
                             style="color: black">
                         Save
                     </button>
-                    <c:if test="${LOGIN eq 'true'}">
+                    <sec:authorize access="hasRole('ROLE_CLIENT')">
 
                         <button id="product-buy" type="submit"
                                 class="button btn btn-warning btn-sm  button-block click-buy" style="color: black">
@@ -132,15 +136,15 @@
                         </button>
                         <form id="form-submit" method="post" action="pay">
                         </form>
-                    </c:if>
-                    <c:if test="${LOGIN ne 'true'}">
+                    </sec:authorize>
+                    <sec:authorize access="hasRole('ROLE_ANONYMOUS')">
                         <button id="product-login" type="submit"
                                 class="button btn btn-warning btn-sm  button-block click-login" style="color: black">
                             $Buy
                         </button>
                         <form id="form-login" method="get" action="login">
                         </form>
-                    </c:if>
+                    </sec:authorize>
 
                 </div>
             </div>
@@ -227,7 +231,7 @@
 
             $.ajax({
                 type: 'POST', // it's easier to read GET request parameters
-                url: '/updatebasket',
+                url: 'updatebasket',
                 dataType: 'JSON',
                 async: false,
                 data: {

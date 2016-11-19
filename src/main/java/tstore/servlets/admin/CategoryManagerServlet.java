@@ -36,10 +36,6 @@ public class CategoryManagerServlet{
     @RequestMapping(value = "category", method = RequestMethod.GET)
     protected String doGet(Model model, HttpSession session){
 //        HttpSession session = request.getSession(false);
-        if (session.getAttribute(SessionAttributes.LOGIN).equals("true") &&
-                (session.getAttribute(SessionAttributes.ROLE).equals(Role.EMPLOYEE) ||
-                        session.getAttribute(SessionAttributes.ROLE).equals(Role.ADMIN))) {
-
 
 //            CategoryService categoryService = new CategoryServiceImpl();
             List<CategoryEntity> categories = categoryService.getCategories();
@@ -48,14 +44,7 @@ public class CategoryManagerServlet{
             return "admin/category";
             /*RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/admin/category.jsp");
             rd.forward(request, response);*/
-        }
-        else
-        {
-            return "redirect:/";
 
-            /*RequestDispatcher rd = request.getRequestDispatcher("/");
-            rd.forward(request, response);*/
-        }
     }
 
     @RequestMapping(value = "category", method = RequestMethod.POST)
@@ -63,9 +52,7 @@ public class CategoryManagerServlet{
                             @RequestParam(value = "update-form", required = false) String updateForm,
                             HttpSession session,HttpServletRequest request){
 //        HttpSession session = request.getSession(false);
-        if (session.getAttribute(SessionAttributes.LOGIN).equals("true") &&
-                (session.getAttribute(SessionAttributes.ROLE).equals(Role.EMPLOYEE) ||
-                        session.getAttribute(SessionAttributes.ROLE).equals(Role.ADMIN))) {
+
             Map<String, String[]> parameterMap = request.getParameterMap();
             List<String> NameNotDeleted = null;
             if (updateForm != null) {
@@ -91,11 +78,7 @@ public class CategoryManagerServlet{
             request.setAttribute("categoryexist", categories);
 
             return "admin/category";
-        }
-        else
-        {
-            return "redirect:/";
-        }
+
     }
 
     private void createCategory(String[] categoryForCreate) {
