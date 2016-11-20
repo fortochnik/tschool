@@ -71,7 +71,7 @@ public class ProductInBasketServiceImpl implements ProductInBasketService {
      * get top 10 buyable products
      * @return list of {@link ProductListEntity} list
      */
-    public List<ProductListEntity> getTopTenProduct() {
+    public List getTopTenProduct() {
 //        productListDao.beginTransaction();
 
         List topTen = productListDao.getTopTen();

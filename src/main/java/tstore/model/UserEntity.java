@@ -1,5 +1,6 @@
 package tstore.model;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import tstore.model.enums.Role;
 
 import javax.persistence.*;
@@ -24,6 +25,7 @@ public class UserEntity {
     private String sername;
 
     @Column(name = "birthday")
+    @DateTimeFormat(pattern="yyyy-MM-dd")
     @Temporal(TemporalType.DATE)
     private Date birthday;
 
@@ -64,7 +66,6 @@ public class UserEntity {
         if (!name.equals(that.name)) return false;
         if (!sername.equals(that.sername)) return false;
         if (!email.equals(that.email)) return false;
-        if (password != null ? !password.equals(that.password) : that.password != null) return false;
         return role == that.role;
 
     }

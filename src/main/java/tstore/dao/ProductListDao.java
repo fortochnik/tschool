@@ -13,7 +13,7 @@ import java.util.List;
 public interface ProductListDao extends GenericDao<ProductListEntity, Integer> {
     ProductListEntity findProductInBasketById(ProductEntity productEntity, OrderEntity orderEntity);
 
-    List<ProductListEntity> getTopTen();
+    List getTopTen();
 
     BigDecimal getProceedsBy(int days);
 }

@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%--
   Created by IntelliJ IDEA.
   User: mipan
@@ -39,7 +40,7 @@
         <div class="tab-pane active in" id="home">
             <div class="container">
                 <div class="row">
-                    <form class="form-horizontal left userinfo-form" id="tab" method="post" action="profile">
+                    <form:form modelAttribute="infoForm" class="form-horizontal left userinfo-form" id="tab" method="post" action="profile">
                         <fieldset>
                             <jsp:include page="/WEB-INF/views/user/userprofile/info.jsp"/>
                             <%-- <div>
@@ -51,7 +52,7 @@
                         <fieldset class="password-block">
                             <jsp:include page="/WEB-INF/views/user/userprofile/changepassword.jsp"/>
                         </fieldset>
-                    </form>
+                    </form:form>
 
                 </div>
             </div>

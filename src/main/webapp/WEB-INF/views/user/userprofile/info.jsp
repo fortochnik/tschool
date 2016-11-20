@@ -1,4 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%--
   Created by IntelliJ IDEA.
   User: mipan
@@ -12,51 +14,60 @@
 <h3>User Profile</h3>
 
 <!-- first-name input-->
-<div class="control-group ">
+<spring:bind path="name">
+    <div class="control-group ${status.error ? 'has-error' : ''}">
     <label class="control-label">First Name</label>
 
     <div class="controls inline">
-        <input id="first-name" name="first-name" type="text" placeholder="first name"
-               class="input-xlarge" value="<c:out value="${userdata.name}"/>">
+        <form:input path="name" id="first-name" name="first-name" type="text" placeholder="first name"
+               class="input-xlarge" value="${userdata.name}"/>
+        <form:errors path="name" cssClass="error"></form:errors>
 
         <p class="help-block"></p>
     </div>
 </div>
+</spring:bind>
 
 <!-- last-name input-->
-<div class="control-group">
-    <label class="control-label">Last Name</label>
-
-    <div class="controls  inline">
-        <input id="last-name" name="last-name" type="text" placeholder="last name"
-               class="input-xlarge" value="<c:out value="${userdata.sername}"/>">
-
-        <p class="help-block"></p>
-    </div>
-</div>
-
-<!-- email -->
-<div class="control-group">
-    <label class="control-label">Email</label>
-
-    <div class="controls  inline">
-        <input id="email" name="email" type="text" placeholder="email"
-               class="input-xlarge" value="<c:out value="${userdata.email}"/>">
-
-        <p class="help-block"></p>
-    </div>
-</div>
-
-<!-- Date of Birth-->
-<div class="control-group">
-    <label class="control-label">Date of Birth</label>
+<spring:bind path="sername">
+    <div class="control-group ${status.error ? 'has-error' : ''}">
+        <label class="control-label">Last Name</label>
 
         <div class="controls  inline">
-            <input type="text" <%--class="form-control"--%> id="birthday" name="birthday" class="date-empty" value="<c:out value="${userdata.birthday}"/>" >
+            <form:input path="sername" id="last-name" name="last-name" type="text" placeholder="last name"
+                        class="input-xlarge" value="${userdata.sername}"></form:input>
+            <form:errors path="sername" cssClass="error"></form:errors>
+
+            <p class="help-block"></p>
+        </div>
+    </div>
+</spring:bind>
+<!-- email -->
+<spring:bind path="email">
+    <div class="control-group ${status.error ? 'has-error' : ''}">
+        <label class="control-label">Email</label>
+
+        <div class="controls  inline">
+            <form:input path="email" id="email" name="email" type="text" placeholder="email"
+                        class="input-xlarge" value="${userdata.email}"></form:input>
+            <form:errors path="email" cssClass="error"></form:errors>
+            <p class="help-block"></p>
+        </div>
+    </div>
+</spring:bind>
+<!-- Date of Birth-->
+<spring:bind path="birthday">
+    <div class="control-group ${status.error ? 'has-error' : ''}">
+        <label class="control-label">Date of Birth</label>
+
+        <div class="controls  inline">
+            <form:input path="birthday" type="text" id="birthday" name="birthday"
+            class="date-empty"
+            value="${userdata.birthday}"></form:input>
+            <form:errors path="birthday" cssClass="error"></form:errors>
             <p class="help-block"></p>
 
         </div>
-
-
-</div>
+    </div>
+</spring:bind>
 <p class="help-block"></p>

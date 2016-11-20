@@ -20,7 +20,7 @@ public interface ProductInBasketService {
 
     void delete(ProductListEntity productListEntity);
 
-    List<ProductListEntity> getTopTenProduct();
+    List getTopTenProduct();
 
     BigDecimal getProceedsBy(int numberOfDaysToLookBack);
 }

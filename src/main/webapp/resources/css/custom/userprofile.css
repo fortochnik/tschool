@@ -32,3 +32,7 @@ input.medium {
     width:150px;!important;
 }
 
+.error {
+    white-space:nowrap
+}
+

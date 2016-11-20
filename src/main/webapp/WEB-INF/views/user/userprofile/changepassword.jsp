@@ -1,3 +1,5 @@
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%--
   Created by IntelliJ IDEA.
   User: mipan
@@ -8,31 +10,39 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <h3>Change password</h3>
 
-<div class="control-group">
-  <label class="control-label">Old Password</label>
+    <div class="control-group">
+        <label class="control-label">Old Password</label>
 
-  <div class="controls inline">
-    <input id="old-pass" type="password" class="input-xlarge" name="old-password">
+        <div class="controls inline">
+            <input id="old-pass" type="password" class="input-xlarge" name="old-password">
 
-    <p class="help-block"></p>
-  </div>
-</div>
-<div class="control-group">
-  <label class="control-label">New Password</label>
+            <p class="help-block"></p>
+        </div>
+    </div>
 
-  <div class="controls inline">
-    <input id="new-pass" type="password" class="input-xlarge" name="new-password">
 
-    <p class="help-block"></p>
-  </div>
-</div>
-<div class="control-group div-new-password">
-  <label class="control-label">Repeat New Password</label>
+<spring:bind path="password">
+    <div class="control-group ${status.error ? 'has-error' : ''}">
+        <label class="control-label">New Password</label>
 
-  <div class="controls inline">
-    <input  id="new-pass2" type="password" class="input-xlarge" name="new-password-repeat">
+        <div class="controls inline">
+            <form:input path="password" id="new-pass" type="password" class="input-xlarge" name="new-password"/>
+            <form:errors path="password" cssClass="error"></form:errors>
 
-    <p class="help-block"></p>
-  </div>
-</div>
+            <p class="help-block"></p>
+        </div>
+    </div>
+</spring:bind>
+<spring:bind path="passwordConfirm">
+    <div class="control-group div-new-password${status.error ? 'has-error' : ''}">
 
+        <label class="control-label">Repeat New Password</label>
+
+        <div class="controls inline">
+            <form:input path="passwordConfirm" id="new-pass2" type="password" class="input-xlarge" name="new-password-repeat"/>
+            <form:errors path="passwordConfirm" cssClass="error"></form:errors>
+
+            <p class="help-block"></p>
+        </div>
+    </div>
+</spring:bind>

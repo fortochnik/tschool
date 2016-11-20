@@ -5,7 +5,7 @@ import tstore.model.enums.Role;
 /**
  * Created by mipan on 05.10.2016.
  *
- * Attributes that use in servlets
+ * Attributes that use in controllers
  *
  */
 public class SessionAttributes {

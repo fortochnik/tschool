@@ -1,4 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%--
   Created by IntelliJ IDEA.
   User: mipan
@@ -46,45 +48,63 @@
                     </div>
                     <div class="form-bottom">
 
-                        <form id="form-buy" role="form" action="payfinish" method="post" class="pay-form userinfo-form">
-                            <div class="form-group">
-                                <label class="sr-only" for="form-country">Address</label>
-                                <select class="selectpicker show-tick" name="form-country" id="form-country"
-                                        title="Choose country...">
-                                    <c:forEach items="${countries}" var="country">
-                                        <option name="<c:out value="${country.id}"/>"><c:out
-                                                value="${country.country}"/></option>
-                                    </c:forEach>
-                                </select>
+                        <form:form id="form-buy" role="form" modelAttribute="payForm" action="payfinish" method="post"
+                                   class="pay-form userinfo-form">
+                            <spring:bind path="country">
+                                <div class="form-group ${status.error ? 'has-error' : ''}">
+                                    <label class="sr-only" for="form-country">Address</label>
+                                    <form:select class="selectpicker show-tick" name="form-country" id="form-country"
+                                                 title="Choose country..." path="country">
+                                        <%--<c:forEach items="${countries}" var="country">--%>
+                                        <form:options items="${countries}"/>">
+                                        <%--</c:forEach>--%>
+                                    </form:select>
+                                    <form:errors path="country"></form:errors>
+                                </div>
+                            </spring:bind>
+                            <spring:bind path="city">
+                                <div class="form-group ${status.error ? 'has-error' : ''}">
+                                    <label class="sr-only" for="form-city">City</label>
+                                    <form:input type="text" name="form-city" placeholder="City..."
+                                                class="form-city form-control " id="form-city" path="city"/>
+                                    <form:errors path="city"></form:errors>
+                                </div>
+                            </spring:bind>
+                            <spring:bind path="street">
+                                <div class="form-group ${status.error ? 'has-error' : ''}">
+                                    <label class="sr-only" for="form-street">street</label>
+                                    <form:input type="text" name="form-street" placeholder="street..."
+                                                class="form-street form-control " id="form-street" path="street"/>
+                                    <form:errors path="street"></form:errors>
+                                </div>
+                            </spring:bind>
+                            <spring:bind path="building">
+                                <div class="form-group ${status.error ? 'has-error' : ''}">
+                                    <label class="sr-only" for="form-build">Building</label>
+                                    <form:input path="building" type="text" name="form-build" placeholder="build..."
+                                                class="form-build form-control " id="form-build"/>
+                                    <form:errors path="building"></form:errors>
+                                </div>
+                            </spring:bind>
+                            <spring:bind path="apartment">
+                                <div class="form-group ${status.error ? 'has-error' : ''}">
+                                    <label class="sr-only" for="form-apartment">Apartment</label>
+                                    <form:input path="apartment" type="text" name="form-apartment"
+                                                placeholder="apartment..."
+                                                class="form-apartment form-control " id="form-apartment"/>
+                                    <form:errors path="apartment"></form:errors>
 
+                                </div>
+                            </spring:bind>
+                            <spring:bind path="zipcode">
+                                <div class="form-group ${status.error ? 'has-error' : ''}">
+                                    <label class="sr-only" for="form-zipcode">Apartment</label>
+                                    <form:input path="zipcode" type="text" name="form-zipcode" placeholder="zipcode..."
+                                                class="form-zipcode form-control " id="form-zipcode"/>
+                                    <form:errors path="zipcode"></form:errors>
 
-                            </div>
-                            <div class="form-group">
-                                <label class="sr-only" for="form-city">City</label>
-                                <input type="text" name="form-city" placeholder="City..."
-                                       class="form-city form-control " id="form-city"/>
-                            </div>
-                            <div class="form-group">
-                                <label class="sr-only" for="form-street">street</label>
-                                <input type="text" name="form-street" placeholder="street..."
-                                       class="form-street form-control " id="form-street"/>
-                            </div>
-                            <div class="form-group">
-                                <label class="sr-only" for="form-build">Building</label>
-                                <input type="text" name="form-build" placeholder="build..."
-                                       class="form-build form-control " id="form-build"/>
-                            </div>
-                            <div class="form-group">
-                                <label class="sr-only" for="form-apartment">Apartment</label>
-                                <input type="text" name="form-apartment" placeholder="apartment..."
-                                       class="form-apartment form-control " id="form-apartment"/>
-                            </div>
-                            <div class="form-group">
-                                <label class="sr-only" for="form-zipcode">Apartment</label>
-                                <input type="text" name="form-zipcode" placeholder="zipcode..."
-                                       class="form-zipcode form-control " id="form-zipcode"/>
-                            </div>
-
+                                </div>
+                            </spring:bind>
 
                             <div class="row">
                                 <div class="form-inline">
@@ -118,21 +138,21 @@
                                     </div>
                                 </div>
                             </div>
-                        </form>
-                            <p class="help-block"></p>
+                        </form:form>
+                        <p class="help-block"></p>
 
-                            <button name="form-submit" value="finish" class="btn buy">Finish!</button>
+                        <button name="form-submit" value="finish" class="btn buy">Finish!</button>
 
-                            <p class="help-block"></p>
-                            <c:if test="${not empty requestScope.get('errorSignInMessage')}">
-                                <div class="form-group top15">
-                                    <div class="alert alert-danger fade in ">
-                                        <a href="#" class="close" data-dismiss="alert">&times;</a>
-                                        <strong>Error!</strong> <c:out
-                                            value="${requestScope.get('errorSignInMessage')}"/>
-                                    </div>
+                        <p class="help-block"></p>
+                        <c:if test="${not empty requestScope.get('errorSignInMessage')}">
+                            <div class="form-group top15">
+                                <div class="alert alert-danger fade in ">
+                                    <a href="#" class="close" data-dismiss="alert">&times;</a>
+                                    <strong>Error!</strong> <c:out
+                                        value="${requestScope.get('errorSignInMessage')}"/>
                                 </div>
-                            </c:if>
+                            </div>
+                        </c:if>
 
                     </div>
                 </div>
