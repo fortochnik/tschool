@@ -21,7 +21,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/")
-public class MainServlet { //extends HttpServlet {
+public class MainServlet {
     final static Logger logger = Logger.getLogger(MainServlet.class);
 
     @Autowired
@@ -33,12 +33,8 @@ public class MainServlet { //extends HttpServlet {
     protected ModelAndView doGet() throws ServletException, IOException {
 
         List<CategoryEntity> categories = categoryService.getCategories();
-//        request.setAttribute("categories", categories);
 
         List<ProductEntity> productList = productService.getAllProducts();
-//        request.setAttribute("products", productList);
-//        RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
-//        rd.forward(request, response);
 
         ModelAndView index = new ModelAndView("index");
         index.addObject("categories", categories);

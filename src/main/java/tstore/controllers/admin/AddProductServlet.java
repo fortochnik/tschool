@@ -41,19 +41,12 @@ public class AddProductServlet {
 
     @RequestMapping(value = "add", method = RequestMethod.GET)
     protected ModelAndView doGet(HttpSession session) {
-
-
         ModelAndView addProductPage = new ModelAndView("admin/addProduct");
-//        HttpSession session = request.getSession(false);
 
-//            CategoryService categoryService = new CategoryServiceImpl();
-            List<CategoryEntity> categories = categoryService.getCategories();
-            addProductPage.addObject("categories", categories);
+        List<CategoryEntity> categories = categoryService.getCategories();
+        addProductPage.addObject("categories", categories);
 
-            return addProductPage;
-            /*RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/admin/addProduct.jsp");
-            rd.forward(request, response);*/
-
+        return addProductPage;
     }
 
     @RequestMapping(value = "add", method = RequestMethod.POST)
@@ -74,62 +67,38 @@ public class AddProductServlet {
                             @RequestParam(value = "test", required = false) String test,
                             RedirectAttributes redirectAttributes,
                             HttpServletRequest request, HttpServletResponse response) throws ServletException {
-//        HttpSession session = request.getSession(false);
 
-//            CategoryService categoryService = new CategoryServiceImpl();
-            List<CategoryEntity> categories = categoryService.getCategories();
-            request.setAttribute("categories", categories);
+        List<CategoryEntity> categories = categoryService.getCategories();
+        request.setAttribute("categories", categories);
 
-            int productId;
+        int productId;
 
-//            String name = request.getParameter("name");
-//            String category = request.getParameter("form-category");
-//            String parameters = request.getParameter("parameters");
-//            String weight = request.getParameter("weight");
-//            String volume = request.getParameter("volume");
-//            String price = request.getParameter("price");
-//            String count = request.getParameter("count");
-//            String company = request.getParameter("company");
+        try {
+            productId = createProduct(name, category, parameters, weight, volume, price, count, company);
+            saveImage(productId, img1.getInputStream(), 1);
+            saveImage(productId, img2.getInputStream(), 2);
+            saveImage(productId, img3.getInputStream(), 3);
+        } catch (NumberFormatException e) {
+            logger.error(MessageFormat.format("Invalid value fore ne product : {0}, {1}, {2}, {3}, {4}, {5}, {6}, {7}, {8}",
+                    name, category, parameters, weight, volume, price, count, company), e);
+            redirectAttributes.addFlashAttribute("parsErrorMessage", "Some data is invalid");
+            return "redirect:add";
 
-            try {
-                productId = createProduct(name, category, parameters, weight, volume, price, count, company);
+        } catch (IOException e) {
+            logger.error("Problem with uplouded imeges", e);
+            redirectAttributes.addFlashAttribute("parsErrorMessage", "Some problem with image save process. Please try again.");
+            return "redirect:add";
+        }
 
-                /*Part mainImg = request.getPart("img1");
-                Part secondImg = request.getPart("img2");
-                Part thirdImg = request.getPart("img3");*/
+        model.addAttribute("parsSuccessMessage", "Created");
 
-                saveImage(productId, img1.getInputStream(), 1);
-                saveImage(productId, img2.getInputStream(), 2);
-                saveImage(productId, img3.getInputStream(), 3);
-            } catch (NumberFormatException e) {
-                logger.error(MessageFormat.format("Invalid value fore ne product : {0}, {1}, {2}, {3}, {4}, {5}, {6}, {7}, {8}", name, category, parameters, weight, volume, price, count, company), e);
-                redirectAttributes.addFlashAttribute("parsErrorMessage", "Some data is invalid");
-                return "redirect:add";
-
-            } catch (IOException e) {
-                logger.error("Problem with uplouded imeges", e);
-                redirectAttributes.addFlashAttribute("parsErrorMessage", "Some problem with image save process. Please try again.");
-                return "redirect:add";
-            }
-
-            model.addAttribute("parsSuccessMessage", "Created");
-
-            return "admin/addProduct";
-            /*RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/admin/addProduct.jsp");
-            rd.forward(request, response);*/
-
-
+        return "admin/addProduct";
     }
 
     private void saveImage(int productId, InputStream fileContent, int index) throws IOException {
-
-//        String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString(); // MSIE fix.
-//        InputStream fileContent = filePart.getInputStream();
         File uploads = new File("c:\\img\\");
         File file = new File(uploads, MessageFormat.format("{0}-image{1}.jpg", productId, index));
         Files.copy(fileContent, file.toPath());
-
-//        ImageService imageService = new ImageServiceImpl();
         imageService.save(MessageFormat.format("{0}-image{1}.jpg", productId, index), productId);
 
     }
@@ -152,8 +121,6 @@ public class AddProductServlet {
         productEntity.setCompany(company);
         CategoryEntity categoryEntity = categoryService.get(categoryId);
         productEntity.setCategory(categoryEntity);
-
-//        ProductService productService = new ProductServiceImpl();
         int id = productService.save(productEntity);
 
         return id;

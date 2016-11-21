@@ -39,31 +39,26 @@ public class UpdateBasket{
     private ProductInBasketService productInBasketService;
 
     @RequestMapping(value = "updatebasket", method = RequestMethod.POST)
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response){
         String jsonOrder = request.getParameter("order");
         int totalBasket;
         try {
             Authentication auth = SecurityContextHolder.getContext().getAuthentication();
             boolean isLogin  = !(auth instanceof AnonymousAuthenticationToken);
 
-//            boolean isLogin = Boolean.valueOf((String) request.getSession(false).getAttribute(SessionAttributes.LOGIN));
             Map<Integer, Integer> basketJson = null;
             basketJson = JsonParser.getBasket(jsonOrder, request);
-            totalBasket = getTotalBasket(basketJson);
         /*if logged - pars and update order in db*/
             if (isLogin) {
                 Integer userId = Integer.parseInt(request.getSession(false).getAttribute(SessionAttributes.USERID).toString());
 
-                OrderEntity basketByUserId = updateBasket(orderService.getBasketByUserId(userId), basketJson);
+//                OrderEntity basketByUserId = updateBasket(orderService.getBasketByUserId(userId), basketJson);
             }
             else {
                 Cookie[] cookies = request.getCookies();
-
                 for (Cookie cookie : cookies) {
                     try{
                         int productId = Integer.parseInt(cookie.getName());
-
-
                         if (basketJson.get(productId)==null){
                             cookie.setMaxAge(0);
                         }
@@ -82,11 +77,6 @@ public class UpdateBasket{
                 }
             }
 //todo update basket count label
-//            todo add Spring redirect
-            /*request.getSession(false).setAttribute(SessionAttributes.BASKET, totalBasket);
-            RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/views/user/payment.jsp");
-            rd.forward(request, response);*/
-
         }
         catch (ParseException e) {
             logger.error("Error after parse cookies:", e);
@@ -96,6 +86,11 @@ public class UpdateBasket{
             logger.error("Error after parse cookies:", e);
             throw new RuntimeException("Problem in update basket process", e);
         }
+    }
+
+    @RequestMapping(value = "updatebasket", method = RequestMethod.GET)
+    protected String doGet(){
+        return "redirect:/";
     }
 
     private int getTotalBasket(Map<Integer, Integer> basketJson) {
@@ -127,8 +122,5 @@ public class UpdateBasket{
         return basketByUserId;
     }
 
-    @RequestMapping(value = "updatebasket", method = RequestMethod.GET)
-    protected String doGet(){
-        return "redirect:/";
-    }
+
 }

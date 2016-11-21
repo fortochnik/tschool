@@ -1,4 +1,4 @@
-package tstore.controllers;
+package tstore.controllers.security;
 
 import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +39,6 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
         Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
 //        todo get userEntity if it's CLIENT role
 
-
         request.setCharacterEncoding("UTF-8");
 
         if (authorities.stream().anyMatch((s)->s.getAuthority().equals(Role.ROLE_CLIENT.name()))){
@@ -64,9 +63,6 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
             }
         }
 
-       /* RequestCache requestCache = new HttpSessionRequestCache();
-        SavedRequest savedRequest = requestCache.getRequest(request, response);
-        String targetUrl = savedRequest.getRedirectUrl();*/
         response.sendRedirect(request.getContextPath() + "/");
     }
 }

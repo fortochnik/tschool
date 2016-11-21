@@ -34,12 +34,11 @@ public class BuyServlet{
     private ProductService productService;
 
     @RequestMapping(value = "pay", method = RequestMethod.POST)
-    protected ModelAndView doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected ModelAndView doPost(HttpServletRequest request){
 
         ModelAndView model = new ModelAndView();
 
         int userId = Integer.parseInt(request.getSession(false).getAttribute(SessionAttributes.USERID).toString());
-//        request.getParameterNames();
         OrderEntity basket = orderService.getBasketByUserId(userId);
 
         List<String> deficiency = productNumberValidation(basket.getProductList());
@@ -48,7 +47,6 @@ public class BuyServlet{
         if (basket.getProductList().size()!=0 && deficiency.size()==0) {
             List<CountryEntity> countryEntities = countryService.getAll();
             model.addObject("countries", countryEntities);
-
             model.addObject("payForm", new AddressEntity());
             model.setViewName("user/payment");
             return model;

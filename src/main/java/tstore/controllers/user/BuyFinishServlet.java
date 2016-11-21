@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import tstore.model.*;
+import tstore.model.AddressEntity;
+import tstore.model.CountryEntity;
+import tstore.model.OrderEntity;
 import tstore.model.enums.*;
 import tstore.service.CountryService;
 import tstore.service.OrderService;
@@ -18,7 +20,6 @@ import tstore.validator.PayValidator;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.time.Instant;
 import java.time.LocalDate;
@@ -42,66 +43,43 @@ public class BuyFinishServlet {
     private CountryService countryService;
 
     @RequestMapping(value = "payfinish", method = RequestMethod.POST)
-    protected String doPost(HttpServletRequest request, HttpServletResponse response,
+    protected String doPost(HttpServletRequest request,
                             @ModelAttribute("payForm") AddressEntity addressEntity, BindingResult bindingResult,
-                          /*@RequestParam(value = "form-country") String country,
-                          @RequestParam(value = "form-city") String city,
-                          @RequestParam(value = "form-street") String street,
-                          @RequestParam(value = "form-build") String building,
-                          @RequestParam(value = "form-apartment") String apartment,
-                          @RequestParam(value = "form-zipcode") String zipcode,*/
-                          @RequestParam(value = "payment") String payment,
-                          @RequestParam(value = "delivery") String delivery,
+                            @RequestParam(value = "payment") String payment,
+                            @RequestParam(value = "delivery") String delivery,
                             Model model
-                          ) throws ServletException, IOException {
+    ) throws ServletException, IOException {
 
         int userId = Integer.parseInt(request.getSession(false).getAttribute(SessionAttributes.USERID).toString());
-//        request.getParameterNames();
         OrderEntity basket = orderService.getBasketByUserId(userId);
-            /*String country = request.getParameter("form-country");
-            String city = request.getParameter("form-city");
-            String street = request.getParameter("form-street");
-            String building = request.getParameter("form-build");
-            String apartment = request.getParameter("form-apartment");
-            String zipcode = request.getParameter("form-zipcode");*/
+
         payValidator.validate(addressEntity, bindingResult);
 
         if (bindingResult.hasErrors()) {
             logger.error("wrong data for buy. Validation fail.");
             List<CountryEntity> countryEntities = countryService.getAll();
             model.addAttribute("countries", countryEntities);
-//            redirectAttributes.addFlashAttribute("errorSignInMessage", "Sorry, all data are necessary");
             return "user/payment";
         }
 
+        basket.setAddress(addressEntity);
+        basket.setDeliveryType(DeliveryType.valueOf(delivery));
+        basket.setPaymentType(PaymentType.valueOf(payment));
+        basket.setPaymentStatus(PaymentStatus.NOT_PAID);
+        basket.setOrderStatus(OrderStatus.PLACED);
+        basket.setState(BasketOrderState.ORDER);
 
-//            PaymentType payment = PaymentType.valueOf(request.getParameter("payment"));
-//            DeliveryType delivery = DeliveryType.valueOf(request.getParameter("delivery"));
+        LocalDate localDate = LocalDate.now();
+        Instant instant = localDate.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant();
+        Date orderDate = Date.from(instant);
+        basket.setOrderDate(orderDate);
 
-//            CountryEntity countryEntity = countryService.getByName(addressEntity.getCountry().getCountry());
-//            AddressEntity addressEntity = new AddressEntity(countryEntity, city, zipcode, street, building, apartment);
-
-            basket.setAddress(addressEntity);
-            basket.setDeliveryType(DeliveryType.valueOf(delivery));
-            basket.setPaymentType(PaymentType.valueOf(payment));
-            basket.setPaymentStatus(PaymentStatus.NOT_PAID);
-            basket.setOrderStatus(OrderStatus.PLACED);
-            basket.setState(BasketOrderState.ORDER);
-
-            LocalDate localDate = LocalDate.now();
-            Instant instant = localDate.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant();
-            Date orderDate = Date.from(instant);
-            basket.setOrderDate(orderDate);
-
-            orderService.updateBasketToOrder(basket);
-
-            return "success";
-
-
+        orderService.updateBasketToOrder(basket);
+        return "success";
     }
 
     @RequestMapping(value = "payfinish", method = RequestMethod.GET)
-    protected String doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected String doGet() {
         return "redirect:/";
     }
 

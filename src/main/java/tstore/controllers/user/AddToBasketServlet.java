@@ -40,16 +40,14 @@ public class AddToBasketServlet {
     private int userId;
 
     @RequestMapping(value = "addtobasket", method = RequestMethod.POST)
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession(false);
         try {
             Authentication auth = SecurityContextHolder.getContext().getAuthentication();
             if (!(auth instanceof AnonymousAuthenticationToken)) {
-                // userDetails = auth.getPrincipal()
 
                 userId = Integer.parseInt(session.getAttribute(SessionAttributes.USERID).toString());
                 addProductToBasket(request);
-//                response.setStatus(HttpServletResponse.SC_OK);
             }
             else
             {
@@ -76,9 +74,6 @@ public class AddToBasketServlet {
         } catch (NullPointerException e) {
             logger.error("fail add product to basket: {0}", e);
         }
-//        int basketCount = Integer.parseInt(session.getAttribute(SessionAttributes.BASKET).toString()) + Integer.parseInt(request.getParameter("number"));
-//        session.setAttribute(SessionAttributes.BASKET, basketCount);
-
     }
 
     private void addProductToBasket(HttpServletRequest request) {

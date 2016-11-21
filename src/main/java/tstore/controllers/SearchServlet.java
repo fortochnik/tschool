@@ -43,9 +43,7 @@ public class SearchServlet{
         searchParameters.put("company", company);
         searchParameters.put("parameters",  parameters);
 
-//        ProductService productService = new ProductServiceImpl();
         List<ProductEntity> productList = productService.getBySearch(searchParameters);
-
 
         model.addAttribute("categoryId", category);
         model.addAttribute("name", name);
@@ -54,24 +52,16 @@ public class SearchServlet{
         model.addAttribute("company", company);
         model.addAttribute("parameters", parameters);
 
-
-
-//        CategoryService categoryService = new CategoryServiceImpl();
         List<CategoryEntity> categories = categoryService.getCategories();
         model.addAttribute("categories", categories);
 
         model.addAttribute("products", productList);
         return "index";
-        /*RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
-        rd.forward(request, response);*/
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "search")
     protected String doGet(Model model){
-
-
         List<CategoryEntity> categories = categoryService.getCategories();
-
         model.addAttribute("categories", categories);
         return "index";
     }

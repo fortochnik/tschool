@@ -41,7 +41,7 @@ public class BasketServlet{
     private ProductService productService;
 
     @RequestMapping(value = "basket", method = RequestMethod.GET)
-    protected ModelAndView displayBasket(HttpServletRequest request) throws IOException {
+    protected ModelAndView displayBasket(HttpServletRequest request){
         OrderEntity basket;
         HttpSession session = request.getSession(false);
         ModelAndView model = new ModelAndView("/user/basket");
@@ -84,9 +84,6 @@ public class BasketServlet{
             }
             model.addObject("basket", basket);
 
-            /*request.setAttribute("basket", basket);
-            RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/user/basket.jsp");
-            rd.forward(request, response);*/
         }
         catch (NullPointerException e)
         {

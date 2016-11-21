@@ -26,13 +26,9 @@ public class ProductServlet {
     private ProductService productService;
 
     @RequestMapping(value = "product/{id}", method = RequestMethod.GET)
-    public ModelAndView doGet(HttpServletRequest request, @PathVariable(value = "id") String id)
+    public ModelAndView doGet(@PathVariable(value = "id") String id)
             throws IOException {
-
-        String requestURI = request.getRequestURI();
         ModelAndView modelAndView = new ModelAndView("product/product");
-
-
         int productId = getProductIdFromUri(id);
         ProductEntity product = productService.getProductById(productId);
         if (product == null){
@@ -41,9 +37,6 @@ public class ProductServlet {
         }
 
         return modelAndView.addObject("product", product);
-/*
-        RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/product/product.jsp");
-        rd.forward(request, response);*/
     }
 
     @RequestMapping(value = "product/*", method = RequestMethod.POST)
@@ -53,7 +46,6 @@ public class ProductServlet {
 
     private int getProductIdFromUri(String id) {
         int productId;
-        /*String[] split = requestURI.split("/");*/
         try {
             productId = Integer.parseInt(id);
         }

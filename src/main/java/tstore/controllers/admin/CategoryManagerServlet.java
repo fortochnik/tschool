@@ -26,25 +26,17 @@ public class CategoryManagerServlet{
     private CategoryService categoryService;
 
     @RequestMapping(value = "category", method = RequestMethod.GET)
-    protected String doGet(Model model, HttpSession session){
-//        HttpSession session = request.getSession(false);
-
-//            CategoryService categoryService = new CategoryServiceImpl();
+    protected String doGet(Model model){
             List<CategoryEntity> categories = categoryService.getCategories();
             model.addAttribute("categoryexist", categories);
 
             return "admin/category";
-            /*RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/admin/category.jsp");
-            rd.forward(request, response);*/
-
     }
 
     @RequestMapping(value = "category", method = RequestMethod.POST)
     protected String doPost(Model model,
                             @RequestParam(value = "update-form", required = false) String updateForm,
-                            HttpSession session,HttpServletRequest request){
-//        HttpSession session = request.getSession(false);
-
+                            HttpServletRequest request){
             Map<String, String[]> parameterMap = request.getParameterMap();
             List<String> NameNotDeleted = null;
             if (updateForm != null) {
@@ -64,13 +56,10 @@ public class CategoryManagerServlet{
             if (NameNotDeleted != null) {
                 request.setAttribute("notdeleted", NameNotDeleted);
             }
-
-//            CategoryService categoryService = new CategoryServiceImpl();
             List<CategoryEntity> categories = categoryService.getCategories();
             request.setAttribute("categoryexist", categories);
 
             return "admin/category";
-
     }
 
     private void createCategory(String[] categoryForCreate) {
@@ -97,7 +86,6 @@ public class CategoryManagerServlet{
 
     private List<String> deleteCategory(String[] categoriesId) {
         List<String> notDeleted = new ArrayList<String>();
-//        CategoryService categoryService = new CategoryServiceImpl();
         for (String forDelete : categoriesId) {
             try {
                 int categoryId = Integer.parseInt(forDelete);

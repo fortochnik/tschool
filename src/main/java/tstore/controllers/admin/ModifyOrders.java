@@ -36,18 +36,12 @@ public class ModifyOrders {
                             @RequestParam(value = "modify", required = false) String modifyOrderId,
                             @RequestParam(value = "order-update-admin", required = false) String saveOrderId,
                             @RequestParam(value = "form-payment-status", required = false) String paymentStatus,
-                            @RequestParam(value = "form-delivery-status", required = false) String deliveryStatus,
-                            HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+                            @RequestParam(value = "form-delivery-status", required = false) String deliveryStatus){
 
             OrderEntity order = null;
-//        String modifyOrderId = request.getParameter("modify");
-//        String saveOrderId = request.getParameter("order-update-admin");
-//        String paymentStatus = request.getParameter("form-payment-status");
-//        String deliveryStatus = request.getParameter("form-delivery-status");
             if (modifyOrderId != null) {
                 List<OrderEntity> orders = orderService.getOrders(modifyOrderId, "");
                 order = orders.get(0);
-
             }
 
             if (saveOrderId != null) {
@@ -60,9 +54,5 @@ public class ModifyOrders {
             }
             model.addAttribute("order", order);
             return "admin/modifyOrder";
-        /*RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/admin/modifyOrder.jsp");
-        rd.forward(request, response);*/
-
-
     }
 }

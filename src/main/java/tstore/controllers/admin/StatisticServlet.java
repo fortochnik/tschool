@@ -16,43 +16,29 @@ import java.util.List;
  * Created by mipan on 21.10.2016.
  */
 @Controller
-public class StatisticServlet{
+public class StatisticServlet {
     @Autowired
     private UserService orderService;
     @Autowired
     private ProductInBasketService productInBasketService;
 
     @RequestMapping(value = "statistic", method = RequestMethod.GET)
-    protected ModelAndView doGet( HttpSession session) {
-//        HttpSession session = request.getSession(false);
+    protected ModelAndView doGet() {
         ModelAndView model = new ModelAndView();
-        /*if (session.getAttribute(SessionAttributes.LOGIN).equals("true") &&
-                (session.getAttribute(SessionAttributes.ROLE).equals(Role.EMPLOYEE) ||
-                        session.getAttribute(SessionAttributes.ROLE).equals(Role.ADMIN))) {*/
-//            ProductInBasketService productInBasketService = new ProductInBasketServiceImpl();
-//            UserService orderService = new UserServiceImpl();
-            List topTenProduct = productInBasketService.getTopTenProduct();
-            List topTenUser = orderService.getTopTenUser();
-            BigDecimal proceedsByWeek = productInBasketService.getProceedsBy(7);
-            BigDecimal proceedsByMonth = productInBasketService.getProceedsBy(30);
 
-            proceedsByWeek.setScale(2, BigDecimal.ROUND_HALF_UP);
-            proceedsByMonth.setScale(2, BigDecimal.ROUND_HALF_UP);
-            model.addObject("top_products", topTenProduct);
-            model.addObject("top_user", topTenUser);
-            model.addObject("proceeds_week", proceedsByWeek);
-            model.addObject("proceeds_month", proceedsByMonth);
-            model.setViewName("admin/statistics");
-            return model;
-            /*RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/admin/statistics.jsp");
-            rd.forward(request, response);*/
-       /* }
-        else
-        {
-            model.setViewName("redirect:/");
-            return model;
-            *//*RequestDispatcher rd = request.getRequestDispatcher("/");
-            rd.forward(request, response);*//*
-        }*/
+        List topTenProduct = productInBasketService.getTopTenProduct();
+        List topTenUser = orderService.getTopTenUser();
+        BigDecimal proceedsByWeek = productInBasketService.getProceedsBy(7);
+        BigDecimal proceedsByMonth = productInBasketService.getProceedsBy(30);
+
+        proceedsByWeek.setScale(2, BigDecimal.ROUND_HALF_UP);
+        proceedsByMonth.setScale(2, BigDecimal.ROUND_HALF_UP);
+        model.addObject("top_products", topTenProduct);
+        model.addObject("top_user", topTenUser);
+        model.addObject("proceeds_week", proceedsByWeek);
+        model.addObject("proceeds_month", proceedsByMonth);
+        model.setViewName("admin/statistics");
+        return model;
+
     }
 }

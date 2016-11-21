@@ -53,21 +53,13 @@ public class UserProfileServlet {
         model.addObject("orders", ordersByUser);
 
         return model;
-
     }
 
     @RequestMapping(value = "profile", method = RequestMethod.POST)
     protected ModelAndView doPost(@ModelAttribute("infoForm") UserEntity userEntity,
                                   BindingResult bindingResult,
                                   HttpSession session,
-                                  /*@RequestParam(value = "first-name") String name,
-                                  @RequestParam(value = "last-name") String sername,
-                                  @RequestParam(value = "email") String email,
-                                  @RequestParam(value = "birthday", required = false) String birthday,*/
-                                  @RequestParam(value = "old-password", required = false) String oldPassword
-                                  /*@RequestParam(value = "new-password", required = false) String newPassword,
-                                  @RequestParam(value = "new-password-repeat", required = false) String newPasswordRepeat*/
-    ) throws ServletException, IOException {
+                                  @RequestParam(value = "old-password", required = false) String oldPassword )  {
 
         profileValidator.validate(userEntity, bindingResult);
         ModelAndView model = new ModelAndView();
@@ -76,17 +68,7 @@ public class UserProfileServlet {
             model.setViewName("/user/userprofile");
             return model;
         }
-
-//        HttpSession session = request.getSession(false);
-
         try {
-//            String name = request.getParameter("first-name");
-//            String sername = request.getParameter("last-name");
-//            String email = request.getParameter("email");
-//            String birthday = request.getParameter("birthday");
-//            String oldPassword = request.getParameter("old-password");
-//            String newPassword = request.getParameter("new-password");
-//            String newPasswordRepeat = request.getParameter("new-password-repeat");
 
             UserEntity currentUserEntity = getUserEntityById(session);
             UserEntity user = userService.getUser(userEntity.getEmail());
@@ -96,8 +78,6 @@ public class UserProfileServlet {
                 model.setViewName("/user/userprofile");
                 return model;
             }
-
-
             boolean readyForSave = true;
 
             if (!oldPassword.equals("")) {
@@ -116,25 +96,12 @@ public class UserProfileServlet {
             }
 
             if (readyForSave) {
-                /*userEntity.setName(name);
-                userEntity.setSername(sername);
-                userEntity.setEmail(email);*/
-                /*if (!birthday.equals("")) {
-                    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-                    Date date = formatter.parse(birthday);
-                    userEntity.setBirthday(date);
-                }*/
-//                userEntity.setId(currentUserEntity.getId());
-
                 currentUserEntity.setName(userEntity.getName());
                 currentUserEntity.setSername(userEntity.getSername());
                 currentUserEntity.setEmail(userEntity.getEmail());
                 currentUserEntity.setBirthday(userEntity.getBirthday());
-
                 userService.update(currentUserEntity);
-//                currentUserEntity = userEntity;
                 model.addObject("successInfoMessage", "Saved.");
-//                userEntity = getUserEntityById(session);
             }
 
             List<OrderEntity> ordersByUser = orderService.getOrdersByUser(currentUserEntity);
@@ -143,13 +110,10 @@ public class UserProfileServlet {
 
             model.setViewName("/user/userprofile");
             return model;
-            /*RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/views/user/userprofile.jsp");
-            rd.forward(request, response);*/
         } catch (Exception e) {
             logger.error("Error after parse cookies:", e);
             throw new RuntimeException("Problem in update user profile", e);
         }
-//        return model;
     }
 
     private UserEntity getUserEntityById(HttpSession session) {

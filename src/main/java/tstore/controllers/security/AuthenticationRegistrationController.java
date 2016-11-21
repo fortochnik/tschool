@@ -1,4 +1,4 @@
-package tstore.controllers;
+package tstore.controllers.security;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Controller
-public class UserController {
+public class AuthenticationRegistrationController {
     @Autowired
     private UserService userService;
 
@@ -29,13 +29,6 @@ public class UserController {
     @Autowired
     private UserValidator userValidator;
 
-   /* @RequestMapping(value = "/registration", method = RequestMethod.GET)
-    public String registration(Model model) {
-        model.addAttribute("userForm", new UserEntity());
-
-        return "/security/registration";
-    }*/
-
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
     public String registration(@ModelAttribute("userForm") UserEntity userForm, BindingResult bindingResult, Model model,
                                HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -44,9 +37,7 @@ public class UserController {
         if (bindingResult.hasErrors()) {
             return "login";
         }
-
         userService.createUserSecurity(userForm);
-
         securityService.autologin(userForm.getEmail(), userForm.getPasswordConfirm(), request, response);
 
         return "index";
