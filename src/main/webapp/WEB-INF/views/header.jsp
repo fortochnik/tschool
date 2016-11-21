@@ -38,11 +38,9 @@
                     <a href="">Catalog</a>
                 </li>
                 <sec:authorize access="hasRole('ROLE_CLIENT')">
-                    <%--<c:if test="${LOGIN eq 'true'}">--%>
                     <li>
                         <a href="profile">Profile</a>
                     </li>
-                    <%--</c:if>--%>
                 </sec:authorize>
                 <sec:authorize access="hasAnyRole('ROLE_CLIENT', 'ROLE_ANONYMOUS')">
                     <li>
@@ -54,7 +52,6 @@
 
                     </li>
                 </sec:authorize>
-                <%--<c:if test="${(LOGIN eq 'true') and ((ROLE eq 'EMPLOYEE') or (ROLE eq 'ADMIN'))}">--%>
                 <sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_EMPLOYEE')">
                     <li>
                         <a href="statistic"> Statistic</a>
@@ -69,8 +66,6 @@
                         <a href="add">Add new product</a>
                     </li>
                 </sec:authorize>
-                <%--</c:if>--%>
-
             </ul>
             <sec:authorize access="isAnonymous()">
                 <ul class="nav navbar-nav navbar-right">
@@ -78,19 +73,11 @@
                 </ul>
             </sec:authorize>
 
-            <%--<c:if test="${LOGIN eq 'true'}">
-                <ul class="nav navbar-nav navbar-right">
-                    <li><a href="/logout">Logout</a></li>
-                </ul>
-            </c:if>--%>
-
             <sec:authorize access="isAuthenticated()">
-                <%--<form id="logoutForm" method="POST" action="${contextPath}/logout">--%>
                 <form id="logoutForm" method="POST" action="logout">
-                        <%--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>--%>
                 </form>
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a onclick="document.forms['logoutForm'].submit()">Logout_sec</a></li>
+                    <li><a onclick="document.forms['logoutForm'].submit()">Logout</a></li>
                 </ul>
             </sec:authorize>
         </div>

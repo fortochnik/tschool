@@ -52,7 +52,7 @@ public class UpdateBasket{
             if (isLogin) {
                 Integer userId = Integer.parseInt(request.getSession(false).getAttribute(SessionAttributes.USERID).toString());
 
-//                OrderEntity basketByUserId = updateBasket(orderService.getBasketByUserId(userId), basketJson);
+                updateBasket(orderService.getBasketByUserId(userId), basketJson);
             }
             else {
                 Cookie[] cookies = request.getCookies();
