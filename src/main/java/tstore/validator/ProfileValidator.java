@@ -22,7 +22,6 @@ public class ProfileValidator implements Validator {
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name", "NotEmpty");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "sername", "NotEmpty");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email", "NotEmpty");
-//        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "birthday", "NotEmpty");
 
         if (user.getPassword().length() > 0) {
             ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "NotEmpty");

@@ -8,7 +8,9 @@ import tstore.dao.ProductListDao;
 import tstore.model.OrderEntity;
 import tstore.model.ProductEntity;
 import tstore.model.ProductListEntity;
+import tstore.model.enums.BasketOrderState;
 import tstore.model.enums.PaymentStatus;
+import tstore.utils.SessionAttributes;
 
 import javax.persistence.NoResultException;
 import javax.persistence.TemporalType;
@@ -81,5 +83,16 @@ public class ProductListDaoImpl extends GenericDaoImpl<ProductListEntity, Intege
             total = BigDecimal.ZERO;
         }
         return total;
+    }
+
+    @Override
+    public int getBasketProductCountByUserId(Integer userId) {
+        String hql = "select sum (pr_list.count) from ProductListEntity as pr_list left join pr_list.consignment as consignment where consignment.client.id = :id and consignment.state = :status";
+        Query query = getCurrentSession().createQuery(hql).setParameter("id", userId).setParameter("status", BasketOrderState.BASKET);
+        List list = query.list();
+        if (list != null && list.get(0)!=null ){
+            return Integer.valueOf(list.get(0).toString());
+        }
+        return 0;
     }
 }

@@ -39,8 +39,10 @@ public class AddToBasketServlet {
     private ProductInBasketService productInBasketService;
     private int userId;
 
+
     @RequestMapping(value = "addtobasket", method = RequestMethod.POST)
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        int basketCount=0;
         HttpSession session = request.getSession(false);
         try {
             Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -48,16 +50,27 @@ public class AddToBasketServlet {
 
                 userId = Integer.parseInt(session.getAttribute(SessionAttributes.USERID).toString());
                 addProductToBasket(request);
-            }
-            else
-            {
+                basketCount = getBasketProductCount(session);
+                session.setAttribute(SessionAttributes.BASKET, basketCount);
+            } else {
                 Cookie[] cookies = request.getCookies();
 
+
+                int countInBasket = 0;
                 boolean newProductInBasket = true;
                 String productId = String.valueOf(getProductId(request));
                 for (Cookie cookie : cookies) {
+                    if (cookie.getName().equals("basket")){
+                        countInBasket+=Integer.valueOf(cookie.getValue());
+                        break;
+                    }
+                }
+                for (Cookie cookie : cookies) {
                     if (cookie.getName().equals(productId)) {
                         int number = Integer.parseInt(cookie.getValue()) + Integer.parseInt(request.getParameter("number"));
+
+                        countInBasket += Integer.parseInt(request.getParameter("number"));
+
                         cookie.setValue(String.valueOf(number));
                         cookie.setMaxAge(60 * 60);
                         response.addCookie(cookie);
@@ -67,13 +80,27 @@ public class AddToBasketServlet {
                 }
                 if (newProductInBasket) {
                     Cookie cookie = new Cookie(productId, request.getParameter("number"));
+
+                    countInBasket+=Integer.valueOf(request.getParameter("number"));
                     cookie.setMaxAge(60 * 60);
                     response.addCookie(cookie);
                 }
+
+                Cookie basketCookie = new Cookie("basket",countInBasket+"");
+                response.addCookie(basketCookie);
+                basketCount = countInBasket;
             }
         } catch (NullPointerException e) {
             logger.error("fail add product to basket: {0}", e);
         }
+
+        //todo get basket
+        response.setContentType("text/plain");
+        response.getWriter().write(basketCount);
+    }
+
+    private int getBasketProductCount(HttpSession session) {
+        return productInBasketService.getBasketProductCount(Integer.valueOf(session.getAttribute(SessionAttributes.USERID).toString()));
     }
 
     private void addProductToBasket(HttpServletRequest request) {

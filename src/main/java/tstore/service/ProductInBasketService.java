@@ -23,4 +23,7 @@ public interface ProductInBasketService {
     List getTopTenProduct();
 
     BigDecimal getProceedsBy(int numberOfDaysToLookBack);
+
+
+    int getBasketProductCount(Integer attribute);
 }

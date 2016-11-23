@@ -30,9 +30,7 @@ public class ProductInBasketServiceImpl implements ProductInBasketService {
      * @return {@link ProductListEntity} for target {@param orderEntity} with {@param ProductEntity } or null
      */
     public ProductListEntity getProductInBasketById(ProductEntity ProductEntity, OrderEntity orderEntity) {
-//        productListDao.beginTransaction();
         ProductListEntity productInBasketById = productListDao.findProductInBasketById(ProductEntity, orderEntity);
-//        productListDao.closeTransaction();
         return productInBasketById;
     }
 
@@ -41,9 +39,7 @@ public class ProductInBasketServiceImpl implements ProductInBasketService {
      * @param productInBasketById {@param ProductListEntity} for save
      */
     public void save(ProductListEntity productInBasketById) {
-//        productListDao.beginTransaction();
         productListDao.persist(productInBasketById);
-//        productListDao.closeTransaction();
     }
 
     /**
@@ -51,9 +47,7 @@ public class ProductInBasketServiceImpl implements ProductInBasketService {
      * @param productInBasketById {@param ProductListEntity} for update
      */
     public void update(ProductListEntity productInBasketById) {
-//        productListDao.beginTransaction();
         productListDao.update(productInBasketById);
-//        productListDao.closeTransaction();
     }
 
 
@@ -62,9 +56,7 @@ public class ProductInBasketServiceImpl implements ProductInBasketService {
      * @param productListEntity {@param ProductListEntity} for delete
      */
     public void delete(ProductListEntity productListEntity) {
-//        productListDao.beginTransaction();
         productListDao.delete(productListEntity);
-//        productListDao.closeTransaction();
     }
 
     /**
@@ -72,11 +64,8 @@ public class ProductInBasketServiceImpl implements ProductInBasketService {
      * @return list of {@link ProductListEntity} list
      */
     public List getTopTenProduct() {
-//        productListDao.beginTransaction();
-
         List topTen = productListDao.getTopTen();
         Hibernate.initialize(topTen);
-//        productListDao.closeTransaction();
         return topTen;
     }
 
@@ -86,10 +75,13 @@ public class ProductInBasketServiceImpl implements ProductInBasketService {
      * @return Proceeds by last {@param numberOfDaysToLookBack} days
      */
     public BigDecimal getProceedsBy(int numberOfDaysToLookBack) {
-//        productListDao.beginTransaction();
         BigDecimal proceeds = productListDao.getProceedsBy(numberOfDaysToLookBack);
-//        productListDao.closeTransaction();
         return proceeds;
+    }
+
+    @Override
+    public int getBasketProductCount(Integer userId) {
+        return productListDao.getBasketProductCountByUserId(userId);
     }
 
 }

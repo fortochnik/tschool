@@ -228,7 +228,8 @@
                         {product: product, count: count}
                 );
             });
-
+            var aBasket = $("a.basket-link");
+            var basket = $("span.basket");
             $.ajax({
                 type: 'POST', // it's easier to read GET request parameters
                 url: 'updatebasket',
@@ -239,6 +240,16 @@
                     order: JSON.stringify(order) // look here!
                 },
                 success: function (data) {
+                    if(data != 0){
+                        basket.text("("+parseInt(data, 10 )+")");
+                    }
+                    else
+                    {
+                        basket.text(" ");
+                    }
+
+                },
+                error: function(){
                 }
             });
         });

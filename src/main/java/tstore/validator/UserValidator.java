@@ -22,7 +22,6 @@ public class UserValidator implements Validator {
     public void validate(Object o, Errors errors) {
         UserEntity user = (UserEntity) o;
 
-//        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "username", "NotEmpty");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name", "NotEmpty");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "sername", "NotEmpty");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email", "NotEmpty");

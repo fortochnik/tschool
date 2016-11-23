@@ -16,4 +16,6 @@ public interface ProductListDao extends GenericDao<ProductListEntity, Integer> {
     List getTopTen();
 
     BigDecimal getProceedsBy(int days);
+
+    int getBasketProductCountByUserId(Integer userId);
 }

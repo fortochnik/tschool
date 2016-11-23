@@ -9,8 +9,6 @@
 
     <http auto-config="true" authentication-manager-ref="authenticationManager">
         <csrf disabled="true"/>
-        <!--<intercept-url pattern="/" access="hasRole('ADMIN')"/>-->
-        <!--<intercept-url pattern="/welcome" access="hasAnyRole('ROLE_ADMIN', 'ROLE_EMPLOYEE')"/>-->
         <intercept-url pattern="/login" access="hasRole('ROLE_ANONYMOUS')"/>
         <intercept-url pattern="/profile" access="hasRole('ROLE_CLIENT')"/>
         <intercept-url pattern="/statistic" access="hasAnyRole('ROLE_ADMIN', 'ROLE_EMPLOYEE')"/>
@@ -22,8 +20,7 @@
                     username-parameter="j_email" password-parameter="j_password"
                     authentication-success-handler-ref="customAuthenticationSuccessHandler"/>
         <logout delete-cookies="JSESSIONID" logout-success-url="/" invalidate-session="true"/>
-        <!--<intercept-url pattern="/login/**" access="IS_AUTHENTICATED_ANONYMOUSLY"/>-->
-        <!-- logout-success-url="/login?logout"-->
+
     </http>
 
     <authentication-manager alias="authenticationManager">

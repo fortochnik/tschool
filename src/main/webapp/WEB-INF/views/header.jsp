@@ -13,7 +13,7 @@
 <html>
 <head>
     <c:set var="url">${pageContext.request.requestURL}</c:set>
-    <base href="${fn:substring(url, 0, fn:length(url) - fn:length(pageContext.request.requestURI))}${pageContext.request.contextPath}/" />
+    <base href="${fn:substring(url, 0, fn:length(url) - fn:length(pageContext.request.requestURI))}${pageContext.request.contextPath}/"/>
     <title></title>
 </head>
 <body>
@@ -42,11 +42,20 @@
                         <a href="profile">Profile</a>
                     </li>
                 </sec:authorize>
-                <sec:authorize access="hasAnyRole('ROLE_CLIENT', 'ROLE_ANONYMOUS')">
+                <sec:authorize access="isAnonymous()">
                     <li>
-                        <a href="basket">Basket
-                            <c:if test="${BASKET ne '0'}">
-                                (<c:out value="${BASKET}"/>)
+                        <a class="basket-link" href="basket">Basket
+                            <c:if test="${cookie.containsKey('basket')}">
+                                <span class="basket">(${cookie.basket.value})</span>
+                            </c:if>
+                        </a>
+                    </li>
+                </sec:authorize>
+                <sec:authorize access="hasRole('ROLE_CLIENT')">
+                    <li>
+                        <a class="basket-link" href="basket">Basket
+                            <c:if test="${BASKET ne '0' && BASKET ne null}">
+                                <span class="basket">(<c:out value="${BASKET}"/>)</span>
                             </c:if>
                         </a>
 

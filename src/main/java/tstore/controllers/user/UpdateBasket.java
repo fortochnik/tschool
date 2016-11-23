@@ -32,14 +32,15 @@ import java.util.Map;
 @Controller
 public class UpdateBasket{
     final static Logger logger = Logger.getLogger(UpdateBasket.class);
-
+//    private int basketCount;
     @Autowired
     private OrderService orderService;
     @Autowired
     private ProductInBasketService productInBasketService;
 
     @RequestMapping(value = "updatebasket", method = RequestMethod.POST)
-    protected void doPost(HttpServletRequest request, HttpServletResponse response){
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        int basketCount = 0;
         String jsonOrder = request.getParameter("order");
         int totalBasket;
         try {
@@ -53,12 +54,19 @@ public class UpdateBasket{
                 Integer userId = Integer.parseInt(request.getSession(false).getAttribute(SessionAttributes.USERID).toString());
 
                 updateBasket(orderService.getBasketByUserId(userId), basketJson);
+                basketCount = productInBasketService.getBasketProductCount(Integer.valueOf(request.getSession().getAttribute(
+                        SessionAttributes.USERID).toString()));
+                request.getSession().setAttribute(SessionAttributes.BASKET, basketCount);
             }
             else {
                 Cookie[] cookies = request.getCookies();
+
+
+
                 for (Cookie cookie : cookies) {
                     try{
                         int productId = Integer.parseInt(cookie.getName());
+
                         if (basketJson.get(productId)==null){
                             cookie.setMaxAge(0);
                         }
@@ -71,9 +79,15 @@ public class UpdateBasket{
                     catch (NumberFormatException e)
                     {
                         logger.info(MessageFormat.format("Wrong cookie : {0}", cookie), e);
-
                     }
 
+                    int countInBasket=0;
+                    for (Integer integer : basketJson.values()) {
+                        countInBasket+=integer;
+                    }
+                    Cookie countInBasketCookie = new Cookie("basket",countInBasket+"");
+                    response.addCookie(countInBasketCookie);
+                    basketCount = countInBasket;
                 }
             }
 //todo update basket count label
@@ -86,6 +100,9 @@ public class UpdateBasket{
             logger.error("Error after parse cookies:", e);
             throw new RuntimeException("Problem in update basket process", e);
         }
+
+        response.setContentType("text/plain");
+        response.getWriter().write(basketCount+"");
     }
 
     @RequestMapping(value = "updatebasket", method = RequestMethod.GET)
@@ -121,6 +138,7 @@ public class UpdateBasket{
         }
         return basketByUserId;
     }
+
 
 
 }

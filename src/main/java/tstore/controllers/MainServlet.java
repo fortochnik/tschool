@@ -12,6 +12,7 @@ import tstore.service.CategoryService;
 import tstore.service.ProductService;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 
@@ -30,7 +31,7 @@ public class MainServlet {
     private ProductService productService;
 
     @RequestMapping(method = RequestMethod.GET)
-    protected ModelAndView doGet() throws ServletException, IOException {
+    protected ModelAndView doGet(HttpSession session){
 
         List<CategoryEntity> categories = categoryService.getCategories();
 

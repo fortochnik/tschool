@@ -19,6 +19,7 @@ import tstore.service.impl.UserServiceImpl;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.text.MessageFormat;
 import java.util.*;
 
@@ -43,9 +44,10 @@ public class UpdateBasket {
      * add product from cookies to exists basket or create new basket
      * @param basketInBD draft user's Basket in db
      * @param request servlet request
+     * @param response
      * @throws ParseException
      */
-    public void updateBasketAfterLogin(OrderEntity basketInBD, HttpServletRequest request) throws ParseException {
+    public void updateBasketAfterLogin(OrderEntity basketInBD, HttpServletRequest request, HttpServletResponse response) throws ParseException {
         Map<Integer, Integer> orderInCookies = new HashMap<Integer, Integer>();
         Map<Integer, Integer> orderUpdated = new HashMap<Integer, Integer>();
         OrderEntity orderEntity = null;
@@ -97,8 +99,10 @@ public class UpdateBasket {
                     orderUpdated = orderInCookies;
                 }
                 updateBasketAfterLoginInDB(basketInBD, orderUpdated);
+
             }
         }
+
     }
 
 
@@ -120,4 +124,6 @@ public class UpdateBasket {
             productInBasketService.save(newProductInBasket);
         }
     }
+
+
 }

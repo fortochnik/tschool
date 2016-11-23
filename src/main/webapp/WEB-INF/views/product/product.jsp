@@ -170,13 +170,22 @@
     addToBasket = function (id) {
         var number = $("#" + id).siblings(".selectpicker").val();
         var productId = id;
+        var aBasket = $("a.basket-link");
+        var basket = $("span.basket");
+        if(basket.length==0){
+            aBasket.append("<span class='basket'>("+number+")</span>");
+        }
+        else{
+            basket.text("("+(parseInt(basket.text().substr(1, basket.text().length-1), 10 ) + parseInt(number, 10 ))+")");
+        }
         $.ajax({
             method: "POST",
             url: "addtobasket",
             data: {
                 product: id,
                 number: number
-            }
+            },
+
         })
     }
 
