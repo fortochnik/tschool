@@ -62,6 +62,7 @@ public class BuyFinishController {
             return "user/payment";
         }
 
+        addressEntity.setCountry(countryService.getByName(addressEntity.getCountry().getCountry()));
         basket.setAddress(addressEntity);
         basket.setDeliveryType(DeliveryType.valueOf(delivery));
         basket.setPaymentType(PaymentType.valueOf(payment));
@@ -75,6 +76,7 @@ public class BuyFinishController {
         basket.setOrderDate(orderDate);
 
         orderService.updateBasketToOrder(basket);
+        request.getSession().setAttribute(SessionAttributes.BASKET, 0);
         return "success";
     }
 
