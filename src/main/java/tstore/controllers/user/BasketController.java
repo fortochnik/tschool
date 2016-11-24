@@ -21,7 +21,6 @@ import tstore.service.UserService;
 import tstore.utils.SessionAttributes;
 
 import javax.servlet.http.*;
-import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.HashSet;
 import java.util.Set;
@@ -30,8 +29,8 @@ import java.util.Set;
  * Created by mipan on 04.10.2016.
  */
 @Controller
-public class BasketServlet{
-    final static Logger logger = Logger.getLogger(BasketServlet.class);
+public class BasketController {
+    final static Logger logger = Logger.getLogger(BasketController.class);
 
     @Autowired
     private UserService userService;

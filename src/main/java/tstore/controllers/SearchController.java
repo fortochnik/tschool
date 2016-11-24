@@ -19,7 +19,7 @@ import java.util.Map;
  * Created by mipan on 23.10.2016.
  */
 @Controller
-public class SearchServlet{
+public class SearchController {
 
     @Autowired
     private ProductService productService;

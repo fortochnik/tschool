@@ -16,7 +16,6 @@ import tstore.service.ProductInBasketService;
 import tstore.utils.JsonParser;
 import tstore.utils.SessionAttributes;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -30,8 +29,8 @@ import java.util.Map;
  * Created by mipan on 17.10.2016.
  */
 @Controller
-public class UpdateBasket{
-    final static Logger logger = Logger.getLogger(UpdateBasket.class);
+public class UpdateController {
+    final static Logger logger = Logger.getLogger(UpdateController.class);
 //    private int basketCount;
     @Autowired
     private OrderService orderService;

@@ -11,7 +11,6 @@ import tstore.exceptions.PageNotFoundException;
 import tstore.model.ProductEntity;
 import tstore.service.ProductService;
 
-import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.text.MessageFormat;
 
@@ -19,8 +18,8 @@ import java.text.MessageFormat;
  * Created by mipan on 25.09.2016.
  */
 @Controller
-public class ProductServlet {
-    final static Logger logger = Logger.getLogger(ProductServlet.class);
+public class ProductController {
+    final static Logger logger = Logger.getLogger(ProductController.class);
 
     @Autowired
     private ProductService productService;

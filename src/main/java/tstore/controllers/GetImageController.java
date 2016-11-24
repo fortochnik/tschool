@@ -16,11 +16,11 @@ import java.io.*;
  */
 @Controller
 @RequestMapping(value="/image")
-public class getImageServlet{
+public class GetImageController {
     @Autowired
     private ServletContext servletContext;
 
-    final static Logger logger = Logger.getLogger(getImageServlet.class);
+    final static Logger logger = Logger.getLogger(GetImageController.class);
 
     @ResponseBody
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.IMAGE_JPEG_VALUE)

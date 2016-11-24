@@ -32,8 +32,8 @@ import java.util.List;
  * Created by mipan on 18.10.2016.
  */
 @Controller
-public class BuyFinishServlet {
-    final static Logger logger = Logger.getLogger(BuyFinishServlet.class);
+public class BuyFinishController {
+    final static Logger logger = Logger.getLogger(BuyFinishController.class);
 
     @Autowired
     private PayValidator payValidator;

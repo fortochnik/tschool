@@ -18,9 +18,9 @@ import java.util.HashSet;
 import java.util.Set;
 
 
-public class UserDetailsServiceImpl implements UserDetailsService{
+public class UserAuthenticationServiceImpl implements UserDetailsService{
     @Autowired
-    private UserDao userRepository;
+    protected UserDao userRepository;
 
     @Override
     @Transactional(readOnly = true)
@@ -28,9 +28,7 @@ public class UserDetailsServiceImpl implements UserDetailsService{
         UserEntity user = userRepository.findByLogin(username);
 
         Set<GrantedAuthority> grantedAuthorities = new HashSet<GrantedAuthority>();
-//        for (Role role : user.getRoles()){
             grantedAuthorities.add(new SimpleGrantedAuthority(user.getRole().name()));
-//        }
 
         User user1 = new User(user.getEmail(), user.getPassword(), grantedAuthorities);
         return user1;

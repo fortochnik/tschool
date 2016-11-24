@@ -21,7 +21,7 @@ import java.util.List;
 @Transactional
 public class ProductInBasketServiceImpl implements ProductInBasketService {
     @Autowired
-    private ProductListDao productListDao;
+    protected ProductListDao productListDao;
 
     /**
      * Get products in target basket by {@link ProductEntity}

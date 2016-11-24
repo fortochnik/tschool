@@ -20,7 +20,6 @@ public class CountryServiceImplTest
 
     private class CountryServiceImplUnitTest extends CountryServiceImpl{
 
-//        CountryDao countryDao;
         public CountryServiceImplUnitTest() {
             super();
             countryDao = mock(CountryDao.class);
@@ -33,7 +32,6 @@ public class CountryServiceImplTest
     @Before
     public void setUp() {
         this.countryServiceImplUnitTest = new CountryServiceImplUnitTest();
-//        CountryServiceImplUnitTest countryServiceImplUnitTest = new CountryServiceImplUnitTest();
     }
 @Test
     public void testGetAll() throws Exception {

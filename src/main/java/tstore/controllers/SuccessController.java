@@ -13,7 +13,7 @@ import java.io.IOException;
  * Created by mipan on 19.10.2016.
  */
 @Controller
-public class SuccessServlet extends HttpServlet {
+public class SuccessController extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/success.jsp");

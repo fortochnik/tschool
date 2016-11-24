@@ -30,8 +30,8 @@ import java.util.List;
  * Created by mipan on 23.10.2016.
  */
 @Controller
-public class AddProductServlet {
-    final static Logger logger = Logger.getLogger(AddProductServlet.class);
+public class AddProductController {
+    final static Logger logger = Logger.getLogger(AddProductController.class);
     @Autowired
     private ImageService imageService;
     @Autowired

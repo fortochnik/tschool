@@ -14,7 +14,7 @@ import static org.mockito.Mockito.mock;
  * Created by mpankin on 24.10.2016.
  */
 public class AddressServiceImplTest {
-    AddressServiceImplUnitTest addressServiceImplUnitTest;
+    private AddressServiceImplUnitTest addressServiceImplUnitTest;
 
     private class AddressServiceImplUnitTest extends AddressServiceImpl {
         public AddressServiceImplUnitTest() {

@@ -17,7 +17,7 @@ import java.util.Map;
 @Transactional
 public class ProductServiceImpl implements ProductService{
     @Autowired
-    private ProductDao productDaoImpl;
+    protected ProductDao productDao;
 
     /**
      * Get {@link ProductEntity} by id
@@ -25,9 +25,7 @@ public class ProductServiceImpl implements ProductService{
      * @return target {@link ProductEntity}
      */
     public ProductEntity getProductById(Integer id) {
-//        productDaoImpl.beginTransaction();
-        ProductEntity productEntity = productDaoImpl.findById(ProductEntity.class, id);
-//        productDaoImpl.closeTransaction();
+        ProductEntity productEntity = productDao.findById(ProductEntity.class, id);
         return productEntity;
     }
 
@@ -36,9 +34,7 @@ public class ProductServiceImpl implements ProductService{
      * @return {@link ProductEntity} list
      */
     public List<ProductEntity> getAllProducts() {
-//        productDaoImpl.beginTransaction();
-        List<ProductEntity> productEntityList = productDaoImpl.findAll(ProductEntity.class);
-//        productDaoImpl.closeTransaction();
+        List<ProductEntity> productEntityList = productDao.findAll(ProductEntity.class);
         return productEntityList;
     }
 
@@ -47,9 +43,7 @@ public class ProductServiceImpl implements ProductService{
      * @param product {@link ProductEntity} for update
      */
     public void update(ProductEntity product) {
-//        productDaoImpl.beginTransaction();
-        productDaoImpl.update(product);
-//        productDaoImpl.closeTransaction();
+        productDao.update(product);
     }
 
     /**
@@ -58,9 +52,7 @@ public class ProductServiceImpl implements ProductService{
      * @return id of saved {@link ProductEntity}
      */
     public int save(ProductEntity productEntity) {
-//        productDaoImpl.beginTransaction();
-        productDaoImpl.persist(productEntity);
-//        productDaoImpl.closeTransaction();
+        productDao.persist(productEntity);
         return productEntity.getId();
     }
 
@@ -72,9 +64,7 @@ public class ProductServiceImpl implements ProductService{
      * @return {@link ProductEntity} list by search parameters
      */
     public List<ProductEntity> getBySearch(Map<String, String> searchParameters) {
-//        productDaoImpl.beginTransaction();
-        List<ProductEntity> productEntities = productDaoImpl.findByCriteria(searchParameters);
-//        productDaoImpl.closeTransaction();
+        List<ProductEntity> productEntities = productDao.findByCriteria(searchParameters);
         return productEntities;
     }
 }

@@ -25,9 +25,9 @@ import java.io.IOException;
  * Created by mipan on 11.10.2016.
  */
 @Controller
-public class AddToBasketServlet {
+public class AddToBasketController {
 
-    final static Logger logger = Logger.getLogger(AddToBasketServlet.class);
+    final static Logger logger = Logger.getLogger(AddToBasketController.class);
     public static final int NUMBER_OF_JUST_ADDED = 1;
     @Autowired
     private OrderService orderService;

@@ -61,3 +61,25 @@ img.catalog-image.resize{
 div.img-height {
     min-height: 150px;
 }
+
+#carousel-example-generic {
+    position:relative;
+}
+
+@media (max-width:994px) {
+
+    #search, #search-button {
+        position:relative;
+        z-index:10;
+    }
+    #carousel-example-generic {
+        display:none !important;
+
+    }
+}
+
+
+
+div.index{
+    z-index:20;!important;
+}

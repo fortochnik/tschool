@@ -16,7 +16,7 @@ import java.util.List;
  * Created by mipan on 21.10.2016.
  */
 @Controller
-public class StatisticServlet {
+public class StatisticController {
     @Autowired
     private UserService orderService;
     @Autowired

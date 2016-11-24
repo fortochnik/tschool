@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tstore.dao.CategoryDao;
-import tstore.dao.ProductDao;
 import tstore.model.CategoryEntity;
 
 import tstore.service.CategoryService;
@@ -21,7 +20,7 @@ public class CategoryServiceImpl implements CategoryService {
 
 
     @Autowired
-    private CategoryDao categoryDaoImpl;
+    protected CategoryDao categoryDao;
 
 
     /**
@@ -29,9 +28,7 @@ public class CategoryServiceImpl implements CategoryService {
      * @return all {@link CategoryEntity}
      */
     public List<CategoryEntity> getCategories() {
-//        categoryDaoImpl.beginTransaction();
-        List<CategoryEntity> categoryEntities = categoryDaoImpl.findAll(CategoryEntity.class);
-//        categoryDaoImpl.closeTransaction();
+        List<CategoryEntity> categoryEntities = categoryDao.findAll(CategoryEntity.class);
         return categoryEntities;
     }
 
@@ -41,11 +38,9 @@ public class CategoryServiceImpl implements CategoryService {
      *
      */
     public void deleteAll(String[] categoriesId) {
-//        categoryDaoImpl.beginTransaction();
         int categoryId = Integer.parseInt(categoriesId[0]);
-        CategoryEntity categoryEntity = categoryDaoImpl.findById(CategoryEntity.class, categoryId);
-        categoryDaoImpl.delete(categoryEntity);
-//        categoryDaoImpl.closeTransaction();
+        CategoryEntity categoryEntity = categoryDao.findById(CategoryEntity.class, categoryId);
+        categoryDao.delete(categoryEntity);
 
     }
 
@@ -55,16 +50,13 @@ public class CategoryServiceImpl implements CategoryService {
      * @return name of{@link CategoryEntity} if it didn't delete or null
      */
     public String deleteById(int id) {
-//        categoryDaoImpl.beginTransaction();
-        CategoryEntity categoryEntity = categoryDaoImpl.findById(CategoryEntity.class, id);
+        CategoryEntity categoryEntity = categoryDao.findById(CategoryEntity.class, id);
         if (categoryEntity.getProducts().size() == 0) {
-            categoryDaoImpl.delete(categoryEntity);
-//            categoryDaoImpl.closeTransaction();
+            categoryDao.delete(categoryEntity);
         }
         else
         {
             String name = categoryEntity.getName();
-//            categoryDaoImpl.closeTransaction();
             return name;
         }
         return null;
@@ -76,9 +68,7 @@ public class CategoryServiceImpl implements CategoryService {
      * @return {@link CategoryEntity} with current id
      */
     public CategoryEntity get(int id) {
-//        categoryDaoImpl.beginTransaction();
-        CategoryEntity categoryEntities = categoryDaoImpl.findById(CategoryEntity.class, id);
-//        categoryDaoImpl.closeTransaction();
+        CategoryEntity categoryEntities = categoryDao.findById(CategoryEntity.class, id);
         return categoryEntities;
     }
 
@@ -87,9 +77,7 @@ public class CategoryServiceImpl implements CategoryService {
      * @param categoryEntity Entity for update
      */
     public void update(CategoryEntity categoryEntity) {
-//        categoryDaoImpl.beginTransaction();
-        categoryDaoImpl.update(categoryEntity);
-//        categoryDaoImpl.closeTransaction();
+        categoryDao.update(categoryEntity);
     }
 
     /**
@@ -97,11 +85,9 @@ public class CategoryServiceImpl implements CategoryService {
      * @param categoryName name for new {@link CategoryEntity}
      */
     public void create(String categoryName) {
-//        categoryDaoImpl.beginTransaction();
         CategoryEntity categoryEntity = new CategoryEntity();
         categoryEntity.setName(categoryName);
         categoryEntity.setLevel(1);
-        categoryDaoImpl.persist(categoryEntity);
-//        categoryDaoImpl.closeTransaction();
+        categoryDao.persist(categoryEntity);
     }
 }

@@ -24,8 +24,9 @@ import java.util.Set;
 public class UserServiceImpl implements UserService {
 
     @Autowired
-    private UserDao userDao;
-
+    protected UserDao userDao;
+    @Autowired
+    protected BCryptPasswordEncoder bCryptPasswordEncoder;
     /**
      * Get user by credentials
      * @param login user login
@@ -33,9 +34,7 @@ public class UserServiceImpl implements UserService {
      * @return {@link UserEntity}
      */
     public UserEntity getUser(String login, String password) {
-//        userDao.beginTransaction();
         UserEntity userEntity = userDao.findByCredential(login, password);
-//        userDao.closeTransaction();
         return userEntity;
     }
 
@@ -45,9 +44,7 @@ public class UserServiceImpl implements UserService {
      * @return {@link UserEntity}
      */
     public UserEntity getUser(String login) {
-//        userDao.beginTransaction();
         UserEntity userEntity = userDao.findByLogin(login);
-//        userDao.closeTransaction();
         return userEntity;
     }
 
@@ -57,9 +54,7 @@ public class UserServiceImpl implements UserService {
      * @return {@link UserEntity}
      */
     public UserEntity getUserById(Integer id) {
-//        userDao.beginTransaction();
         UserEntity userEntity = userDao.findById(UserEntity.class, id);
-//        userDao.closeTransaction();
         Hibernate.initialize(userEntity);
         return userEntity;
     }
@@ -69,9 +64,7 @@ public class UserServiceImpl implements UserService {
      * @param userEntity {@link UserEntity} for create
      */
     public void createUser(UserEntity userEntity) {
-//        userDao.beginTransaction();
         userDao.persist(userEntity);
-//        userDao.closeTransaction();
     }
 
     /**
@@ -79,11 +72,8 @@ public class UserServiceImpl implements UserService {
      * @param userEntity {@link UserEntity} for update
      */
     public void update(UserEntity userEntity) {
-//        userDao.beginTransaction();
         userDao.update(userEntity);
-//        userDao.closeTransaction();
     }
-
 
     /**
      * Create user by id
@@ -92,14 +82,12 @@ public class UserServiceImpl implements UserService {
      */
     @Deprecated
     public UserEntity getFullUserById(Integer id) {
-//        userDao.beginTransaction();
         UserEntity userEntity = userDao.findById(UserEntity.class, id);
         OrderEntity basketByUserId = new OrderServiceImpl().getBasketByUserId(id);
         Set setS = new HashSet();
         setS.add(basketByUserId);
         userEntity.setOrders(setS);
         userEntity.getOrders();
-//        userDao.closeTransaction();
         return userEntity;
     }
 
@@ -108,15 +96,10 @@ public class UserServiceImpl implements UserService {
      * @return {@list UserEntity} list
      */
     public List getTopTenUser() {
-//        userDao.beginTransaction();
         List topTenUser = userDao.getTopTenUser();
-//        userDao.closeTransaction();
         return topTenUser;
     }
 
-
-    @Autowired
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
     @Override
     public void createUserSecurity(UserEntity user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));

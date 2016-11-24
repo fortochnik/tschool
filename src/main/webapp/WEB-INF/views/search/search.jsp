@@ -29,7 +29,7 @@
 </div>--%>
 
 
-<div class="container">
+<div class="container" id="search">
 
 
     <%--<div class="col-sm-3">--%>
@@ -87,6 +87,12 @@
                            value="<c:out value="${min}"/>"
                            onkeyup="this.value=this.value.replace(/[^0-9.]/g,'')"/>
 
+                    <%--<p class="help-block"></p>--%>
+
+                </div>
+                <div class="pull-left control-group">
+
+                    <br/>
                     <input id="price-max" name="price-max" type="text" placeholder="max"
                            class="input-xlarge min" maxlength="7"
                            value="<c:out value="${max}"/>"
@@ -128,7 +134,7 @@
     </div>
 </div>
 <div>
-    <button class="btn .btn-xs" type="submit">
+    <button id="search-button"class="btn .btn-xs" type="submit">
         Search
     </button>
 </div>

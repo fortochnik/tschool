@@ -11,9 +11,7 @@ import tstore.model.ProductEntity;
 import tstore.service.CategoryService;
 import tstore.service.ProductService;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpSession;
-import java.io.IOException;
 import java.util.List;
 
 /**
@@ -22,8 +20,8 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/")
-public class MainServlet {
-    final static Logger logger = Logger.getLogger(MainServlet.class);
+public class MainController {
+    final static Logger logger = Logger.getLogger(MainController.class);
 
     @Autowired
     private CategoryService categoryService;

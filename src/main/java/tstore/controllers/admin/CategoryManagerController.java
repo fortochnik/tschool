@@ -11,7 +11,6 @@ import tstore.model.CategoryEntity;
 import tstore.service.CategoryService;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.text.MessageFormat;
 import java.util.*;
 
@@ -19,8 +18,8 @@ import java.util.*;
  * Created by mipan on 22.10.2016.
  */
 @Controller
-public class CategoryManagerServlet{
-    final static Logger logger = Logger.getLogger(CategoryManagerServlet.class);
+public class CategoryManagerController {
+    final static Logger logger = Logger.getLogger(CategoryManagerController.class);
 
     @Autowired
     private CategoryService categoryService;

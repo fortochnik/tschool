@@ -11,7 +11,7 @@ import java.io.IOException;
  * Created by mipan on 08.10.2016.
  */
 @Controller
-public class LogoutServlet{
+public class LogoutController {
     @RequestMapping(value = "logout", method = RequestMethod.GET)
     protected String logout(HttpServletRequest request, HttpServletResponse response) throws IOException {
         HttpSession session = request.getSession(false);

@@ -27,9 +27,9 @@ import java.util.Set;
 public class OrderServiceImpl implements OrderService {
 
     @Autowired
-    private ProductDao productDao;
+    protected ProductDao productDao;
     @Autowired
-    private OrderDao orderDao;
+    protected OrderDao orderDao;
 
     /**
      * get {@link OrderEntity} with BASKET {@link BasketOrderState} state by User Id
@@ -37,12 +37,10 @@ public class OrderServiceImpl implements OrderService {
      * @return {@link OrderEntity} with BASKET {@link BasketOrderState} state
      */
     public OrderEntity getBasketByUserId(Integer userId) {
-//        orderDao.beginTransaction();
         OrderEntity basket = orderDao.findBasketByUserId(userId);
         if (basket!=null) {
             Hibernate.initialize(basket.getProductList());
         }
-//        orderDao.closeTransaction();
         return basket;
     }
 
@@ -51,9 +49,7 @@ public class OrderServiceImpl implements OrderService {
      * @param orderEntity {@link OrderEntity} for create
      */
     public void createOrder(OrderEntity orderEntity) {
-//        orderDao.beginTransaction();
         orderDao.persist(orderEntity);
-//        orderDao.closeTransaction();
     }
 
     /**
@@ -62,13 +58,10 @@ public class OrderServiceImpl implements OrderService {
      * @return {@link OrderEntity} list
      */
     public List<OrderEntity> getOrdersByUser(UserEntity userEntity) {
-//        orderDao.beginTransaction();
-
         List<OrderEntity> orderEntities = orderDao.findOrdersByUser(userEntity);
         for (OrderEntity orderEntity : orderEntities) {
             Hibernate.initialize(orderEntity.getProductList());
         }
-//        orderDao.closeTransaction();
         return orderEntities;
     }
 
@@ -77,9 +70,7 @@ public class OrderServiceImpl implements OrderService {
      * @param orderEntity {@link OrderEntity} for update
      */
     public void update(OrderEntity orderEntity) {
-//        orderDao.beginTransaction();
         orderDao.update(orderEntity);
-//        orderDao.closeTransaction();
     }
 
     /**
@@ -87,8 +78,6 @@ public class OrderServiceImpl implements OrderService {
      * @param basket {@link OrderEntity} for change status
      */
     public void updateBasketToOrder(OrderEntity basket) {
-//        orderDao.beginTransaction();
-//        ProductInBasketService productInBasketService = new ProductInBasketServiceImpl();
         Set<ProductListEntity> productList = basket.getProductList();
         for (ProductListEntity productListEntity : productList) {
             ProductEntity product = productListEntity.getProduct();
@@ -98,7 +87,6 @@ public class OrderServiceImpl implements OrderService {
             productDao.update(product);
         }
         orderDao.update(basket);
-//        orderDao.closeTransaction();
     }
 
     /**
@@ -109,9 +97,7 @@ public class OrderServiceImpl implements OrderService {
      * @return list of {@link OrderEntity}
      */
     public List<OrderEntity> getOrders(String orderNumber, String userEmail) {
-//        orderDao.beginTransaction();
         List<OrderEntity> orderEntities= orderDao.find(orderNumber, userEmail);
-//        orderDao.closeTransaction();
         return orderEntities;
     }
 
@@ -120,9 +106,7 @@ public class OrderServiceImpl implements OrderService {
      * @return {@link OrderEntity} list
      */
     public List<OrderEntity> getNotDelivered() {
-//        orderDao.beginTransaction();
         List<OrderEntity> orderEntities= orderDao.findNotDelivered();
-//        orderDao.closeTransaction();
         return orderEntities;
     }
 
@@ -131,9 +115,7 @@ public class OrderServiceImpl implements OrderService {
      * @return {@link OrderEntity} list
      */
     public List<OrderEntity> getNotPaid() {
-//        orderDao.beginTransaction();
         List<OrderEntity> orderEntities= orderDao.findNotPaid();
-//        orderDao.closeTransaction();
         return orderEntities;
     }
 
@@ -142,9 +124,7 @@ public class OrderServiceImpl implements OrderService {
      * @return {@link OrderEntity} list
      */
     public List<OrderEntity> getAllOrders() {
-//        orderDao.beginTransaction();
         List<OrderEntity> orderEntities= orderDao.findAllOrders();
-//        orderDao.closeTransaction();
         return orderEntities;
     }
 

@@ -24,7 +24,7 @@ import java.util.Set;
  * Created by mipan on 18.10.2016.
  */
 @Controller
-public class BuyServlet{
+public class BuyController {
 
     @Autowired
     private OrderService orderService;

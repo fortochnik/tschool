@@ -17,7 +17,6 @@ import tstore.service.UserService;
 import tstore.utils.SessionAttributes;
 import tstore.validator.ProfileValidator;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
@@ -28,8 +27,8 @@ import java.util.List;
  * Created by mipan on 13.10.2016.
  */
 @Controller
-public class UserProfileServlet {
-    final static Logger logger = Logger.getLogger(UserProfileServlet.class);
+public class UserProfileController {
+    final static Logger logger = Logger.getLogger(UserProfileController.class);
 
     @Autowired
     private ProfileValidator profileValidator;

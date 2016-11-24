@@ -18,7 +18,7 @@ import java.util.List;
  * Created by mipan on 05.10.2016.
  */
 @Controller
-public class AdminOrderListServlet {
+public class AdminOrderListController {
 
     @Autowired
     private OrderService orderService;

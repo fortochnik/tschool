@@ -27,7 +27,6 @@ public class SecurityServiceImpl implements SecurityService {
     @Autowired
     private UserDetailsService userDetailsService;
 
-//    private static final Logger logger = LoggerFactory.getLogger(SecurityServiceImpl.class);
 
     @Override
     public String findLoggedInUsername() {
@@ -51,7 +50,6 @@ public class SecurityServiceImpl implements SecurityService {
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
             successHandler.onAuthenticationSuccess(request, response, authentication);
-//            logger.debug(String.format("Auto login %s successfully!", username));
         }
     }
 }

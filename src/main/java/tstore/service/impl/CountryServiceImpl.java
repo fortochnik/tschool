@@ -24,9 +24,7 @@ public class CountryServiceImpl implements CountryService {
      * @return all {@link CountryEntity}
      */
     public List<CountryEntity> getAll() {
-//        countryDao.beginTransaction();
         List<CountryEntity> countryEntities = countryDao.findAll(CountryEntity.class);
-//        countryDao.closeTransaction();
         return countryEntities;
     }
 
@@ -36,9 +34,7 @@ public class CountryServiceImpl implements CountryService {
      * @return {@link CountryEntity} with target country name
      */
     public CountryEntity getByName(String country) {
-//        countryDao.beginTransaction();
         CountryEntity countryEntity = countryDao.findByName(country);
-//        countryDao.closeTransaction();
         return countryEntity;
     }
 

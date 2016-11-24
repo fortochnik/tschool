@@ -25,9 +25,7 @@ public class AddressServiceImpl implements AddressService {
      * @param address Entity address for create
      * */
     public void addAddress(AddressEntity address) {
-//        addressDao.beginTransaction();
         addressDao.persist(address);
-//        addressDao.closeTransaction();
     }
 
     /**
@@ -35,8 +33,6 @@ public class AddressServiceImpl implements AddressService {
      * @param address Entity for update
      * */
     public void updateAddress(AddressEntity address) {
-//        addressDao.beginTransaction();
         addressDao.update(address);
-//        addressDao.closeTransaction();
     }
 }

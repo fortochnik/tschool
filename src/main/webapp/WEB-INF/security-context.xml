@@ -24,12 +24,12 @@
     </http>
 
     <authentication-manager alias="authenticationManager">
-        <authentication-provider user-service-ref="userDetailsServiceImpl">
+        <authentication-provider user-service-ref="userAuthenticationServiceImpl">
             <password-encoder ref="encoder"></password-encoder>
         </authentication-provider>
     </authentication-manager>
 
-    <beans:bean id="userDetailsServiceImpl" class="tstore.service.impl.UserDetailsServiceImpl"></beans:bean>
+    <beans:bean id="userAuthenticationServiceImpl" class="tstore.service.impl.UserAuthenticationServiceImpl"></beans:bean>
 
     <beans:bean id="encoder"
                 class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">

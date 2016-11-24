@@ -30,13 +30,11 @@ public class ImageServiceImpl implements ImageService {
      * @param productId target product's id
      */
     public void save(String url, Integer productId) {
-//        imageDao.beginTransaction();
         ProductEntity productEntity = productDao.findById(ProductEntity.class, productId);
         ImageEntity imageEntity = new ImageEntity();
         imageEntity.setImage(url);
         imageEntity.setProduct(productEntity);
         imageDao.persist(imageEntity);
-//        imageDao.closeTransaction();
     }
 
     /**
@@ -45,9 +43,7 @@ public class ImageServiceImpl implements ImageService {
      * @return url of image
      */
     public ImageEntity getMain(int productId) {
-//        imageDao.beginTransaction();
         ImageEntity imageEntity =imageDao.getImage(productId, 1);
-//        imageDao.closeTransaction();
         return imageEntity;
     }
 
@@ -57,9 +53,7 @@ public class ImageServiceImpl implements ImageService {
      * @return all image for product
      */
     public List<ImageEntity> getAll(int productId) {
-//        imageDao.beginTransaction();
         List<ImageEntity> imageEntity =imageDao.getImage(productId);
-//        imageDao.closeTransaction();
         return imageEntity;
     }
 }

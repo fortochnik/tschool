@@ -90,7 +90,7 @@
 
             </div>
 
-            <div class="row">
+            <div class="row index">
                 <c:forEach items="${products}" var="product">
                     <div class="col-sm-4 col-lg-4 col-md-4">
                         <div class="thumbnail">

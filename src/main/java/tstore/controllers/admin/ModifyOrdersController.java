@@ -21,7 +21,7 @@ import java.util.List;
  * Created by mipan on 23.10.2016.
  */
 @Controller
-public class ModifyOrders {
+public class ModifyOrdersController {
 
     @Autowired
     private OrderService orderService;
