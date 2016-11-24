@@ -31,4 +31,4 @@ Also used in additional part:
 *	EJB;
 *	JSF;
 
-For more information see "Technical Solution Description MMS"
+For more information see ["Technical Solution Description MMS"](https://github.com/fortochnik/tschool/blob/master/TechnicalSolutionDescriptionMMS.docx)
