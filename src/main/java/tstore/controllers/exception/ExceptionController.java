@@ -1,5 +1,6 @@
 package tstore.controllers.exception;
 
+import org.apache.log4j.Logger;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.ModelAndView;
@@ -10,10 +11,9 @@ import tstore.exceptions.PageNotFoundException;
  */
 @ControllerAdvice
 public class ExceptionController {
-
+    final static Logger logger = Logger.getLogger(ExceptionController.class);
     @ExceptionHandler(PageNotFoundException.class)
     public ModelAndView handleCustomException(PageNotFoundException ex) {
-
         ModelAndView model = new ModelAndView("error/404");
         model.addObject("exception", ex);
         return model;
@@ -24,10 +24,9 @@ public class ExceptionController {
 
     @ExceptionHandler(Exception.class)
     public ModelAndView handleAllException(Exception ex) {
-        //todo logging
+        logger.error("Exeption controller: ", ex);
         ModelAndView model = new ModelAndView("error/Error");
         return model;
-
     }
 
 }
