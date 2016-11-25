@@ -34,9 +34,11 @@ Essential functionality includes retrieving mobile plan usage statistics from th
 
 #	Technologies and frameworks
 *	Java 1.8;
+* MySQL;
 *	Hibernate;
 *	Spring MVC;
 *	Spring Security;
+* Spring Validation;
 *	JSP, CSS3, JQuery;
 *	JUnit;
 *	Glassfish 4;
