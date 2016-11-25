@@ -12,9 +12,24 @@ Also this type of users can access for statistics (top ten product, client, mont
 Search includes filtering by all parameters of products;
 
 As addition second application is to be developed.
- Essential functionality includes retrieving mobile plan usage statistics from the web service provided by the main application. Report in .pdf format must be generated using retrieved statistics.
+Essential functionality includes retrieving mobile plan usage statistics from the web service provided by the main application. Report in .pdf format must be generated using retrieved statistics.
 
-===============
+=============== 
+
+## Main characteristics
+- Password hashed by bcrypt;
+- Two roles:
+ * Client
+ * Admin;
+
+- User can put products in the basket before login. This information stored in cookies on the client side. After login the products in the basket added into existing basket in the database or created new if it not;
+- Validation is carried out both on the Client's and on the server side (Spring Validation);
+
+- Admin can get statistics by top products, users and weekly/monthly revenue;
+- Creation and management of product categories;
+- Creation of new products;
+- Change the status of existing orders;
+
 ![ScreenShot](https://github.com/fortochnik/tschool/blob/master/screenshot/main_page.png)
 
 #	Technologies and frameworks
@@ -27,7 +42,8 @@ As addition second application is to be developed.
 *	Glassfish 4;
 *	Mockito;
 *	Log4j;
-Also used in additional part:
+
+Also used in [additional part](https://github.com/fortochnik/pdfreport):
 *	EJB;
 *	JSF;
 
