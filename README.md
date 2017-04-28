@@ -1,5 +1,6 @@
 # Introduction
 ===============
+
 E-commerce site is to be developed. Essential functionality includes catalog of products, search by catalog, personal accounts where client can manage order, get history of orders and update personal information.
 
 User can manage basket before login or registration. All data must be stored in basket on the client side in this case. 
